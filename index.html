@@ -12,7 +12,8 @@
 <meta property="og:description" content="The daily market for public-safety data. Call the number before it drops.">
 <meta property="og:url" content="https://crimeline.fun/">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect x='2' y='2' width='44' height='44' rx='12' fill='%2313223f'/%3E%3Cline x1='7' y1='28.5' x2='41' y2='28.5' stroke='%23aebbd6' stroke-opacity='.3' stroke-width='1.4' stroke-dasharray='1.5 3'/%3E%3Cpath d='M6 28.5 H14 L17.2 32.5 L21 12.5 L24.6 35 L27.8 28.5 H42' fill='none' stroke='%23eef3fd' stroke-width='2.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='21' cy='12.5' r='3.6' fill='%23ff2d4d' stroke='%23ffdfe4' stroke-width='1.1'/%3E%3C/svg%3E">
+<meta name="twitter:site" content="@CrimeLineMarket">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cdefs%3E%3CclipPath id='c'%3E%3Crect x='2' y='2' width='44' height='44' rx='12'/%3E%3C/clipPath%3E%3C/defs%3E%3Crect x='2' y='2' width='44' height='44' rx='12' fill='%2313223f'/%3E%3Cg clip-path='url(%23c)'%3E%3Cpath d='M6 44 V27 H9 V23 H11.5 V31 H14 V16 H20 V31 H22.5 V22 H26 V26 H29 V18.5 H32 V29 H34.5 V24 H38 V44 Z' fill='%232c4066'/%3E%3Cpath d='M5 9 H13.5 L15.5 12 L17 16 L18.5 12 L20.5 9 H43' fill='none' stroke='%23ff5069' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='17' cy='16' r='3' fill='%23ff2d4d' stroke='%23ffdfe4' stroke-width='1'/%3E%3C/g%3E%3C/svg%3E">
 <style>
   :root {
     --bg:#05070e; --navy:#0a1120; --surface:#0c1424; --surface-2:#111c31; --raise:#16233c;
@@ -270,18 +271,20 @@
   <symbol id="clmark" viewBox="0 0 48 48">
     <defs>
       <linearGradient id="clTile" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1b2d4c"/><stop offset="1" stop-color="#0a1322"/></linearGradient>
+      <linearGradient id="clBld" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a527d"/><stop offset="1" stop-color="#213257"/></linearGradient>
       <linearGradient id="clEdge" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff" stop-opacity=".16"/><stop offset=".5" stop-color="#ffffff" stop-opacity="0"/></linearGradient>
-      <radialGradient id="clGlow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#ff2d4d" stop-opacity=".9"/><stop offset=".55" stop-color="#ff2d4d" stop-opacity=".28"/><stop offset="1" stop-color="#ff2d4d" stop-opacity="0"/></radialGradient>
+      <radialGradient id="clGlow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#ff2d4d" stop-opacity=".95"/><stop offset=".55" stop-color="#ff2d4d" stop-opacity=".3"/><stop offset="1" stop-color="#ff2d4d" stop-opacity="0"/></radialGradient>
       <clipPath id="clClip"><rect x="1.5" y="1.5" width="45" height="45" rx="12.5"/></clipPath>
     </defs>
     <rect x="1.5" y="1.5" width="45" height="45" rx="12.5" fill="url(#clTile)"/>
     <g clip-path="url(#clClip)">
-      <g stroke="#9fb0d0" stroke-opacity=".07" stroke-width="1"><line x1="12" y1="6" x2="12" y2="42"/><line x1="24" y1="6" x2="24" y2="42"/><line x1="36" y1="6" x2="36" y2="42"/><line x1="6" y1="18" x2="42" y2="18"/><line x1="6" y1="30" x2="42" y2="30"/></g>
-      <line x1="7" y1="28.5" x2="41" y2="28.5" stroke="#aebbd6" stroke-opacity=".30" stroke-width="1.4" stroke-dasharray="1.5 3"/>
-      <path d="M6 28.5 H14 L17.2 32.5 L21 12.5 L24.6 35 L27.8 28.5 H42" fill="none" stroke="#eef3fd" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/>
-      <circle cx="21" cy="12.5" r="7.5" fill="url(#clGlow)"/>
-      <circle cx="21" cy="12.5" r="3.5" fill="#ff2d4d" stroke="#ffdfe4" stroke-width="1.1"/>
-      <circle cx="21" cy="12.5" r="1.1" fill="#fff"/>
+      <g stroke="#9fb0d0" stroke-opacity=".06" stroke-width="1"><line x1="16" y1="4" x2="16" y2="44"/><line x1="32" y1="4" x2="32" y2="44"/><line x1="4" y1="20" x2="44" y2="20"/></g>
+      <path d="M6 44 V27 H9 V23 H11.5 V31 H14 V16 H20 V31 H22.5 V22 H26 V26 H29 V18.5 H32 V29 H34.5 V24 H38 V44 Z" fill="url(#clBld)"/>
+      <g fill="#0c1526"><rect x="15.2" y="20" width="1.3" height="1.8"/><rect x="17.05" y="20" width="1.3" height="1.8"/><rect x="18.9" y="20" width="1.3" height="1.8"/><rect x="15.2" y="24.5" width="1.3" height="1.8"/><rect x="17.05" y="24.5" width="1.3" height="1.8"/><rect x="18.9" y="24.5" width="1.3" height="1.8"/><rect x="15.2" y="29" width="1.3" height="1.8"/><rect x="18.9" y="29" width="1.3" height="1.8"/><rect x="30" y="22.5" width="1.2" height="1.6"/><rect x="23.6" y="25.5" width="1.2" height="1.6"/></g>
+      <path d="M5 9 H13.5 L15.5 12 L17 16 L18.5 12 L20.5 9 H43" fill="none" stroke="#ff5069" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="17" cy="16" r="6.5" fill="url(#clGlow)"/>
+      <circle cx="17" cy="16" r="2.9" fill="#ff2d4d" stroke="#ffdfe4" stroke-width="1"/>
+      <circle cx="17" cy="16" r="1" fill="#fff"/>
       <rect x="1.5" y="1.5" width="45" height="22" rx="12.5" fill="url(#clEdge)"/>
     </g>
     <rect x="1.5" y="1.5" width="45" height="45" rx="12.5" fill="none" stroke="#ffffff" stroke-opacity=".11" stroke-width="1.4"/>
@@ -454,7 +457,7 @@
         </div>
       </div>
       <div class="foot-links">
-        <a href="#board">Today's board</a><a href="#markets">Markets</a><a href="#how">How it works</a><a href="#lines">The Lines</a><a href="mailto:hello@crimeline.fun">Contact</a>
+        <a href="#board">Today's board</a><a href="#markets">Markets</a><a href="#how">How it works</a><a href="#lines">The Lines</a><a href="mailto:hello@crimeline.fun">Contact</a><a href="https://x.com/CrimeLineMarket" target="_blank" rel="noopener" aria-label="CrimeLine on X" style="display:inline-flex;align-items:center;gap:6px">X <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:middle"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
       </div>
     </div>
     <p class="disc">CrimeLine is a prediction market on aggregate, publicly-reported city statistics — not a commentary on any individual or event, and not a live product. All numbers, lines, probabilities, names and leaderboards shown here are illustrative previews. Markets are intended to settle from a single licensed third-party data provider at a predetermined time. Participation, where offered, will be subject to eligibility, age, identity verification and applicable law, and will not be available where prohibited. © 2026 CrimeLine. crimeline.fun</p>
