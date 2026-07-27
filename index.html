@@ -310,6 +310,7 @@
       <a href="#markets">Markets</a>
       <a href="#how">How it works</a>
       <a href="#lines">The Lines</a>
+      <a href="#" id="tokenLink">$CrimeLine</a>
       <button class="btn solid js-join" type="button">Join the waitlist</button>
     </div>
   </div>
@@ -600,7 +601,7 @@
   var navToggle=$("navToggle"), navLinks=$("navLinks");
   function closeNav(){ navLinks.classList.remove("open"); navToggle.setAttribute("aria-expanded","false"); }
   navToggle.addEventListener("click", function(){ var o=navLinks.classList.toggle("open"); navToggle.setAttribute("aria-expanded",o?"true":"false"); });
-  Array.prototype.forEach.call(navLinks.querySelectorAll("a"), function(a){ a.addEventListener("click", closeNav); });
+  Array.prototype.forEach.call(navLinks.querySelectorAll("a"), function(a){ a.addEventListener("click", function(e){ if(a.getAttribute("href")==="#"){ e.preventDefault(); } closeNav(); }); });
 
   var ov=$("ov"), formView=$("formView"), doneView=$("doneView"), form=$("form"), fEmail=$("fEmail"), eEmail=$("eEmail"), submit=$("submit"), lastFocus=null;
   var emailRe=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/, EA_ENDPOINT="";
