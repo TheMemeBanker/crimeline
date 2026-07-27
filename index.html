@@ -112,6 +112,12 @@
   .mtab { font-family: var(--mono); font-size: 12.5px; color: var(--muted); border: 1px solid var(--card-line); background: var(--surface); border-radius: 9px; padding: 7px 13px; cursor: pointer; transition: all .14s ease; }
   .mtab:hover { color: var(--ink); }
   .mtab.on { color: #fff; background: linear-gradient(180deg, var(--red-ink), var(--red)); border-color: transparent; }
+  .settle-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin: 0 0 16px; padding: 11px 16px; border: 1px solid var(--card-line); border-radius: 12px; background: linear-gradient(180deg, var(--surface), var(--navy)); font-family: var(--mono); font-size: 12.5px; }
+  .settle-bar .sb-live { display: inline-flex; align-items: center; gap: 8px; color: var(--over); letter-spacing: .06em; text-transform: uppercase; font-size: 11px; }
+  .settle-bar .sb-live i { width: 7px; height: 7px; border-radius: 50%; background: var(--over); animation: pulse 1.8s ease-out infinite; }
+  .settle-bar .sb-count { color: var(--muted); letter-spacing: .02em; }
+  .settle-bar .sb-count b { color: var(--red-ink); font-weight: 700; font-size: 14.5px; letter-spacing: .08em; font-variant-numeric: tabular-nums; }
+  .settle-bar .sb-tz { color: var(--dim); }
 
   /* board grid */
   .board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
@@ -342,6 +348,10 @@
       </div>
       <div class="mtabs" id="mtabs"></div>
     </div>
+    <div class="settle-bar">
+      <span class="sb-live"><i></i>Markets open</span>
+      <span class="sb-count">Next settlement in <b id="settleClock" class="mono">--:--:--</b><span class="sb-tz"> · noon ET</span></span>
+    </div>
     <div class="board" id="boardGrid"></div>
   </section>
 
@@ -356,7 +366,7 @@
     </div>
     <div class="live-wrap">
       <div class="live-panel">
-        <div class="lp-head"><h3>Houston · Daily Total</h3><span class="live-tag"><i></i>Live · settles noon ET tomorrow</span></div>
+        <div class="lp-head"><h3>Houston · Daily Total</h3><span class="live-tag"><i></i>Live · settles in <b id="settleClock2" class="mono" style="color:var(--ink);letter-spacing:.06em">--:--:--</b></span></div>
         <div class="lp-big">
           <div class="lp-stat"><div class="k">Reported so far</div><div class="v" id="lpCur">0</div></div>
           <div class="lp-stat"><div class="k">Projected finish</div><div class="v" id="lpExp">0</div></div>
@@ -612,6 +622,25 @@
     p.then(function(){ formView.hidden=true; doneView.hidden=false; setTimeout(function(){ $("doneClose").focus(); },40); })
      .catch(function(){ submit.disabled=false; submit.textContent="Join the waitlist"; eEmail.textContent="Something went wrong — please try again."; });
   });
+
+  // ---- live settlement countdown (to next noon ET, DST-safe) ----
+  (function(){
+    var el1=$("settleClock"), el2=$("settleClock2");
+    function etSecondsNow(){
+      try{
+        var parts=new Intl.DateTimeFormat("en-US",{timeZone:"America/New_York",hour12:false,hour:"2-digit",minute:"2-digit",second:"2-digit"}).formatToParts(new Date());
+        var o={}; parts.forEach(function(p){ o[p.type]=p.value; });
+        return (parseInt(o.hour,10)%24)*3600 + parseInt(o.minute,10)*60 + parseInt(o.second,10);
+      }catch(e){ var d=new Date(); return d.getUTCHours()*3600 + d.getUTCMinutes()*60 + d.getUTCSeconds(); }
+    }
+    function pad(n){ return (n<10?"0":"")+n; }
+    function tick(){
+      var s=etSecondsNow(), noon=43200, left = s<noon ? noon-s : 86400-s+noon;
+      var t=pad(Math.floor(left/3600))+":"+pad(Math.floor((left%3600)/60))+":"+pad(left%60);
+      if(el1) el1.textContent=t; if(el2) el2.textContent=t;
+    }
+    tick(); setInterval(tick, 1000);
+  })();
 })();
 </script>
 
