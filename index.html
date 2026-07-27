@@ -12,7 +12,7 @@
 <meta property="og:description" content="The daily market for public-safety data. Call the number before it drops.">
 <meta property="og:url" content="https://crimeline.fun/">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='9' fill='%230c1424'/%3E%3Cpath d='M4 21 H13 L16.5 11 L21 30 L25 16 L28.5 21 H36' fill='none' stroke='%23ff2d4d' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect x='2' y='2' width='44' height='44' rx='12' fill='%2313223f'/%3E%3Cline x1='7' y1='28.5' x2='41' y2='28.5' stroke='%23aebbd6' stroke-opacity='.3' stroke-width='1.4' stroke-dasharray='1.5 3'/%3E%3Cpath d='M6 28.5 H14 L17.2 32.5 L21 12.5 L24.6 35 L27.8 28.5 H42' fill='none' stroke='%23eef3fd' stroke-width='2.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='21' cy='12.5' r='3.6' fill='%23ff2d4d' stroke='%23ffdfe4' stroke-width='1.1'/%3E%3C/svg%3E">
 <style>
   :root {
     --bg:#05070e; --navy:#0a1120; --surface:#0c1424; --surface-2:#111c31; --raise:#16233c;
@@ -53,8 +53,8 @@
   nav { position: sticky; top: 0; z-index: 40; border-bottom: 1px solid var(--line); background: rgba(5,7,14,.82); backdrop-filter: blur(12px); }
   .nav-in { max-width: 1200px; margin: 0 auto; padding: 13px 26px; display: flex; align-items: center; gap: 16px; }
   .brand { display: flex; align-items: center; gap: 11px; text-decoration: none; color: inherit; }
-  .brand .mark { width: 34px; height: 34px; border-radius: 9px; background: linear-gradient(160deg, var(--surface-2), var(--navy)); border: 1px solid var(--card-line); display: flex; align-items: center; justify-content: center; box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 18px -6px var(--glow); }
-  .brand .mark svg { width: 22px; height: 15px; color: var(--red); }
+  .brand .mark { width: 36px; height: 36px; flex: none; display: block; filter: drop-shadow(0 3px 9px rgba(0,0,0,.5)) drop-shadow(0 0 14px rgba(255,45,77,.14)); }
+  .brand .mark svg { width: 100%; height: 100%; display: block; }
   .brand b { font-size: 17px; font-weight: 750; letter-spacing: -.01em; }
   .brand .cr { font-size: 8px; font-weight: 600; letter-spacing: 0; vertical-align: super; margin-left: 1px; color: var(--muted); }
   .nav-links { margin-left: auto; display: flex; align-items: center; gap: 24px; }
@@ -267,8 +267,24 @@
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <symbol id="pulse" viewBox="0 0 40 24">
-    <path d="M2 13 H11 L14.5 5 L19 20 L23 9 L26.5 13 H38" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <symbol id="clmark" viewBox="0 0 48 48">
+    <defs>
+      <linearGradient id="clTile" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1b2d4c"/><stop offset="1" stop-color="#0a1322"/></linearGradient>
+      <linearGradient id="clEdge" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff" stop-opacity=".16"/><stop offset=".5" stop-color="#ffffff" stop-opacity="0"/></linearGradient>
+      <radialGradient id="clGlow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#ff2d4d" stop-opacity=".9"/><stop offset=".55" stop-color="#ff2d4d" stop-opacity=".28"/><stop offset="1" stop-color="#ff2d4d" stop-opacity="0"/></radialGradient>
+      <clipPath id="clClip"><rect x="1.5" y="1.5" width="45" height="45" rx="12.5"/></clipPath>
+    </defs>
+    <rect x="1.5" y="1.5" width="45" height="45" rx="12.5" fill="url(#clTile)"/>
+    <g clip-path="url(#clClip)">
+      <g stroke="#9fb0d0" stroke-opacity=".07" stroke-width="1"><line x1="12" y1="6" x2="12" y2="42"/><line x1="24" y1="6" x2="24" y2="42"/><line x1="36" y1="6" x2="36" y2="42"/><line x1="6" y1="18" x2="42" y2="18"/><line x1="6" y1="30" x2="42" y2="30"/></g>
+      <line x1="7" y1="28.5" x2="41" y2="28.5" stroke="#aebbd6" stroke-opacity=".30" stroke-width="1.4" stroke-dasharray="1.5 3"/>
+      <path d="M6 28.5 H14 L17.2 32.5 L21 12.5 L24.6 35 L27.8 28.5 H42" fill="none" stroke="#eef3fd" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="21" cy="12.5" r="7.5" fill="url(#clGlow)"/>
+      <circle cx="21" cy="12.5" r="3.5" fill="#ff2d4d" stroke="#ffdfe4" stroke-width="1.1"/>
+      <circle cx="21" cy="12.5" r="1.1" fill="#fff"/>
+      <rect x="1.5" y="1.5" width="45" height="22" rx="12.5" fill="url(#clEdge)"/>
+    </g>
+    <rect x="1.5" y="1.5" width="45" height="45" rx="12.5" fill="none" stroke="#ffffff" stroke-opacity=".11" stroke-width="1.4"/>
   </symbol>
 </svg>
 
@@ -278,7 +294,7 @@
 <!-- NAV -->
 <nav>
   <div class="nav-in">
-    <a class="brand" href="#top"><span class="mark"><svg><use href="#pulse"/></svg></span><b>CrimeLine<span class="cr">&#169;</span></b></a>
+    <a class="brand" href="#top"><span class="mark"><svg><use href="#clmark"/></svg></span><b>CrimeLine<span class="cr">&#169;</span></b></a>
     <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
     <div class="nav-links" id="navLinks">
       <a href="#board">Today's board</a>
@@ -432,7 +448,7 @@
   <footer>
     <div class="foot-top">
       <div>
-        <a class="brand brand-lg" href="#top"><span class="mark"><svg><use href="#pulse"/></svg></span><b>CrimeLine<span class="cr">&#169;</span></b></a>
+        <a class="brand brand-lg" href="#top"><span class="mark"><svg><use href="#clmark"/></svg></span><b>CrimeLine<span class="cr">&#169;</span></b></a>
         <div class="foot-tags" style="margin-top:16px">
           <span>Predict the Pulse.</span><span>Where cities become markets.</span><span>Every city has a number.</span><span>Find the line. Beat the line.</span>
         </div>
