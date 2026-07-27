@@ -1,0 +1,600 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CrimeLine — Predict the Pulse of America's Cities</title>
+<meta name="description" content="CrimeLine turns official city statistics into a daily prediction market. Call the number before it is released — over or under — and watch the line move in real time.">
+<link rel="canonical" href="https://crimeline.fun/">
+<meta name="theme-color" content="#05070e">
+<meta property="og:type" content="website"><meta property="og:site_name" content="CrimeLine">
+<meta property="og:title" content="CrimeLine — Predict the Pulse of America's Cities">
+<meta property="og:description" content="The daily market for public-safety data. Call the number before it drops.">
+<meta property="og:url" content="https://crimeline.fun/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='9' fill='%230c1424'/%3E%3Cpath d='M4 21 H13 L16.5 11 L21 30 L25 16 L28.5 21 H36' fill='none' stroke='%23ff2d4d' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<style>
+  :root {
+    --bg:#05070e; --navy:#0a1120; --surface:#0c1424; --surface-2:#111c31; --raise:#16233c;
+    --line:rgba(255,255,255,.08); --card-line:rgba(255,255,255,.07);
+    --ink:#eaf0fb; --muted:#8a95ac; --dim:#5c667d;
+    --red:#ff2d4d; --red-ink:#ff5069; --glow:rgba(255,45,77,.18);
+    --over:#22d38b; --over-dim:rgba(34,211,139,.14);
+    --under:#ff4d68; --under-dim:rgba(255,77,104,.13);
+    --mono: ui-monospace, "SF Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+    --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; color: var(--ink); font: 15.5px/1.6 var(--sans); -webkit-font-smoothing: antialiased;
+    background:
+      radial-gradient(120% 60% at 84% -8%, rgba(255,45,77,.10), transparent 55%),
+      radial-gradient(90% 50% at 0% 0%, rgba(24,54,120,.16), transparent 55%),
+      var(--bg);
+    background-attachment: fixed; }
+  a { color: inherit; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 26px; }
+  .mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  .eyebrow { font-family: var(--mono); font-size: 11.5px; letter-spacing: .22em; text-transform: uppercase; color: var(--red-ink); }
+
+  /* ticker */
+  .ticker { border-bottom: 1px solid var(--line); background: rgba(4,6,12,.7); backdrop-filter: blur(8px); overflow: hidden; }
+  .ticker-track { display: inline-flex; gap: 0; white-space: nowrap; will-change: transform; animation: tick 46s linear infinite; }
+  @keyframes tick { to { transform: translateX(-50%); } }
+  .ticker:hover .ticker-track { animation-play-state: paused; }
+  .tk { display: inline-flex; align-items: center; gap: 8px; padding: 9px 20px; font-family: var(--mono); font-size: 12.5px; border-right: 1px solid var(--line); }
+  .tk .c { color: var(--muted); letter-spacing: .04em; }
+  .tk .n { color: var(--ink); font-weight: 600; }
+  .tk .p { font-size: 11px; padding: 1px 6px; border-radius: 5px; }
+  .tk .p.u { color: var(--over); background: var(--over-dim); }
+  .tk .p.d { color: var(--under); background: var(--under-dim); }
+
+  /* nav */
+  nav { position: sticky; top: 0; z-index: 40; border-bottom: 1px solid var(--line); background: rgba(5,7,14,.82); backdrop-filter: blur(12px); }
+  .nav-in { max-width: 1200px; margin: 0 auto; padding: 13px 26px; display: flex; align-items: center; gap: 16px; }
+  .brand { display: flex; align-items: center; gap: 11px; text-decoration: none; color: inherit; }
+  .brand .mark { width: 34px; height: 34px; border-radius: 9px; background: linear-gradient(160deg, var(--surface-2), var(--navy)); border: 1px solid var(--card-line); display: flex; align-items: center; justify-content: center; box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 18px -6px var(--glow); }
+  .brand .mark svg { width: 22px; height: 15px; color: var(--red); }
+  .brand b { font-size: 17px; font-weight: 750; letter-spacing: -.01em; }
+  .brand .cr { font-size: 8px; font-weight: 600; letter-spacing: 0; vertical-align: super; margin-left: 1px; color: var(--muted); }
+  .nav-links { margin-left: auto; display: flex; align-items: center; gap: 24px; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 14px; }
+  .nav-links a:hover { color: var(--ink); }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; font-family: var(--sans); font-size: 14px; font-weight: 650; text-decoration: none; cursor: pointer; border-radius: 10px; padding: 9px 17px; border: 1px solid var(--card-line); background: transparent; color: var(--ink); transition: all .15s ease; }
+  .btn:hover { border-color: color-mix(in srgb, var(--red) 55%, var(--card-line)); }
+  .btn.solid { background: linear-gradient(180deg, var(--red-ink), var(--red)); border-color: transparent; color: #fff; box-shadow: 0 1px 1px rgba(0,0,0,.25), 0 10px 26px -12px var(--glow); }
+  .btn.solid:hover { transform: translateY(-1px); box-shadow: 0 2px 3px rgba(0,0,0,.3), 0 16px 34px -12px var(--glow); }
+  .btn.solid:active { transform: translateY(0); }
+  .btn:focus-visible { outline: 2px solid var(--red-ink); outline-offset: 2px; }
+  .nav-toggle { display: none; margin-left: auto; width: 40px; height: 40px; border: 1px solid var(--card-line); border-radius: 10px; background: var(--surface); cursor: pointer; padding: 0; flex-direction: column; align-items: center; justify-content: center; gap: 4px; }
+  .nav-toggle span { width: 18px; height: 2px; border-radius: 2px; background: var(--ink); display: block; transition: transform .2s, opacity .2s; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(1){ transform: translateY(6px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] span:nth-child(2){ opacity: 0; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(3){ transform: translateY(-6px) rotate(-45deg); }
+
+  /* hero */
+  .hero { padding: 66px 0 40px; display: grid; grid-template-columns: 1.05fr .95fr; gap: 46px; align-items: center; }
+  .hero h1 { margin: 16px 0 0; font-size: clamp(40px, 6vw, 68px); line-height: .98; font-weight: 820; letter-spacing: -.035em; }
+  .hero h1 .hl { color: var(--red); }
+  .hero .lede { margin: 20px 0 26px; font-size: 18px; color: var(--muted); max-width: 48ch; }
+  .cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+  .hero-chips { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 26px; font-family: var(--mono); font-size: 12px; color: var(--muted); }
+  .hero-chips span { display: inline-flex; align-items: center; gap: 7px; }
+  .hero-chips i { width: 6px; height: 6px; border-radius: 50%; background: var(--red); box-shadow: 0 0 8px var(--glow); }
+
+  /* hero board preview card */
+  .preview { border: 1px solid var(--card-line); border-radius: 18px; background: linear-gradient(180deg, var(--surface), var(--navy)); box-shadow: 0 50px 90px -50px #000, inset 0 1px 0 rgba(255,255,255,.04); overflow: hidden; }
+  .pv-head { display: flex; align-items: center; gap: 10px; padding: 14px 18px; border-bottom: 1px solid var(--line); font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .pv-live { display: inline-flex; align-items: center; gap: 6px; color: var(--over); }
+  .pv-live i { width: 7px; height: 7px; border-radius: 50%; background: var(--over); box-shadow: 0 0 0 0 var(--over); animation: pulse 1.8s ease-out infinite; }
+  @keyframes pulse { 0%{ box-shadow: 0 0 0 0 rgba(34,211,139,.6);} 70%{ box-shadow: 0 0 0 7px transparent;} 100%{ box-shadow: 0 0 0 0 transparent; } }
+  .pv-rows { padding: 6px; }
+  .pv-row { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 10px; padding: 12px 12px; border-radius: 11px; }
+  .pv-row + .pv-row { border-top: 1px solid var(--line); }
+  .pv-city { display: flex; flex-direction: column; }
+  .pv-city b { font-size: 15px; font-weight: 650; }
+  .pv-city span { font-family: var(--mono); font-size: 11px; color: var(--dim); }
+  .pv-line { font-family: var(--mono); font-size: 22px; font-weight: 700; letter-spacing: -.5px; }
+  .pv-ou { display: flex; gap: 6px; }
+  .pill { font-family: var(--mono); font-size: 12px; font-weight: 650; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--card-line); min-width: 58px; text-align: center; }
+  .pill.o { color: var(--over); border-color: color-mix(in srgb, var(--over) 32%, transparent); }
+  .pill.u { color: var(--under); border-color: color-mix(in srgb, var(--under) 32%, transparent); }
+
+  /* section frame */
+  .sec { padding: 44px 0; border-top: 1px solid var(--line); }
+  .sec-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
+  .sec-head h2 { margin: 8px 0 0; font-size: clamp(26px, 3.4vw, 38px); font-weight: 780; letter-spacing: -.02em; }
+  .sec-head p { margin: 8px 0 0; color: var(--muted); font-size: 15.5px; max-width: 60ch; }
+
+  /* market tabs */
+  .mtabs { display: flex; gap: 8px; flex-wrap: wrap; }
+  .mtab { font-family: var(--mono); font-size: 12.5px; color: var(--muted); border: 1px solid var(--card-line); background: var(--surface); border-radius: 9px; padding: 7px 13px; cursor: pointer; transition: all .14s ease; }
+  .mtab:hover { color: var(--ink); }
+  .mtab.on { color: #fff; background: linear-gradient(180deg, var(--red-ink), var(--red)); border-color: transparent; }
+
+  /* board grid */
+  .board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .card { border: 1px solid var(--card-line); border-radius: 15px; background: linear-gradient(180deg, var(--surface), var(--navy)); padding: 16px 16px 14px; transition: border-color .15s ease, transform .15s ease; }
+  .card:hover { border-color: color-mix(in srgb, var(--red) 30%, var(--card-line)); transform: translateY(-2px); }
+  .card-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .card-city { display: flex; align-items: center; gap: 10px; }
+  .abbr { width: 38px; height: 38px; border-radius: 9px; background: var(--surface-2); border: 1px solid var(--card-line); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--ink); letter-spacing: .02em; }
+  .card-city b { font-size: 15px; font-weight: 650; display: block; }
+  .card-city .mkt { font-family: var(--mono); font-size: 10.5px; color: var(--dim); letter-spacing: .06em; text-transform: uppercase; }
+  .live-tag { font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--over); display: inline-flex; align-items: center; gap: 5px; }
+  .live-tag i { width: 6px; height: 6px; border-radius: 50%; background: var(--over); animation: pulse 1.8s ease-out infinite; }
+  .card-line { display: flex; align-items: baseline; gap: 8px; margin: 14px 0 4px; }
+  .card-line .num { font-family: var(--mono); font-size: 34px; font-weight: 750; letter-spacing: -1px; }
+  .card-line .lab { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+  .card-meta { font-family: var(--mono); font-size: 11.5px; color: var(--muted); margin-bottom: 12px; }
+  .card-meta b { color: var(--ink); }
+  .ou { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .ou button { font-family: var(--mono); font-size: 13px; font-weight: 650; padding: 11px 8px; border-radius: 10px; cursor: pointer; border: 1px solid var(--card-line); background: var(--surface-2); color: var(--ink); transition: all .14s ease; display: flex; flex-direction: column; gap: 2px; align-items: center; }
+  .ou .o:hover, .ou .o.sel { border-color: var(--over); background: var(--over-dim); color: var(--over); }
+  .ou .u:hover, .ou .u.sel { border-color: var(--under); background: var(--under-dim); color: var(--under); }
+  .ou .dir { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; opacity: .85; }
+  .ou .prob { font-size: 12px; opacity: .9; }
+  .ou button.sel { box-shadow: 0 0 0 1px currentColor inset; }
+
+  /* live dashboard */
+  .live-wrap { display: grid; grid-template-columns: 1.1fr .9fr; gap: 20px; }
+  .live-panel { border: 1px solid var(--card-line); border-radius: 18px; background: linear-gradient(180deg, var(--surface), var(--navy)); padding: 24px; }
+  .lp-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .lp-head h3 { margin: 0; font-size: 20px; font-weight: 720; }
+  .lp-big { display: flex; align-items: flex-end; gap: 26px; margin: 22px 0 6px; flex-wrap: wrap; }
+  .lp-stat .k { font-family: var(--mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .lp-stat .v { font-family: var(--mono); font-size: 40px; font-weight: 780; letter-spacing: -1.5px; line-height: 1.05; }
+  .lp-stat .v.red { color: var(--red-ink); } .lp-stat .v.green { color: var(--over); }
+  .lp-bar { height: 12px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--card-line); overflow: hidden; margin: 14px 0 8px; }
+  .lp-bar > i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--red), var(--red-ink)); border-radius: 999px; transition: width 1.4s cubic-bezier(.3,.7,.2,1); }
+  .lp-scale { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 11px; color: var(--dim); }
+  .lp-note { margin-top: 16px; font-size: 13.5px; color: var(--muted); }
+  .lp-side { display: flex; flex-direction: column; gap: 12px; }
+  .mini { border: 1px solid var(--card-line); border-radius: 14px; background: var(--surface); padding: 16px 18px; }
+  .mini .k { font-family: var(--mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+  .mini .k .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--red); }
+  .mini .b { font-size: 20px; font-weight: 720; margin-top: 6px; }
+  .mini .s { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+
+  /* generic feature grids */
+  .grid3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .feat { border: 1px solid var(--card-line); border-radius: 15px; background: var(--surface); padding: 22px; }
+  .feat .fi { width: 36px; height: 36px; border-radius: 10px; background: color-mix(in srgb, var(--red) 14%, transparent); color: var(--red-ink); display: inline-flex; align-items: center; justify-content: center; }
+  .feat h4 { margin: 14px 0 6px; font-size: 17px; font-weight: 720; }
+  .feat p { margin: 0; color: var(--muted); font-size: 14px; }
+
+  /* how it works */
+  .steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; counter-reset: s; }
+  .step { border: 1px solid var(--card-line); border-radius: 15px; background: var(--surface); padding: 22px; position: relative; }
+  .step .n { font-family: var(--mono); font-size: 12px; color: var(--red-ink); font-weight: 700; }
+  .step h4 { margin: 8px 0 6px; font-size: 17px; font-weight: 720; }
+  .step p { margin: 0; color: var(--muted); font-size: 14px; }
+
+  /* slip / social */
+  .slipbox { border: 1px solid var(--card-line); border-radius: 18px; background: linear-gradient(180deg, var(--surface), var(--navy)); padding: 22px; }
+  .slip-h { display: flex; align-items: center; justify-content: space-between; font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .slip-pick { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .slip-pick:last-of-type { border-bottom: none; }
+  .slip-pick .l { display: flex; align-items: center; gap: 10px; }
+  .slip-pick .l b { font-weight: 650; font-size: 14.5px; }
+  .slip-pick .l span { font-family: var(--mono); font-size: 11.5px; color: var(--muted); }
+  .slip-pick .r { font-family: var(--mono); font-size: 12.5px; padding: 4px 9px; border-radius: 7px; }
+  .slip-pick .r.o { color: var(--over); background: var(--over-dim); } .slip-pick .r.u { color: var(--under); background: var(--under-dim); }
+  .lead-row { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .lead-row:last-child { border-bottom: none; }
+  .lead-row .rank { font-family: var(--mono); color: var(--dim); width: 24px; }
+  .lead-row .who { flex: 1; font-weight: 600; }
+  .lead-row .rec { font-family: var(--mono); font-size: 12.5px; color: var(--muted); }
+  .lead-row .pts { font-family: var(--mono); font-weight: 700; color: var(--over); }
+
+  /* expansion lines */
+  .lines { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+  .lcard { border: 1px solid var(--card-line); border-radius: 15px; background: var(--surface); padding: 20px; display: flex; flex-direction: column; gap: 6px; }
+  .lcard.live { border-color: color-mix(in srgb, var(--red) 40%, var(--card-line)); background: linear-gradient(180deg, color-mix(in srgb, var(--red) 8%, var(--surface)), var(--surface)); }
+  .lcard .lh { display: flex; align-items: center; justify-content: space-between; }
+  .lcard b { font-size: 17px; font-weight: 730; }
+  .lcard p { margin: 0; color: var(--muted); font-size: 13.5px; }
+  .badge { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; padding: 3px 8px; border-radius: 6px; }
+  .badge.live { color: #fff; background: var(--red); }
+  .badge.soon { color: var(--muted); border: 1px solid var(--card-line); }
+
+  /* cta band */
+  .cta-band { border: 1px solid var(--card-line); border-radius: 22px; padding: 46px 40px; text-align: center; background: radial-gradient(120% 160% at 50% -40%, var(--glow), transparent 60%), linear-gradient(180deg, var(--surface), var(--navy)); box-shadow: 0 50px 90px -60px #000; }
+  .cta-band h2 { margin: 14px 0 10px; font-size: clamp(28px, 3.6vw, 42px); font-weight: 800; letter-spacing: -.02em; }
+  .cta-band p { margin: 0 auto 22px; max-width: 54ch; color: var(--muted); font-size: 16px; }
+
+  /* footer */
+  footer { border-top: 1px solid var(--line); margin-top: 20px; padding: 34px 0 60px; }
+  .foot-top { display: flex; justify-content: space-between; gap: 22px; flex-wrap: wrap; align-items: flex-start; }
+  .foot-tags { display: flex; flex-wrap: wrap; gap: 8px 10px; max-width: 620px; }
+  .foot-tags span { font-family: var(--mono); font-size: 11.5px; color: var(--muted); border: 1px solid var(--card-line); border-radius: 999px; padding: 5px 11px; }
+  .foot-links { display: flex; flex-wrap: wrap; gap: 10px 20px; }
+  .foot-links a { color: var(--muted); text-decoration: none; font-size: 14px; }
+  .foot-links a:hover { color: var(--ink); }
+  .disc { margin-top: 26px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 11.5px; line-height: 1.7; color: var(--dim); max-width: 92ch; }
+  .brand-lg { display: inline-flex; align-items: center; gap: 10px; }
+
+  /* floating slip bar */
+  .slipbar { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%) translateY(140%); z-index: 45; display: flex; align-items: center; gap: 16px; padding: 12px 12px 12px 20px; border-radius: 14px; background: linear-gradient(180deg, var(--surface-2), var(--navy)); border: 1px solid color-mix(in srgb, var(--red) 40%, var(--card-line)); box-shadow: 0 30px 60px -24px #000, 0 0 30px -10px var(--glow); transition: transform .3s cubic-bezier(.2,.8,.2,1); max-width: calc(100vw - 32px); }
+  .slipbar.show { transform: translateX(-50%) translateY(0); }
+  .slipbar .cnt { font-family: var(--mono); font-size: 13px; color: var(--ink); }
+  .slipbar .cnt b { color: var(--red-ink); }
+
+  /* modal */
+  .ov { position: fixed; inset: 0; z-index: 60; display: flex; align-items: center; justify-content: center; padding: 20px; background: rgba(3,5,10,.72); backdrop-filter: blur(7px); animation: fade .2s ease; }
+  .ov[hidden] { display: none; }
+  @keyframes fade { from{opacity:0} to{opacity:1} }
+  .modal { position: relative; width: 100%; max-width: 440px; border: 1px solid var(--card-line); border-radius: 18px; background: linear-gradient(180deg, var(--surface-2), var(--navy)); padding: 30px 28px 26px; box-shadow: 0 50px 100px -30px #000; animation: rise .25s cubic-bezier(.2,.7,.2,1); max-height: calc(100dvh - 40px); overflow-y: auto; }
+  @keyframes rise { from{opacity:0; transform: translateY(14px)} to{opacity:1; transform:none} }
+  .modal .x { position: absolute; top: 14px; right: 14px; width: 32px; height: 32px; border-radius: 9px; border: none; background: var(--surface); color: var(--muted); cursor: pointer; font-size: 13px; }
+  .modal .x:hover { color: var(--ink); }
+  .modal h3 { margin: 12px 0 8px; font-size: 22px; font-weight: 760; letter-spacing: -.01em; }
+  .modal .sub { margin: 0 0 20px; color: var(--muted); font-size: 14px; }
+  .fld { display: block; margin-bottom: 14px; }
+  .fld .lab { display: block; font-size: 12.5px; font-weight: 600; margin-bottom: 6px; }
+  .fld input, .fld select { width: 100%; padding: 12px 13px; border-radius: 11px; border: 1px solid var(--card-line); background: var(--navy); color: var(--ink); font: inherit; font-size: 15px; }
+  .fld input:focus, .fld select:focus { outline: none; border-color: var(--red); box-shadow: 0 0 0 3px var(--glow); }
+  .fld.bad input { border-color: var(--under); }
+  .err { display: block; min-height: 15px; margin-top: 5px; font-size: 12px; color: var(--under); }
+  .modal .btn.solid { width: 100%; padding: 13px; margin-top: 4px; }
+  .done { text-align: center; }
+  .done .ck { width: 58px; height: 58px; margin: 4px auto 10px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; background: var(--red); box-shadow: 0 0 0 8px var(--glow); }
+  body.lock { overflow: hidden; }
+
+  @media (max-width: 1000px) {
+    .hero { grid-template-columns: 1fr; gap: 30px; padding: 44px 0 30px; }
+    .board { grid-template-columns: 1fr 1fr; }
+    .live-wrap { grid-template-columns: 1fr; }
+    .grid3, .steps, .lines { grid-template-columns: 1fr 1fr; }
+    .grid2 { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 680px) {
+    .wrap { padding: 0 16px; }
+    .nav-in { padding: 12px 16px; position: relative; }
+    .nav-toggle { display: flex; }
+    .nav-links { position: absolute; top: calc(100% + 1px); left: 0; right: 0; margin: 0; flex-direction: column; align-items: stretch; gap: 0; background: var(--surface); border-bottom: 1px solid var(--line); padding: 8px 16px 14px; display: none; box-shadow: 0 22px 40px -24px #000; }
+    .nav-links.open { display: flex; }
+    .nav-links a { padding: 13px 4px; border-bottom: 1px solid var(--card-line); }
+    .nav-links .btn { margin-top: 12px; justify-content: center; padding: 12px; }
+    .board { grid-template-columns: 1fr; }
+    .grid3, .steps, .lines { grid-template-columns: 1fr; }
+    .cta-band { padding: 34px 20px; }
+    .cta-row .btn { flex: 1; }
+    .lp-stat .v { font-size: 34px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .ticker-track { animation: none; } .pv-live i, .live-tag i { animation: none; } html { scroll-behavior: auto; } }
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="pulse" viewBox="0 0 40 24">
+    <path d="M2 13 H11 L14.5 5 L19 20 L23 9 L26.5 13 H38" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+</svg>
+
+<!-- TICKER -->
+<div class="ticker" aria-hidden="true"><div class="ticker-track" id="ticker"></div></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-in">
+    <a class="brand" href="#top"><span class="mark"><svg><use href="#pulse"/></svg></span><b>CrimeLine<span class="cr">&#169;</span></b></a>
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <div class="nav-links" id="navLinks">
+      <a href="#board">Today's board</a>
+      <a href="#markets">Markets</a>
+      <a href="#how">How it works</a>
+      <a href="#lines">The Lines</a>
+      <button class="btn solid js-join" type="button">Join the waitlist</button>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap" id="top">
+  <!-- HERO -->
+  <header class="hero">
+    <div>
+      <p class="eyebrow">The daily market for public-safety data</p>
+      <h1>Predict the <span class="hl">Pulse</span> of America's cities.</h1>
+      <p class="lede">CrimeLine turns official city statistics into a daily prediction market. Call the number before it's released — over or under — and watch the line move in real time.</p>
+      <div class="cta-row">
+        <button class="btn solid js-join" type="button">Join the waitlist</button>
+        <a class="btn" href="#board">See today's board ↓</a>
+      </div>
+      <div class="hero-chips">
+        <span><i></i>Settles from licensed data</span>
+        <span><i></i>Snapshot at noon ET</span>
+        <span><i></i>10 U.S. cities at launch</span>
+      </div>
+    </div>
+    <div class="preview" id="pv">
+      <div class="pv-head"><span class="pv-live"><i></i>Live board</span><span style="margin-left:auto">Daily Total · settles noon ET</span></div>
+      <div class="pv-rows" id="pvRows"></div>
+    </div>
+  </header>
+
+  <!-- BOARD -->
+  <section class="sec" id="board">
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow">Today's board</p>
+        <h2>Every city has a number.</h2>
+        <p>Pick a market, pick a side. It's as simple as opening a sportsbook — but the outcome is real, measurable city data.</p>
+      </div>
+      <div class="mtabs" id="mtabs"></div>
+    </div>
+    <div class="board" id="boardGrid"></div>
+  </section>
+
+  <!-- LIVE DASHBOARD -->
+  <section class="sec" id="live">
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow">Live dashboard</p>
+        <h2>Watch the line evolve.</h2>
+        <p>Before settlement, every market is live. Track reported incidents against the projected finish and the probability of going over — updating through the day.</p>
+      </div>
+    </div>
+    <div class="live-wrap">
+      <div class="live-panel">
+        <div class="lp-head"><h3>Houston · Daily Total</h3><span class="live-tag"><i></i>Live · settles noon ET tomorrow</span></div>
+        <div class="lp-big">
+          <div class="lp-stat"><div class="k">Reported so far</div><div class="v" id="lpCur">0</div></div>
+          <div class="lp-stat"><div class="k">Projected finish</div><div class="v" id="lpExp">0</div></div>
+          <div class="lp-stat"><div class="k">Prob. over 287.5</div><div class="v green" id="lpProb">0%</div></div>
+        </div>
+        <div class="lp-bar"><i id="lpBar"></i></div>
+        <div class="lp-scale"><span>0</span><span>line 287.5</span><span>350</span></div>
+        <p class="lp-note">The projection blends the current pace with historical settlement patterns for this weekday. As incidents post, the line — and the odds — move.</p>
+      </div>
+      <div class="lp-side">
+        <div class="mini"><div class="k"><span class="dot"></span>Hot city</div><div class="b">Chicago</div><div class="s">Running 14% above its line — the busiest board today.</div></div>
+        <div class="mini"><div class="k"><span class="dot"></span>Biggest surprise</div><div class="s" style="margin-top:6px">Yesterday</div><div class="b">Miami finished 41 under</div><div class="s">Largest miss versus the posted line across all ten cities.</div></div>
+        <div class="mini"><div class="k"><span class="dot"></span>Streak</div><div class="b">Chicago · 4 Unders</div><div class="s">Four straight days under the line. Regression watch.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARKETS -->
+  <section class="sec" id="markets">
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow">Markets</p>
+        <h2>More ways to read the city.</h2>
+        <p>Over/under is the flagship. Around it sits a full board of daily markets — city-versus-city, ranges, and one index that captures them all.</p>
+      </div>
+    </div>
+    <div class="grid3">
+      <div class="feat"><span class="fi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 18 L4 6 M4 18 L20 18 M8 14l3-4 3 3 4-6"/></svg></span><h4>Over / Under</h4><p>Total crime, violent crime, vehicle thefts, burglaries, robberies — call each city's number against the line.</p></div>
+      <div class="feat"><span class="fi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="9"/></svg></span><h4>Most Crime Today</h4><p>Which city reports the most qualifying incidents? Pick the leader from the field before the day settles.</p></div>
+      <div class="feat"><span class="fi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><h4>Lowest Crime</h4><p>The flip side — which city stays quietest today. A market for the calm as much as the chaos.</p></div>
+      <div class="feat"><span class="fi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20 L10 12 L14 15 L20 5 M20 5 h-5 M20 5 v5"/></svg></span><h4>Biggest Increase</h4><p>Which city jumps the most versus yesterday? A pure momentum market on the day-over-day swing.</p></div>
+      <div class="feat"><span class="fi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="4" rx="1"/><rect x="3" y="10" width="18" height="4" rx="1"/><rect x="3" y="16" width="18" height="4" rx="1"/></svg></span><h4>Exact Range</h4><p>Skip over/under and nail the bucket: 260–269, 270–279, 280–289, 290–299, 300+. More precision, bigger payout.</p></div>
+      <div class="feat"><span class="fi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 4-6"/></svg></span><h4>CrimeLine Index</h4><p>One market to rule them all: total qualifying incidents across every launch city, in a single daily number.</p></div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="sec" id="how">
+    <div class="sec-head"><div><p class="eyebrow">How it works</p><h2>One source. One settlement. Fully transparent.</h2></div></div>
+    <div class="steps">
+      <div class="step"><div class="n">01</div><h4>Lines post each morning</h4><p>Every launch city opens with a line for each market, priced from historical data and the day's early pace.</p></div>
+      <div class="step"><div class="n">02</div><h4>You take a side</h4><p>Over or under, a city, or a range. Build a slip, track it live, and watch the projection move all day.</p></div>
+      <div class="step"><div class="n">03</div><h4>Settles from a licensed feed</h4><p>A single third-party data provider is snapshotted at a fixed time — noon Eastern the following day. Same source, every market.</p></div>
+    </div>
+  </section>
+
+  <!-- SOCIAL -->
+  <section class="sec" id="social">
+    <div class="sec-head"><div><p class="eyebrow">Social</p><h2>Build a slip. Climb the board.</h2><p>Stack picks into a slip, share it, and see who reads the city best over a week, a month, a season.</p></div></div>
+    <div class="grid2">
+      <div class="slipbox">
+        <div class="slip-h"><span>Sample slip</span><span>3 picks</span></div>
+        <div class="slip-pick"><div class="l"><span class="abbr" style="width:34px;height:34px">HOU</span><div><b>Houston</b> · <span>Total 287.5</span></div></div><div class="r o">OVER</div></div>
+        <div class="slip-pick"><div class="l"><span class="abbr" style="width:34px;height:34px">CHI</span><div><b>Chicago</b> · <span>Violent 53.5</span></div></div><div class="r u">UNDER</div></div>
+        <div class="slip-pick"><div class="l"><span class="abbr" style="width:34px;height:34px">MIA</span><div><b>Miami</b> · <span>Most Crime — no</span></div></div><div class="r o">FIELD</div></div>
+      </div>
+      <div class="slipbox">
+        <div class="slip-h"><span>This week · leaderboard</span><span>Top readers</span></div>
+        <div class="lead-row"><span class="rank">1</span><span class="who">nightdesk</span><span class="rec mono">31–17</span><span class="pts">+842</span></div>
+        <div class="lead-row"><span class="rank">2</span><span class="who">the_actuary</span><span class="rec mono">28–19</span><span class="pts">+610</span></div>
+        <div class="lead-row"><span class="rank">3</span><span class="who">precinct_9</span><span class="rec mono">26–20</span><span class="pts">+455</span></div>
+        <div class="lead-row"><span class="rank">4</span><span class="who">line_reader</span><span class="rec mono">24–21</span><span class="pts">+318</span></div>
+        <div class="lead-row"><span class="rank">5</span><span class="who">quietmiami</span><span class="rec mono">23–22</span><span class="pts">+201</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPANSION -->
+  <section class="sec" id="lines">
+    <div class="sec-head"><div><p class="eyebrow">The bigger picture</p><h2>Crime is just the first Line.</h2><p>The same engine works on anything a city measures. CrimeLine is the flagship; the platform is a market for real-world public data.</p></div></div>
+    <div class="lines">
+      <div class="lcard live"><div class="lh"><b>CrimeLine</b><span class="badge live">Live first</span></div><p>Daily crime and public-safety totals across major U.S. cities. The flagship market.</p></div>
+      <div class="lcard"><div class="lh"><b>WeatherLine</b><span class="badge soon">Next</span></div><p>Rainfall, highs and lows, first-snow dates — the most-measured data on earth.</p></div>
+      <div class="lcard"><div class="lh"><b>TrafficLine</b><span class="badge soon">Next</span></div><p>Commute times, incident counts, and the daily gridlock index by metro.</p></div>
+      <div class="lcard"><div class="lh"><b>FireLine</b><span class="badge soon">Next</span></div><p>Fire, EMS and 911 call volumes — the other side of the public-safety desk.</p></div>
+      <div class="lcard"><div class="lh"><b>EconomyLine</b><span class="badge soon">Next</span></div><p>Airport delays, power outages, transit ridership — the city's daily economic pulse.</p></div>
+      <div class="lcard"><div class="lh"><b>CityLine</b><span class="badge soon">Next</span></div><p>Air quality, earthquakes, and everything else measurable, in one place.</p></div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="sec" style="border-top:none">
+    <div class="cta-band">
+      <p class="eyebrow">Now forming · first cohort</p>
+      <h2>Find the line. Beat the line.</h2>
+      <p>CrimeLine is opening to a first group of players. Join the waitlist to get early access and help shape the launch board.</p>
+      <div class="cta-row" style="justify-content:center"><button class="btn solid js-join" type="button">Join the waitlist</button><a class="btn" href="#board">Explore the board</a></div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="foot-top">
+      <div>
+        <a class="brand brand-lg" href="#top"><span class="mark"><svg><use href="#pulse"/></svg></span><b>CrimeLine<span class="cr">&#169;</span></b></a>
+        <div class="foot-tags" style="margin-top:16px">
+          <span>Predict the Pulse.</span><span>Where cities become markets.</span><span>Every city has a number.</span><span>Find the line. Beat the line.</span>
+        </div>
+      </div>
+      <div class="foot-links">
+        <a href="#board">Today's board</a><a href="#markets">Markets</a><a href="#how">How it works</a><a href="#lines">The Lines</a><a href="mailto:hello@crimeline.fun">Contact</a>
+      </div>
+    </div>
+    <p class="disc">CrimeLine is a prediction market on aggregate, publicly-reported city statistics — not a commentary on any individual or event, and not a live product. All numbers, lines, probabilities, names and leaderboards shown here are illustrative previews. Markets are intended to settle from a single licensed third-party data provider at a predetermined time. Participation, where offered, will be subject to eligibility, age, identity verification and applicable law, and will not be available where prohibited. © 2026 CrimeLine. crimeline.fun</p>
+  </footer>
+</div>
+
+<!-- floating slip bar -->
+<div class="slipbar" id="slipbar"><span class="cnt"><b id="slipN">0</b> picks on your slip</span><button class="btn solid js-join" type="button">Join to play</button></div>
+
+<!-- modal -->
+<div class="ov" id="ov" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+    <button class="x" id="mClose" type="button" aria-label="Close">&#10005;</button>
+    <div id="formView">
+      <p class="eyebrow">Early access · First cohort</p>
+      <h3 id="mTitle">Join the CrimeLine waitlist</h3>
+      <p class="sub">Reserve your spot. We'll email you when your city's board opens.</p>
+      <form id="form" novalidate>
+        <label class="fld"><span class="lab">Email</span><input type="email" id="fEmail" autocomplete="email" placeholder="you@email.com"><span class="err" id="eEmail" role="alert"></span></label>
+        <label class="fld"><span class="lab">Your city <span style="color:var(--dim);font-weight:400">(optional)</span></span>
+          <select id="fCity"><option value="">Pick your home board…</option></select><span class="err"></span></label>
+        <button class="btn solid" id="submit" type="submit">Join the waitlist</button>
+        <p class="sub" style="margin:14px 0 0; font-size:11.5px">18+. Illustrative preview — no wagers are placed. We'll only email you about launch.</p>
+      </form>
+    </div>
+    <div id="doneView" hidden>
+      <div class="done">
+        <div class="ck"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <h3>You're on the list.</h3>
+        <p class="sub">You're in line for the first cohort. Watch your inbox — we'll open your board soon.</p>
+        <button class="btn solid" id="doneClose" type="button">Done</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var $=function(id){ return document.getElementById(id); };
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  var CITIES=["Houston","Chicago","Los Angeles","New York","Philadelphia","Dallas","Phoenix","Atlanta","Miami","St. Louis"];
+  var AB={ "Houston":"HOU","Chicago":"CHI","Los Angeles":"LA","New York":"NYC","Philadelphia":"PHI","Dallas":"DAL","Phoenix":"PHX","Atlanta":"ATL","Miami":"MIA","St. Louis":"STL" };
+  var META={ "Houston":{ov:61,cf:.83},"Chicago":{ov:61,cf:.80},"Los Angeles":{ov:48,cf:.84},"New York":{ov:54,cf:.82},"Philadelphia":{ov:57,cf:.81},"Dallas":{ov:52,cf:.83},"Phoenix":{ov:45,cf:.85},"Atlanta":{ov:49,cf:.84},"Miami":{ov:58,cf:.82},"St. Louis":{ov:43,cf:.86} };
+  var MARKETS=["Total Crime","Violent Crime","Vehicle Thefts","Burglaries","Robberies"];
+  var LINES={
+    "Total Crime":{ "New York":512.5,"Chicago":401.5,"Los Angeles":356.5,"Houston":287.5,"Philadelphia":243.5,"Dallas":198.5,"Phoenix":176.5,"Miami":164.5,"Atlanta":141.5,"St. Louis":88.5 },
+    "Violent Crime":{ "New York":78.5,"Los Angeles":61.5,"Chicago":53.5,"Houston":44.5,"Philadelphia":41.5,"Dallas":31.5,"Phoenix":29.5,"Miami":27.5,"Atlanta":24.5,"St. Louis":18.5 },
+    "Vehicle Thefts":{ "Chicago":121.5,"Los Angeles":94.5,"New York":88.5,"Houston":66.5,"Phoenix":58.5,"Dallas":52.5,"Philadelphia":47.5,"Atlanta":39.5,"Miami":33.5,"St. Louis":26.5 },
+    "Burglaries":{ "New York":61.5,"Los Angeles":52.5,"Chicago":44.5,"Houston":41.5,"Dallas":37.5,"Phoenix":33.5,"Philadelphia":29.5,"Miami":24.5,"Atlanta":22.5,"St. Louis":14.5 },
+    "Robberies":{ "New York":44.5,"Chicago":31.5,"Los Angeles":28.5,"Houston":22.5,"Philadelphia":19.5,"Dallas":17.5,"Phoenix":16.5,"Miami":15.5,"Atlanta":13.5,"St. Louis":9.5 }
+  };
+  function curOf(line,cf){ return Math.round(line*cf); }
+  function expOf(line,ov){ return Math.round(line*(0.985 + (ov-50)/50*0.06)); }
+
+  // ---- ticker ----
+  (function(){
+    var order=["New York","Chicago","Los Angeles","Houston","Phoenix","Philadelphia","Dallas","Atlanta","Miami","St. Louis"];
+    var html="";
+    order.forEach(function(c){ var L=LINES["Total Crime"][c], ov=META[c].ov; var up=ov>=50;
+      html+='<span class="tk"><span class="c">'+AB[c]+'</span><span class="n">'+L.toFixed(1)+'</span><span class="p '+(up?"u":"d")+'">'+(up?"O ":"U ")+(up?ov:100-ov)+'%</span></span>'; });
+    $("ticker").innerHTML=html+html;  // duplicate for seamless loop
+  })();
+
+  // ---- hero preview (top 4 by line) ----
+  (function(){
+    var top=CITIES.slice().sort(function(a,b){ return LINES["Total Crime"][b]-LINES["Total Crime"][a]; }).slice(0,4);
+    $("pvRows").innerHTML=top.map(function(c){ var L=LINES["Total Crime"][c], ov=META[c].ov;
+      return '<div class="pv-row"><div class="pv-city"><b>'+c+'</b><span>'+curOf(L,META[c].cf)+' reported · proj '+expOf(L,ov)+'</span></div>'
+        +'<div class="pv-line">'+L.toFixed(1)+'</div>'
+        +'<div class="pv-ou"><span class="pill o">O '+ov+'%</span><span class="pill u">U '+(100-ov)+'%</span></div></div>';
+    }).join("");
+  })();
+
+  // ---- market tabs + board ----
+  var curMarket="Total Crime";
+  $("mtabs").innerHTML=MARKETS.map(function(m,i){ return '<button class="mtab'+(i===0?" on":"")+'" data-m="'+m+'">'+m+'</button>'; }).join("");
+  function renderBoard(){
+    var order=CITIES.slice().sort(function(a,b){ return LINES[curMarket][b]-LINES[curMarket][a]; });
+    $("boardGrid").innerHTML=order.map(function(c){
+      var L=LINES[curMarket][c], ov=META[c].ov, cur=curOf(L,META[c].cf), exp=expOf(L,ov);
+      var key=c+"|"+curMarket;
+      var so=picks[key]==="O"?" sel":"", su=picks[key]==="U"?" sel":"";
+      return '<div class="card" data-city="'+c+'">'
+        +'<div class="card-top"><div class="card-city"><span class="abbr">'+AB[c]+'</span><div><b>'+c+'</b><span class="mkt">'+curMarket+'</span></div></div>'
+        +'<span class="live-tag"><i></i>Live</span></div>'
+        +'<div class="card-line"><span class="num">'+L.toFixed(1)+'</span><span class="lab">line</span></div>'
+        +'<div class="card-meta"><b>'+cur+'</b> reported so far · proj finish <b>'+exp+'</b></div>'
+        +'<div class="ou"><button class="o'+so+'" data-k="'+key+'" data-s="O"><span class="dir">Over</span><span class="prob">'+ov+'%</span></button>'
+        +'<button class="u'+su+'" data-k="'+key+'" data-s="U"><span class="dir">Under</span><span class="prob">'+(100-ov)+'%</span></button></div>'
+        +'</div>';
+    }).join("");
+  }
+  var picks={};
+  function updateSlip(){
+    var n=Object.keys(picks).length; $("slipN").textContent=n;
+    $("slipbar").classList.toggle("show", n>0);
+  }
+  document.addEventListener("click", function(e){
+    var mt=e.target.closest(".mtab");
+    if(mt){ curMarket=mt.getAttribute("data-m"); Array.prototype.forEach.call($("mtabs").children,function(b){ b.classList.toggle("on", b===mt); }); renderBoard(); return; }
+    var b=e.target.closest(".ou button");
+    if(b){ var k=b.getAttribute("data-k"), s=b.getAttribute("data-s");
+      if(picks[k]===s){ delete picks[k]; } else { picks[k]=s; }
+      renderBoard(); updateSlip(); return; }
+  });
+  renderBoard();
+
+  // ---- live dashboard animation ----
+  (function(){
+    var curEl=$("lpCur"), expEl=$("lpExp"), probEl=$("lpProb"), bar=$("lpBar");
+    var CUR=241, EXP=289, PROB=61, LINE=287.5, MAX=350;
+    if(reduce){ curEl.textContent=CUR; expEl.textContent=EXP; probEl.textContent=PROB+"%"; bar.style.transition="none"; bar.style.width=(CUR/MAX*100)+"%"; return; }
+    function run(){
+      var t0=null, D=1500;
+      function step(ts){ if(!t0)t0=ts; var p=Math.min(1,(ts-t0)/D), e=1-Math.pow(1-p,3);
+        curEl.textContent=Math.round(CUR*e); expEl.textContent=Math.round(EXP*e); probEl.textContent=Math.round(PROB*e)+"%";
+        if(p<1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+      setTimeout(function(){ bar.style.width=(CUR/MAX*100)+"%"; }, 120);
+    }
+    if("IntersectionObserver" in window){
+      var io=new IntersectionObserver(function(en){ en.forEach(function(x){ if(x.isIntersecting){ run(); io.disconnect(); } }); },{threshold:.4});
+      io.observe($("live"));
+    } else { run(); }
+  })();
+
+  // ---- nav + modal ----
+  var navToggle=$("navToggle"), navLinks=$("navLinks");
+  function closeNav(){ navLinks.classList.remove("open"); navToggle.setAttribute("aria-expanded","false"); }
+  navToggle.addEventListener("click", function(){ var o=navLinks.classList.toggle("open"); navToggle.setAttribute("aria-expanded",o?"true":"false"); });
+  Array.prototype.forEach.call(navLinks.querySelectorAll("a"), function(a){ a.addEventListener("click", closeNav); });
+
+  var ov=$("ov"), formView=$("formView"), doneView=$("doneView"), form=$("form"), fEmail=$("fEmail"), eEmail=$("eEmail"), submit=$("submit"), lastFocus=null;
+  var emailRe=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/, EA_ENDPOINT="";
+  $("fCity").insertAdjacentHTML("beforeend", CITIES.map(function(c){ return '<option>'+c+'</option>'; }).join(""));
+  function openM(){ closeNav(); lastFocus=document.activeElement; formView.hidden=false; doneView.hidden=true; ov.hidden=false; document.body.classList.add("lock"); setTimeout(function(){ fEmail.focus(); },40); }
+  function closeM(){ ov.hidden=true; document.body.classList.remove("lock"); if(lastFocus&&lastFocus.focus) lastFocus.focus(); }
+  Array.prototype.forEach.call(document.querySelectorAll(".js-join"), function(b){ b.addEventListener("click", openM); });
+  $("mClose").addEventListener("click", closeM); $("doneClose").addEventListener("click", closeM);
+  ov.addEventListener("click", function(e){ if(e.target===ov) closeM(); });
+  document.addEventListener("keydown", function(e){ if(e.key==="Escape" && !ov.hidden) closeM(); });
+  fEmail.addEventListener("input", function(){ fEmail.closest(".fld").classList.remove("bad"); eEmail.textContent=""; });
+  form.addEventListener("submit", function(e){
+    e.preventDefault(); var em=fEmail.value.trim();
+    if(!emailRe.test(em)){ fEmail.closest(".fld").classList.add("bad"); eEmail.textContent="Enter a valid email so we can reach you."; return; }
+    submit.disabled=true; submit.textContent="Joining…";
+    var payload={ email:em, city:$("fCity").value, picks:Object.keys(picks).length, source:"crimeline.fun" };
+    try{ localStorage.setItem("crimeline_waitlist", JSON.stringify(payload)); }catch(_){}
+    var p = EA_ENDPOINT ? fetch(EA_ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify(payload)}).then(function(r){ if(!r.ok) throw 0; }) : Promise.resolve();
+    p.then(function(){ formView.hidden=true; doneView.hidden=false; setTimeout(function(){ $("doneClose").focus(); },40); })
+     .catch(function(){ submit.disabled=false; submit.textContent="Join the waitlist"; eEmail.textContent="Something went wrong — please try again."; });
+  });
+})();
+</script>
+
+</body>
+</html>
