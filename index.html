@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>CrimeLine — Predict the Pulse of America's Cities</title>
-<meta name="description" content="CrimeLine turns official city statistics into a daily prediction market. Call the number before it is released — over or under — and watch the line move in real time.">
+<meta name="description" content="The daily on-chain prediction market for public-safety data, built on Solana. Call official city crime totals — over or under — trade in USDC, and settle on-chain.">
 <link rel="canonical" href="https://crimeline.fun/">
 <meta name="theme-color" content="#05070e">
 <meta property="og:type" content="website"><meta property="og:site_name" content="CrimeLine">
@@ -89,6 +89,15 @@
   .pv-live { display: inline-flex; align-items: center; gap: 6px; color: var(--over); }
   .pv-live i { width: 7px; height: 7px; border-radius: 50%; background: var(--over); box-shadow: 0 0 0 0 var(--over); animation: pulse 1.8s ease-out infinite; }
   @keyframes pulse { 0%{ box-shadow: 0 0 0 0 rgba(34,211,139,.6);} 70%{ box-shadow: 0 0 0 7px transparent;} 100%{ box-shadow: 0 0 0 0 transparent; } }
+  /* Solana */
+  .sol-badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 13px 6px 10px; border-radius: 999px; border: 1px solid var(--card-line); background: linear-gradient(90deg, rgba(153,69,255,.12), rgba(20,241,149,.09)); font-family: var(--mono); font-size: 11.5px; letter-spacing: .05em; color: var(--muted); }
+  .sol-badge svg { width: 17px; height: 14px; flex: none; }
+  .sol-badge b { color: var(--ink); font-weight: 650; letter-spacing: .02em; }
+  .onchain { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .oc { border: 1px solid var(--card-line); border-radius: 15px; background: var(--surface); padding: 22px; }
+  .oc .oi { width: 36px; height: 36px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(140deg, rgba(153,69,255,.22), rgba(20,241,149,.16)); color: #fff; }
+  .oc h4 { margin: 14px 0 6px; font-size: 16px; font-weight: 720; }
+  .oc p { margin: 0; color: var(--muted); font-size: 13.5px; }
   .pv-rows { padding: 6px; }
   .pv-row { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 10px; padding: 12px 12px; border-radius: 11px; }
   .pv-row + .pv-row { border-top: 1px solid var(--line); }
@@ -253,7 +262,7 @@
     .hero { grid-template-columns: 1fr; gap: 30px; padding: 44px 0 30px; }
     .board { grid-template-columns: 1fr 1fr; }
     .live-wrap { grid-template-columns: 1fr; }
-    .grid3, .steps, .lines { grid-template-columns: 1fr 1fr; }
+    .grid3, .steps, .lines, .onchain { grid-template-columns: 1fr 1fr; }
     .grid2 { grid-template-columns: 1fr; }
   }
   @media (max-width: 680px) {
@@ -265,7 +274,7 @@
     .nav-links a { padding: 13px 4px; border-bottom: 1px solid var(--card-line); }
     .nav-links .btn { margin-top: 12px; justify-content: center; padding: 12px; }
     .board { grid-template-columns: 1fr; }
-    .grid3, .steps, .lines { grid-template-columns: 1fr; }
+    .grid3, .steps, .lines, .onchain { grid-template-columns: 1fr; }
     .cta-band { padding: 34px 20px; }
     .cta-row .btn { flex: 1; }
     .lp-stat .v { font-size: 34px; }
@@ -295,6 +304,10 @@
     </g>
     <rect x="1.5" y="1.5" width="45" height="45" rx="12.5" fill="none" stroke="#ffffff" stroke-opacity=".11" stroke-width="1.4"/>
   </symbol>
+  <symbol id="sol" viewBox="0 0 24 20">
+    <defs><linearGradient id="solG" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#9945ff"/><stop offset="1" stop-color="#14f195"/></linearGradient></defs>
+    <g fill="url(#solG)"><path d="M4.5 1.5 H22 L19.5 5 H2 Z"/><path d="M2 8.25 H19.5 L22 11.75 H4.5 Z"/><path d="M4.5 15 H22 L19.5 18.5 H2 Z"/></g>
+  </symbol>
 </svg>
 
 <!-- TICKER -->
@@ -320,17 +333,18 @@
   <!-- HERO -->
   <header class="hero">
     <div>
-      <p class="eyebrow">The daily market for public-safety data</p>
+      <span class="sol-badge" style="margin-bottom:18px"><svg><use href="#sol"/></svg>Built on <b>Solana</b></span>
+      <p class="eyebrow">The daily on-chain market for public-safety data</p>
       <h1>Predict the <span class="hl">Pulse</span> of America's cities.</h1>
-      <p class="lede">CrimeLine turns official city statistics into a daily prediction market. Call the number before it's released — over or under — and watch the line move in real time.</p>
+      <p class="lede">CrimeLine turns official city statistics into a daily prediction market on Solana. Call the number before it's released — over or under — trade in USDC, and settle on-chain the moment the data drops.</p>
       <div class="cta-row">
         <button class="btn solid js-join" type="button">Join the waitlist</button>
         <a class="btn" href="#board">See today's board ↓</a>
       </div>
       <div class="hero-chips">
-        <span><i></i>Settles from licensed data</span>
-        <span><i></i>Snapshot at noon ET</span>
-        <span><i></i>10 U.S. cities at launch</span>
+        <span><i></i>Trade in USDC on Solana</span>
+        <span><i></i>Non-custodial · your wallet</span>
+        <span><i></i>On-chain settlement · noon ET</span>
       </div>
     </div>
     <div class="preview" id="pv">
@@ -405,12 +419,22 @@
   </section>
 
   <!-- HOW IT WORKS -->
+  <section class="sec" id="onchain">
+    <div class="sec-head"><div><span class="sol-badge"><svg><use href="#sol"/></svg>Built on <b>Solana</b></span><h2 style="margin-top:14px">On-chain by design.</h2><p>CrimeLine runs on Solana — so every market is fast, cheap, transparent, and always yours. No house account, no custody, no cash-out delays.</p></div></div>
+    <div class="onchain">
+      <div class="oc"><span class="oi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span><h4>Your wallet, your funds</h4><p>Connect a Solana wallet — Phantom, Solflare, Backpack. Non-custodial: we never hold your money.</p></div>
+      <div class="oc"><span class="oi" style="font-weight:800;font-size:18px">$</span><h4>Trade in USDC</h4><p>Take a side in stablecoins. Positions are held and settled in USDC on-chain — no chips, no house float.</p></div>
+      <div class="oc"><span class="oi"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z"/></svg></span><h4>Instant &amp; near-zero fees</h4><p>Solana settles in seconds for a fraction of a cent, so placing and settling a market feels instant.</p></div>
+      <div class="oc"><span class="oi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><h4>Verifiable settlement</h4><p>The licensed data feed is posted on-chain at a fixed time. Every result is auditable by anyone, forever.</p></div>
+    </div>
+  </section>
+
   <section class="sec" id="how">
     <div class="sec-head"><div><p class="eyebrow">How it works</p><h2>One source. One settlement. Fully transparent.</h2></div></div>
     <div class="steps">
       <div class="step"><div class="n">01</div><h4>Lines post each morning</h4><p>Every launch city opens with a line for each market, priced from historical data and the day's early pace.</p></div>
       <div class="step"><div class="n">02</div><h4>You take a side</h4><p>Over or under, a city, or a range. Build a slip, track it live, and watch the projection move all day.</p></div>
-      <div class="step"><div class="n">03</div><h4>Settles from a licensed feed</h4><p>A single third-party data provider is snapshotted at a fixed time — noon Eastern the following day. Same source, every market.</p></div>
+      <div class="step"><div class="n">03</div><h4>Settles on-chain</h4><p>A single licensed data provider is snapshotted at noon Eastern the following day and posted to Solana. Same source, every market — payouts in USDC, verifiable by anyone.</p></div>
     </div>
   </section>
 
@@ -463,7 +487,8 @@
     <div class="foot-top">
       <div>
         <a class="brand brand-lg" href="#top"><span class="mark"><svg><use href="#clmark"/></svg></span><b>CrimeLine<span class="cr">&#169;</span></b></a>
-        <div class="foot-tags" style="margin-top:16px">
+        <div style="margin-top:14px"><span class="sol-badge"><svg><use href="#sol"/></svg>Built on <b>Solana</b></span></div>
+        <div class="foot-tags" style="margin-top:14px">
           <span>Predict the Pulse.</span><span>Where cities become markets.</span><span>Every city has a number.</span><span>Find the line. Beat the line.</span>
         </div>
       </div>
@@ -485,9 +510,10 @@
     <div id="formView">
       <p class="eyebrow">Early access · First cohort</p>
       <h3 id="mTitle">Join the CrimeLine waitlist</h3>
-      <p class="sub">Reserve your spot. We'll email you when your city's board opens.</p>
+      <p class="sub">Reserve your spot on Solana. We'll email you when your city's board opens.</p>
       <form id="form" novalidate>
         <label class="fld"><span class="lab">Email</span><input type="email" id="fEmail" autocomplete="email" placeholder="you@email.com"><span class="err" id="eEmail" role="alert"></span></label>
+        <label class="fld"><span class="lab">Solana wallet <span style="color:var(--dim);font-weight:400">(optional · early whitelist)</span></span><input type="text" id="fWallet" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="e.g. 7xKX…9dPq" style="font-family:var(--mono);font-size:13.5px"><span class="err" id="eWallet" role="alert"></span></label>
         <label class="fld"><span class="lab">Your city <span style="color:var(--dim);font-weight:400">(optional)</span></span>
           <select id="fCity"><option value="">Pick your home board…</option></select><span class="err"></span></label>
         <button class="btn solid" id="submit" type="submit">Join the waitlist</button>
@@ -603,8 +629,17 @@
   navToggle.addEventListener("click", function(){ var o=navLinks.classList.toggle("open"); navToggle.setAttribute("aria-expanded",o?"true":"false"); });
   Array.prototype.forEach.call(navLinks.querySelectorAll("a"), function(a){ a.addEventListener("click", function(e){ if(a.getAttribute("href")==="#"){ e.preventDefault(); } closeNav(); }); });
 
-  var ov=$("ov"), formView=$("formView"), doneView=$("doneView"), form=$("form"), fEmail=$("fEmail"), eEmail=$("eEmail"), submit=$("submit"), lastFocus=null;
+  var ov=$("ov"), formView=$("formView"), doneView=$("doneView"), form=$("form"), fEmail=$("fEmail"), eEmail=$("eEmail"), fWallet=$("fWallet"), eWallet=$("eWallet"), submit=$("submit"), lastFocus=null;
   var emailRe=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/, EA_ENDPOINT="";
+  function isSolAddress(a){
+    if(!/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(a)) return false;
+    var AL="123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz", bytes=[0], i, j;
+    for(i=0;i<a.length;i++){ var v=AL.indexOf(a.charAt(i)); if(v<0) return false; var carry=v;
+      for(j=0;j<bytes.length;j++){ carry+=bytes[j]*58; bytes[j]=carry&0xff; carry>>=8; }
+      while(carry){ bytes.push(carry&0xff); carry>>=8; } }
+    for(i=0;i<a.length && a.charAt(i)==='1';i++) bytes.push(0);
+    return bytes.length===32;
+  }
   $("fCity").insertAdjacentHTML("beforeend", CITIES.map(function(c){ return '<option>'+c+'</option>'; }).join(""));
   function openM(){ closeNav(); lastFocus=document.activeElement; formView.hidden=false; doneView.hidden=true; ov.hidden=false; document.body.classList.add("lock"); setTimeout(function(){ fEmail.focus(); },40); }
   function closeM(){ ov.hidden=true; document.body.classList.remove("lock"); if(lastFocus&&lastFocus.focus) lastFocus.focus(); }
@@ -613,11 +648,13 @@
   ov.addEventListener("click", function(e){ if(e.target===ov) closeM(); });
   document.addEventListener("keydown", function(e){ if(e.key==="Escape" && !ov.hidden) closeM(); });
   fEmail.addEventListener("input", function(){ fEmail.closest(".fld").classList.remove("bad"); eEmail.textContent=""; });
+  fWallet.addEventListener("input", function(){ fWallet.closest(".fld").classList.remove("bad"); eWallet.textContent=""; });
   form.addEventListener("submit", function(e){
-    e.preventDefault(); var em=fEmail.value.trim();
+    e.preventDefault(); var em=fEmail.value.trim(), w=fWallet.value.trim();
     if(!emailRe.test(em)){ fEmail.closest(".fld").classList.add("bad"); eEmail.textContent="Enter a valid email so we can reach you."; return; }
+    if(w && !isSolAddress(w)){ fWallet.closest(".fld").classList.add("bad"); eWallet.textContent="That doesn't look like a valid Solana address."; return; }
     submit.disabled=true; submit.textContent="Joining…";
-    var payload={ email:em, city:$("fCity").value, picks:Object.keys(picks).length, source:"crimeline.fun" };
+    var payload={ email:em, wallet:w, city:$("fCity").value, picks:Object.keys(picks).length, source:"crimeline.fun" };
     try{ localStorage.setItem("crimeline_waitlist", JSON.stringify(payload)); }catch(_){}
     var p = EA_ENDPOINT ? fetch(EA_ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify(payload)}).then(function(r){ if(!r.ok) throw 0; }) : Promise.resolve();
     p.then(function(){ formView.hidden=true; doneView.hidden=false; setTimeout(function(){ $("doneClose").focus(); },40); })
