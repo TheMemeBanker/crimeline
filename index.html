@@ -98,6 +98,29 @@
   .oc .oi { width: 36px; height: 36px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(140deg, rgba(153,69,255,.22), rgba(20,241,149,.16)); color: #fff; }
   .oc h4 { margin: 14px 0 6px; font-size: 16px; font-weight: 720; }
   .oc p { margin: 0; color: var(--muted); font-size: 13.5px; }
+  /* $CrimeLine token */
+  #token { border-top: 1px solid var(--line); }
+  .tok-hero { display: grid; grid-template-columns: 1.1fr .9fr; gap: 26px; align-items: center; margin-bottom: 26px; }
+  .tok-hero h2 { margin: 12px 0 8px; font-size: clamp(28px, 3.8vw, 44px); font-weight: 800; letter-spacing: -.025em; }
+  .tok-hero h2 .hl { color: var(--red); }
+  .tok-hero p { margin: 0; color: var(--muted); font-size: 16px; max-width: 52ch; }
+  .flywheel { display: flex; align-items: center; gap: 8px 10px; flex-wrap: wrap; margin-top: 18px; font-family: var(--mono); font-size: 12px; color: var(--muted); }
+  .flywheel b { color: var(--ink); } .flywheel .arw { color: var(--red-ink); font-weight: 700; }
+  .tok-stat { border: 1px solid var(--card-line); border-radius: 18px; padding: 22px; background: radial-gradient(130% 200% at 100% -30%, rgba(153,69,255,.16), transparent 55%), linear-gradient(180deg, var(--surface), var(--navy)); box-shadow: 0 40px 80px -56px #000; }
+  .tok-stat .tk-top { display: flex; align-items: center; gap: 14px; }
+  .tok-stat .coin { width: 50px; height: 50px; flex: none; }
+  .tok-stat .tick { font-family: var(--mono); font-size: 20px; font-weight: 750; letter-spacing: -.02em; }
+  .tok-stat .net { font-family: var(--mono); font-size: 11.5px; color: var(--muted); display: inline-flex; align-items: center; gap: 6px; margin-top: 2px; }
+  .tok-stat .rows { margin: 18px 0; display: flex; flex-direction: column; gap: 10px; }
+  .tok-stat .tr { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 12.5px; color: var(--muted); }
+  .tok-stat .tr b { color: var(--ink); font-weight: 650; }
+  .tok-stat .btn { width: 100%; justify-content: center; padding: 12px; }
+  .token-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+  .tk-card { border: 1px solid var(--card-line); border-radius: 15px; background: var(--surface); padding: 22px; }
+  .tk-card .ti { width: 36px; height: 36px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; background: color-mix(in srgb, var(--red) 15%, transparent); color: var(--red-ink); font-weight: 800; }
+  .tk-card h4 { margin: 14px 0 6px; font-size: 16px; font-weight: 730; }
+  .tk-card p { margin: 0; color: var(--muted); font-size: 13.5px; }
+  .tk-fine { margin-top: 14px; font-size: 11px; color: var(--dim); }
   .pv-rows { padding: 6px; }
   .pv-row { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 10px; padding: 12px 12px; border-radius: 11px; }
   .pv-row + .pv-row { border-top: 1px solid var(--line); }
@@ -262,7 +285,7 @@
     .hero { grid-template-columns: 1fr; gap: 30px; padding: 44px 0 30px; }
     .board { grid-template-columns: 1fr 1fr; }
     .live-wrap { grid-template-columns: 1fr; }
-    .grid3, .steps, .lines, .onchain { grid-template-columns: 1fr 1fr; }
+    .grid3, .steps, .lines, .onchain { grid-template-columns: 1fr 1fr; } .token-grid { grid-template-columns: 1fr 1fr; } .tok-hero { grid-template-columns: 1fr; }
     .grid2 { grid-template-columns: 1fr; }
   }
   @media (max-width: 680px) {
@@ -274,7 +297,7 @@
     .nav-links a { padding: 13px 4px; border-bottom: 1px solid var(--card-line); }
     .nav-links .btn { margin-top: 12px; justify-content: center; padding: 12px; }
     .board { grid-template-columns: 1fr; }
-    .grid3, .steps, .lines, .onchain { grid-template-columns: 1fr; }
+    .grid3, .steps, .lines, .onchain { grid-template-columns: 1fr; } .token-grid { grid-template-columns: 1fr; }
     .cta-band { padding: 34px 20px; }
     .cta-row .btn { flex: 1; }
     .lp-stat .v { font-size: 34px; }
@@ -323,7 +346,7 @@
       <a href="#markets">Markets</a>
       <a href="#how">How it works</a>
       <a href="#lines">The Lines</a>
-      <a href="#" id="tokenLink">$CrimeLine</a>
+      <a href="#token" id="tokenLink">$CrimeLine</a>
       <button class="btn solid js-join" type="button">Join the waitlist</button>
     </div>
   </div>
@@ -473,6 +496,37 @@
   </section>
 
   <!-- CTA -->
+  <!-- $CRIMELINE TOKEN -->
+  <section class="sec" id="token">
+    <div class="tok-hero">
+      <div>
+        <span class="sol-badge"><svg><use href="#sol"/></svg>$CRIMELINE · on <b>Solana</b></span>
+        <h2 style="margin-top:14px">Don't just beat the line. <span class="hl">Own it.</span></h2>
+        <p>$CrimeLine is the token that powers the protocol. Hold it, stake it, and you stop being a player — you become the house. Every market that settles feeds the people who hold it.</p>
+        <div class="flywheel"><b>Trade</b><span class="arw">&#9656;</span>rake<span class="arw">&#9656;</span>buybacks + stakers<span class="arw">&#9656;</span><b>$CrimeLine holders</b><span class="arw">&#9656;</span>deeper markets<span class="arw">&#8635;</span></div>
+      </div>
+      <div class="tok-stat">
+        <div class="tk-top"><svg class="coin"><use href="#clmark"/></svg><div><div class="tick">$CRIMELINE</div><div class="net"><svg style="width:14px;height:12px"><use href="#sol"/></svg>SPL token · Solana</div></div></div>
+        <div class="rows">
+          <div class="tr"><span>Protocol revenue</span><b>house edge + pro fees</b></div>
+          <div class="tr"><span>Flows to</span><b>stakers &amp; buybacks</b></div>
+          <div class="tr"><span>Holder perks</span><b>fees · boosts · access</b></div>
+          <div class="tr"><span>Launch</span><b>with the first cohort</b></div>
+        </div>
+        <button class="btn solid js-join" type="button">Get on the $CrimeLine list</button>
+        <p class="tk-fine">Illustrative utility token for the CrimeLine protocol. Mechanics shown are design targets — not a promise of value or return.</p>
+      </div>
+    </div>
+    <div class="token-grid">
+      <div class="tk-card"><span class="ti">%</span><h4>Stake the rake</h4><p>Every market takes a small rake. Stake $CrimeLine and a share of that edge flows to you — you're on the house's side of the table.</p></div>
+      <div class="tk-card"><span class="ti">&#8635;</span><h4>On-chain buybacks</h4><p>A cut of protocol revenue continuously buys $CrimeLine back on Solana. Volume on the board feeds the token.</p></div>
+      <div class="tk-card"><span class="ti">&#9670;</span><h4>Trade like a member</h4><p>Holders unlock lower fees, sharper lines, and higher position limits. The more you hold, the better you play.</p></div>
+      <div class="tk-card"><span class="ti">&#10003;</span><h4>Govern the next Line</h4><p>Vote on the next city and the next vertical — Weather, Traffic, Fire. Holders decide where the protocol grows.</p></div>
+      <div class="tk-card"><span class="ti">&#9733;</span><h4>Boosts &amp; free plays</h4><p>Daily free slips, payout boosts, and leaderboard multipliers reserved for people who hold the token.</p></div>
+      <div class="tk-card"><span class="ti">&#8984;</span><h4>Pro data &amp; API</h4><p>Premium analytics, full historical data, and API keys — the institutional layer, unlocked by holding $CrimeLine.</p></div>
+    </div>
+  </section>
+
   <section class="sec" style="border-top:none">
     <div class="cta-band">
       <p class="eyebrow">Now forming · first cohort</p>
