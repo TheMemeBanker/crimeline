@@ -34,6 +34,15 @@
   html { scroll-behavior: smooth; }
   body { position: relative; margin: 0; color: var(--ink); font: 16.5px/1.7 var(--sans); -webkit-font-smoothing: antialiased; background: var(--bg); }
   a { color: inherit; }
+  /* site-wide city horizon — subtle, fixed, never competes with content */
+  .city-horizon { position: fixed; left: 0; right: 0; bottom: 0; height: 240px; z-index: -2; pointer-events: none;
+    background:
+      radial-gradient(60% 130% at 50% 108%, rgba(91,138,255,.07), transparent 60%),
+      radial-gradient(35% 90% at 78% 106%, rgba(255,59,88,.04), transparent 60%);
+  }
+  .city-horizon svg { position: absolute; left: 0; bottom: -2px; width: 100%; height: 190px; display: block; }
+  @media (max-width: 680px) { .city-horizon { height: 150px; } .city-horizon svg { height: 120px; } }
+
   
   .wrap { max-width: 1400px; margin: 0 auto; padding: 0 36px; }
   .mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
@@ -156,6 +165,24 @@
   .sw b { font-size: 14.5px; font-weight: 600; }
   .score-fine { grid-column: 1 / -1; font-size: 11.5px; color: var(--dim); margin-top: 2px; }
   @media (max-width: 1000px) { .score-band { grid-template-columns: 1fr; padding: 36px 24px; gap: 28px; } }
+  .rules-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; margin-top: 26px; }
+  .rules-box { border: none; border-radius: 24px; padding: 40px 44px;
+    background: linear-gradient(170deg, #1e2431, var(--surface) 55%, #171c27); box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 24px 56px -24px rgba(0,0,0,.55); }
+  .rules-list { margin: 18px 0 0; padding: 0 0 0 2px; list-style: none; counter-reset: r; }
+  .rules-list li { counter-increment: r; position: relative; padding: 0 0 18px 46px; color: var(--muted); font-size: 15px; line-height: 1.65; }
+  .rules-list li b { color: var(--ink); display: block; font-size: 15.5px; margin-bottom: 2px; }
+  .rules-list li::before { content: counter(r); position: absolute; left: 0; top: 2px; width: 30px; height: 30px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--ink); background: #232a3a; box-shadow: inset 0 1px 0 rgba(255,255,255,.05); }
+  .rules-list li:last-child { padding-bottom: 0; }
+  .pipeline { margin-top: 18px; position: relative; }
+  .pipeline::before { content: ""; position: absolute; left: 14px; top: 16px; bottom: 16px; width: 2px; background: linear-gradient(180deg, #2a3346, #232a3a); border-radius: 2px; }
+  .pnode { position: relative; display: flex; gap: 18px; padding: 0 0 20px 0; }
+  .pnode:last-child { padding-bottom: 0; }
+  .pnode .pn { position: relative; z-index: 1; flex: none; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 12.5px; font-weight: 700; color: #12151d; background: #eef1f7; box-shadow: 0 0 0 4px #171c27; }
+  .pnode b { display: block; font-size: 15px; color: var(--ink); }
+  .pnode span { display: block; font-size: 13.5px; color: var(--muted); line-height: 1.6; margin-top: 2px; }
+  @media (max-width: 1000px) { .rules-wrap { grid-template-columns: 1fr; } .rules-box { padding: 30px 24px; } }
   /* section frame */
   .sec { padding: 130px 0; }
   .sec-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; margin-bottom: 52px; flex-wrap: wrap; }
@@ -516,6 +543,29 @@
         <div class="sw"><span class="swx">×6</span><b>Robbery</b></div>
         <div class="sw"><span class="swx">×8</span><b>Assault</b></div>
         <div class="score-fine">Illustrative weights — the final scoring rubric ships with the docs and is fixed before any market opens.</div>
+      </div>
+    </div>
+
+    <div class="rules-wrap">
+      <div class="rules-box">
+        <p class="eyebrow">The rules · plain English</p>
+        <ol class="rules-list">
+          <li><b>A line posts every morning.</b> Each city gets a number for each market — like Houston Total Crime 287.5.</li>
+          <li><b>You pick a side.</b> Over or under. Another player takes the opposite side — peer-to-peer, no house.</li>
+          <li><b>The day plays out.</b> Reported incidents accumulate in the live counter all day. You can watch every market move.</li>
+          <li><b>The snapshot settles it.</b> At noon ET the next day, the official number is locked from the licensed feed. Over the line, overs win. Under it, unders win.</li>
+          <li><b>Winners get paid instantly.</b> Settlement posts on-chain and payouts land in USDC — automatic, verifiable, no claims process.</li>
+        </ol>
+      </div>
+      <div class="rules-box">
+        <p class="eyebrow">Where the live numbers come from</p>
+        <div class="pipeline">
+          <div class="pnode"><span class="pn">1</span><div><b>Police departments report</b><span>Official incident reports from each city, timestamped as they're filed.</span></div></div>
+          <div class="pnode"><span class="pn">2</span><div><b>Licensed data feed aggregates</b><span>A single independent provider collects and standardizes every qualifying incident — the same feed for everyone.</span></div></div>
+          <div class="pnode"><span class="pn">3</span><div><b>The live counter updates</b><span>Reported-so-far climbs through the day. Reports lag real time, which is why the projection runs ahead of the raw count.</span></div></div>
+          <div class="pnode"><span class="pn">4</span><div><b>Noon ET snapshot</b><span>The next day's fixed-time snapshot is the final number — raw counts for count markets, severity-weighted for Score markets.</span></div></div>
+          <div class="pnode"><span class="pn">5</span><div><b>On-chain settlement</b><span>The number posts to Solana and every market pays out from it. Anyone can audit any result, forever.</span></div></div>
+        </div>
       </div>
     </div>
   </section>
