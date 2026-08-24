@@ -9,3 +9,8 @@
 - MIA: File:Super Bowl 44 Miami Florida Skyline shot (4331552443).jpg — cc by 2.0 — <a rel="nofollow" class="external text" href="https://www.flickr.com/people/2288
 - ATL: File:Jackson Street Bridge and Atlanta Night Skyline (Unsplash).jpg — cc0 — Joey Kyber <a rel="nofollow" class="external text" href="https://unsplash.com/@j
 - STL: File:Gateway Arch -173 Set (14214208983).jpg — cc by 2.0 — <a rel="nofollow" class="external text" href="https://www.flickr.com/people/1371
+- LINE-WEATHER: File:Lightning Storm (63669379).jpeg — cc by 3.0
+- LINE-TRAFFIC: File:Crossroads - Flickr - -mtnoxx.jpg — cc by 2.0
+- LINE-FIRE: File:Night view of a firefighter silhouetted against a raging fire during the four-day Panorama brush fire, which started in canyons north of town and has been whipped out of control by - DPLA - 6a00e9bd535004e8b427d97bf9282e55.jpeg — public domain
+- LINE-ECONOMY: File:NY stock exchange traders floor LC-U9-10548-6.jpg — public domain
+- LINE-CITY: File:Copenhagen City Hall at night.jpg — cc by 4.0

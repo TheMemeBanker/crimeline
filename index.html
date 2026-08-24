@@ -31,6 +31,7 @@
     --display: "Space Grotesk", var(--sans);
   }
   * { box-sizing: border-box; }
+  html, body { overflow-x: clip; }
   html { scroll-behavior: smooth; }
   body { margin: 0; color: var(--ink); font: 16.5px/1.7 var(--sans); -webkit-font-smoothing: antialiased; background: var(--bg); }
   a { color: inherit; }
@@ -75,7 +76,10 @@
   .nav-toggle[aria-expanded="true"] span:nth-child(3){ transform: translateY(-6px) rotate(-45deg); }
 
   /* hero */
-  .hero { padding: 120px 0 110px; display: grid; grid-template-columns: 1.02fr .98fr; gap: 72px; align-items: center; }
+  .hero { position: relative; padding: 120px 0 110px; display: grid; grid-template-columns: 1.02fr .98fr; gap: 72px; align-items: center; }
+  .hero-atmo { position: absolute; top: -120px; bottom: 0; left: 50%; width: 100vw; transform: translateX(-50%); z-index: -1; pointer-events: none; overflow: hidden; }
+  .hero-atmo img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(.85) brightness(.32) contrast(1.1);
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, rgba(0,0,0,.75) 55%, transparent 96%); mask-image: linear-gradient(180deg, #000 0%, rgba(0,0,0,.75) 55%, transparent 96%); }
   .hero h1 { margin: 22px 0 0; font-family: var(--display); font-size: clamp(42px, 5.4vw, 68px); line-height: 1.02; font-weight: 700; letter-spacing: -.035em; }
   .hero h1 .hl { color: var(--accent); }
   .hero .lede { margin: 28px 0 38px; font-size: 19px; line-height: 1.75; color: var(--muted); max-width: 46ch; }
@@ -95,7 +99,12 @@
   .sol-badge svg { width: 17px; height: 14px; flex: none; }
   .sol-badge b { color: var(--ink); font-weight: 650; letter-spacing: .02em; }
   .onchain { display: grid; grid-template-columns: repeat(4, 1fr); gap: 26px; }
-  .oc { border: 1px solid var(--line); border-radius: 18px; background: var(--surface); box-shadow: var(--card-shadow); padding: 32px; }
+  .oc { position: relative; overflow: hidden; border: 1px solid var(--line); border-radius: 18px; background: var(--surface); box-shadow: var(--card-shadow); padding: 32px; transition: transform .18s ease, border-color .18s ease; }
+  .oc:hover { transform: translateY(-3px); border-color: #333b4f; }
+  .oc::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, #9945ff, #14f195 60%, transparent); opacity: .55; }
+  .oc::after { content: ""; position: absolute; right: -46px; bottom: -46px; width: 150px; height: 150px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(153,69,255,.12), rgba(20,241,149,.06) 55%, transparent 70%); }
+  .oc .oi { width: 42px; height: 42px; }
   .oc .oi { width: 36px; height: 36px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(140deg, rgba(153,69,255,.22), rgba(20,241,149,.16)); color: #fff; }
   .oc h4 { margin: 14px 0 6px; font-size: 16px; font-weight: 720; }
   .oc p { margin: 0; color: var(--muted); font-size: 13.5px; }
@@ -202,7 +211,9 @@
 
   /* live dashboard */
   .live-wrap { display: grid; grid-template-columns: 1.1fr .9fr; gap: 28px; }
-  .live-panel { border: 1px solid var(--line); border-radius: 20px; background: var(--surface); box-shadow: var(--card-shadow); padding: 32px; }
+  .live-panel { border: 1px solid var(--line); border-radius: 20px;
+    background: linear-gradient(180deg, rgba(26,31,42,.88) 0%, rgba(26,31,42,.97) 60%, var(--surface) 100%), url("assets/cities/hou.jpg") center 30%/cover no-repeat;
+    box-shadow: var(--card-shadow); padding: 32px; }
   .lp-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
   .lp-head h3 { margin: 0; font-size: 20px; font-weight: 720; }
   .lp-big { display: flex; align-items: flex-end; gap: 26px; margin: 22px 0 6px; flex-wrap: wrap; }
@@ -223,20 +234,39 @@
   /* generic feature grids */
   .grid3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 26px; }
   .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
-  .feat { border: 1px solid var(--line); border-radius: 18px; background: var(--surface); box-shadow: var(--card-shadow); padding: 32px; transition: transform .18s ease, box-shadow .18s ease; }
+  .feat { position: relative; overflow: hidden; border: 1px solid var(--line); border-radius: 18px; background: var(--surface); box-shadow: var(--card-shadow); padding: 32px; transition: transform .18s ease, border-color .18s ease; }
+  .feat:hover { transform: translateY(-3px); border-color: #333b4f; }
+  .feat::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), transparent 70%); opacity: 0; transition: opacity .2s ease; }
+  .feat:hover::before { opacity: 1; }
+  .feat .spark { position: absolute; top: 26px; right: 24px; width: 92px; height: 38px; opacity: .55; }
+  .feat:hover .spark { opacity: .9; }
   .feat .fi { width: 40px; height: 40px; border-radius: 12px; background: var(--surface-2); color: var(--ink); display: inline-flex; align-items: center; justify-content: center; }
   .feat h4 { margin: 14px 0 6px; font-size: 17px; font-weight: 720; }
   .feat p { margin: 0; color: var(--muted); font-size: 14px; }
 
   /* how it works */
   .steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 26px; counter-reset: s; }
-  .step { border: 1px solid var(--line); border-radius: 18px; background: var(--surface); box-shadow: var(--card-shadow); padding: 32px; position: relative; }
-  .step .n { font-family: var(--mono); font-size: 12px; color: var(--dim); font-weight: 700; }
+  .step { border: 1px solid var(--line); border-radius: 18px; background: var(--surface); box-shadow: var(--card-shadow); padding: 32px; position: relative; overflow: hidden; }
+  .step .n { position: absolute; top: -18px; right: 6px; font-family: var(--display); font-size: 110px; font-weight: 700; color: rgba(228,232,241,.05); letter-spacing: -4px; pointer-events: none; }
   .step h4 { margin: 8px 0 6px; font-size: 17px; font-weight: 720; }
   .step p { margin: 0; color: var(--muted); font-size: 14px; }
 
   /* slip / social */
   .slipbox { border: 1px solid var(--line); border-radius: 18px; background: var(--surface); box-shadow: var(--card-shadow); padding: 30px; }
+  .slip-paper { position: relative; background: linear-gradient(180deg, #1c2230, var(--surface)); }
+  .slip-paper::before, .slip-paper::after { content: ""; position: absolute; width: 22px; height: 22px; border-radius: 50%; background: var(--bg); border: 1px solid var(--line); top: 50%; }
+  .slip-paper::before { left: -12px; } .slip-paper::after { right: -12px; }
+  .slip-pick { border-bottom: 1px dashed #323a4c !important; }
+  .slip-total { display: flex; align-items: center; justify-content: space-between; padding: 16px 0 6px; font-size: 13.5px; color: var(--muted); }
+  .slip-total b { font-family: var(--mono); font-size: 20px; color: var(--over); }
+  .slip-code { margin-top: 14px; height: 30px; border-radius: 4px; opacity: .5;
+    background: repeating-linear-gradient(90deg, var(--ink) 0 2px, transparent 2px 5px, var(--ink) 5px 6px, transparent 6px 11px, var(--ink) 11px 14px, transparent 14px 17px); }
+  .lead-row { transition: background .14s ease; border-radius: 10px; padding-left: 8px !important; padding-right: 8px !important; }
+  .lead-row:hover { background: rgba(148,168,214,.05); }
+  .lead-row .rank { width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center; border-radius: 9px; font-weight: 700; font-size: 13px; }
+  .lead-row:nth-child(2) .rank { background: rgba(255,196,87,.14); color: #ffc457; }
+  .lead-row:nth-child(3) .rank { background: rgba(196,204,222,.13); color: #c4ccde; }
+  .lead-row:nth-child(4) .rank { background: rgba(226,150,102,.13); color: #e29666; }
   .slip-h { display: flex; align-items: center; justify-content: space-between; font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
   .slip-pick { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--line); }
   .slip-pick:last-of-type { border-bottom: none; }
@@ -254,8 +284,14 @@
 
   /* expansion lines */
   .lines { display: grid; grid-template-columns: repeat(3,1fr); gap: 26px; }
-  .lcard { border: 1px solid var(--line); border-radius: 18px; background: var(--surface); box-shadow: var(--card-shadow); padding: 30px; display: flex; flex-direction: column; gap: 9px; }
-  .lcard.live { border-color: #35415f; background: linear-gradient(180deg, #1e2534, var(--surface)); }
+  .lcard { border: 1px solid var(--line); border-radius: 18px; background: var(--surface); box-shadow: var(--card-shadow); padding: 0; overflow: hidden; display: flex; flex-direction: column; transition: transform .18s ease, border-color .18s ease; }
+  .lcard:hover { transform: translateY(-3px); border-color: #333b4f; }
+  .lcard:hover .lph img { transform: scale(1.05); }
+  .lph { height: 120px; overflow: hidden; position: relative; }
+  .lph img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(.8) brightness(.6) contrast(1.1); transition: transform .5s cubic-bezier(.2,.7,.2,1); }
+  .lph::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(18,21,29,.1), var(--surface) 98%); }
+  .lbody { padding: 18px 24px 24px; display: flex; flex-direction: column; gap: 9px; }
+  .lcard.live { border-color: #3a3040; } .lcard.live .lph img { filter: grayscale(.6) brightness(.62) contrast(1.12) sepia(.12) hue-rotate(-18deg); }
   .lcard .lh { display: flex; align-items: center; justify-content: space-between; }
   .lcard b { font-size: 17px; font-weight: 730; }
   .lcard p { margin: 0; color: var(--muted); font-size: 13.5px; }
@@ -264,7 +300,10 @@
   .badge.soon { color: var(--muted); border: 1px solid var(--card-line); }
 
   /* cta band */
-  .cta-band { border: 1px solid var(--line); border-radius: 28px; padding: 84px 48px; text-align: center; background: var(--surface); box-shadow: var(--card-shadow); }
+  .cta-band { position: relative; overflow: hidden; border: 1px solid var(--line); border-radius: 28px; padding: 96px 48px; text-align: center;
+    background: linear-gradient(180deg, rgba(14,17,24,.82), rgba(14,17,24,.9)), url("assets/cities/chi.jpg") center 40%/cover no-repeat;
+    box-shadow: 0 30px 80px -40px rgba(0,0,0,.6); }
+  .cta-band .eyebrow { color: #aab3c7; }
   .cta-band h2 { margin: 14px 0 12px; font-family: var(--display); font-size: clamp(30px, 4vw, 48px); font-weight: 700; letter-spacing: -.03em; }
   .cta-band p { margin: 0 auto 22px; max-width: 54ch; color: var(--muted); font-size: 16px; }
 
@@ -411,6 +450,7 @@
 <div class="wrap" id="top">
   <!-- HERO -->
   <header class="hero">
+    <div class="hero-atmo" aria-hidden="true"><img src="assets/cities/nyc.jpg" alt=""></div>
     <div>
       <p class="eyebrow">The daily on-chain market for public-safety data</p>
       <h1>Predict the <span class="hl">Pulse</span> of America's cities.</h1>
@@ -487,12 +527,12 @@
       </div>
     </div>
     <div class="grid3">
-      <div class="feat"><span class="fi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 18 L4 6 M4 18 L20 18 M8 14l3-4 3 3 4-6"/></svg></span><h4>Over / Under</h4><p>Total crime, violent crime, vehicle thefts, burglaries, robberies — call each city's number against the line.</p></div>
-      <div class="feat"><span class="fi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="9"/></svg></span><h4>Most Crime Today</h4><p>Which city reports the most qualifying incidents? Pick the leader from the field before the day settles.</p></div>
-      <div class="feat"><span class="fi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><h4>Lowest Crime</h4><p>The flip side — which city stays quietest today. A market for the calm as much as the chaos.</p></div>
-      <div class="feat"><span class="fi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20 L10 12 L14 15 L20 5 M20 5 h-5 M20 5 v5"/></svg></span><h4>Biggest Increase</h4><p>Which city jumps the most versus yesterday? A pure momentum market on the day-over-day swing.</p></div>
-      <div class="feat"><span class="fi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="4" rx="1"/><rect x="3" y="10" width="18" height="4" rx="1"/><rect x="3" y="16" width="18" height="4" rx="1"/></svg></span><h4>Exact Range</h4><p>Skip over/under and nail the bucket: 260–269, 270–279, 280–289, 290–299, 300+. More precision, bigger payout.</p></div>
-      <div class="feat"><span class="fi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 4-6"/></svg></span><h4>CrimeLine Index</h4><p>One market to rule them all: total qualifying incidents across every launch city, in a single daily number.</p></div>
+      <div class="feat"><span class="fi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 18 L4 6 M4 18 L20 18 M8 14l3-4 3 3 4-6"/></svg></span><svg class="spark" viewBox="0 0 80 34" aria-hidden="true"><path d="M2 30 L16 26 24 29 34 20 44 24 56 12 66 18 78 8" fill="none" stroke="var(--over)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".8"/><circle cx="78" cy="8" r="2.6" fill="var(--over)"/></svg><h4>Over / Under</h4><p>Total crime, violent crime, vehicle thefts, burglaries, robberies — call each city's number against the line.</p></div>
+      <div class="feat"><span class="fi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="9"/></svg></span><svg class="spark" viewBox="0 0 80 34" aria-hidden="true"><path d="M2 24 L14 20 22 28 32 14 42 22 54 10 64 16 78 6" fill="none" stroke="var(--under)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".8"/><circle cx="78" cy="6" r="2.6" fill="var(--under)"/></svg><h4>Most Crime Today</h4><p>Which city reports the most qualifying incidents? Pick the leader from the field before the day settles.</p></div>
+      <div class="feat"><span class="fi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><svg class="spark" viewBox="0 0 80 34" aria-hidden="true"><path d="M2 12 L14 18 24 10 34 22 44 18 56 26 66 22 78 30" fill="none" stroke="var(--over)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".8"/><circle cx="78" cy="30" r="2.6" fill="var(--over)"/></svg><h4>Lowest Crime</h4><p>The flip side — which city stays quietest today. A market for the calm as much as the chaos.</p></div>
+      <div class="feat"><span class="fi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20 L10 12 L14 15 L20 5 M20 5 h-5 M20 5 v5"/></svg></span><svg class="spark" viewBox="0 0 80 34" aria-hidden="true"><path d="M2 30 L16 28 26 22 36 24 46 14 58 16 68 8 78 4" fill="none" stroke="var(--under)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".8"/><circle cx="78" cy="4" r="2.6" fill="var(--under)"/></svg><h4>Biggest Increase</h4><p>Which city jumps the most versus yesterday? A pure momentum market on the day-over-day swing.</p></div>
+      <div class="feat"><span class="fi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="4" rx="1"/><rect x="3" y="10" width="18" height="4" rx="1"/><rect x="3" y="16" width="18" height="4" rx="1"/></svg></span><svg class="spark" viewBox="0 0 80 34" aria-hidden="true"><path d="M2 22 L12 22 12 14 24 14 24 26 38 26 38 10 52 10 52 20 66 20 66 6 78 6" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".8"/><circle cx="78" cy="6" r="2.6" fill="var(--accent)"/></svg><h4>Exact Range</h4><p>Skip over/under and nail the bucket: 260–269, 270–279, 280–289, 290–299, 300+. More precision, bigger payout.</p></div>
+      <div class="feat"><span class="fi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 4-6"/></svg></span><svg class="spark" viewBox="0 0 80 34" aria-hidden="true"><path d="M2 28 L14 24 24 26 34 18 44 20 56 12 66 14 78 6" fill="none" stroke="var(--over)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".8"/><circle cx="78" cy="6" r="2.6" fill="var(--over)"/></svg><h4>CrimeLine Index</h4><p>One market to rule them all: total qualifying incidents across every launch city, in a single daily number.</p></div>
     </div>
   </section>
 
@@ -520,11 +560,13 @@
   <section class="sec" id="social">
     <div class="sec-head"><div><p class="eyebrow">Social</p><h2>Build a slip. Climb the board.</h2><p>Stack picks into a slip, share it, and see who reads the city best over a week, a month, a season.</p></div></div>
     <div class="grid2">
-      <div class="slipbox">
-        <div class="slip-h"><span>Sample slip</span><span>3 picks</span></div>
+      <div class="slipbox slip-paper">
+        <div class="slip-h"><span>Sample slip</span><span class="mono">#CL-0824-3</span></div>
         <div class="slip-pick"><div class="l"><span class="abbr" style="width:34px;height:34px">HOU</span><div><b>Houston</b> · <span>Total 287.5</span></div></div><div class="r o">OVER</div></div>
         <div class="slip-pick"><div class="l"><span class="abbr" style="width:34px;height:34px">CHI</span><div><b>Chicago</b> · <span>Violent 53.5</span></div></div><div class="r u">UNDER</div></div>
         <div class="slip-pick"><div class="l"><span class="abbr" style="width:34px;height:34px">MIA</span><div><b>Miami</b> · <span>Most Crime — no</span></div></div><div class="r o">FIELD</div></div>
+        <div class="slip-total"><span>3-pick slip · pays</span><b>4.9×</b></div>
+        <div class="slip-code" aria-hidden="true"></div>
       </div>
       <div class="slipbox">
         <div class="slip-h"><span>This week · leaderboard</span><span>Top readers</span></div>
@@ -540,13 +582,13 @@
   <!-- EXPANSION -->
   <section class="sec" id="lines">
     <div class="sec-head"><div><p class="eyebrow">The bigger picture</p><h2>Crime is just the first Line.</h2><p>The same engine works on anything a city measures. CrimeLine is the flagship; the platform is a market for real-world public data.</p></div></div>
-    <div class="lines">
-      <div class="lcard live"><div class="lh"><b>CrimeLine</b><span class="badge live">Live first</span></div><p>Daily crime and public-safety totals across major U.S. cities. The flagship market.</p></div>
-      <div class="lcard"><div class="lh"><b>WeatherLine</b><span class="badge soon">Next</span></div><p>Rainfall, highs and lows, first-snow dates — the most-measured data on earth.</p></div>
-      <div class="lcard"><div class="lh"><b>TrafficLine</b><span class="badge soon">Next</span></div><p>Commute times, incident counts, and the daily gridlock index by metro.</p></div>
-      <div class="lcard"><div class="lh"><b>FireLine</b><span class="badge soon">Next</span></div><p>Fire, EMS and 911 call volumes — the other side of the public-safety desk.</p></div>
-      <div class="lcard"><div class="lh"><b>EconomyLine</b><span class="badge soon">Next</span></div><p>Airport delays, power outages, transit ridership — the city's daily economic pulse.</p></div>
-      <div class="lcard"><div class="lh"><b>CityLine</b><span class="badge soon">Next</span></div><p>Air quality, earthquakes, and everything else measurable, in one place.</p></div>
+        <div class="lines">
+      <div class="lcard live"><div class="lph"><img src="assets/cities/la.jpg" alt="" loading="lazy"></div><div class="lbody"><div class="lh"><b>CrimeLine</b><span class="badge live">Live first</span></div><p>Daily crime and public-safety totals across major U.S. cities. The flagship market.</p></div></div>
+      <div class="lcard"><div class="lph"><img src="assets/cities/line-weather.jpg" alt="" loading="lazy"></div><div class="lbody"><div class="lh"><b>WeatherLine</b><span class="badge soon">Next</span></div><p>Rainfall, highs and lows, first-snow dates — the most-measured data on earth.</p></div></div>
+      <div class="lcard"><div class="lph"><img src="assets/cities/line-traffic.jpg" alt="" loading="lazy"></div><div class="lbody"><div class="lh"><b>TrafficLine</b><span class="badge soon">Next</span></div><p>Commute times, incident counts, and the daily gridlock index by metro.</p></div></div>
+      <div class="lcard"><div class="lph"><img src="assets/cities/line-fire.jpg" alt="" loading="lazy"></div><div class="lbody"><div class="lh"><b>FireLine</b><span class="badge soon">Next</span></div><p>Fire, EMS and 911 call volumes — the other side of the public-safety desk.</p></div></div>
+      <div class="lcard"><div class="lph"><img src="assets/cities/line-economy.jpg" alt="" loading="lazy"></div><div class="lbody"><div class="lh"><b>EconomyLine</b><span class="badge soon">Next</span></div><p>Airport delays, power outages, transit ridership — the city's daily economic pulse.</p></div></div>
+      <div class="lcard"><div class="lph"><img src="assets/cities/line-city.jpg" alt="" loading="lazy"></div><div class="lbody"><div class="lh"><b>CityLine</b><span class="badge soon">Next</span></div><p>Air quality, earthquakes, and everything else measurable, in one place.</p></div></div>
     </div>
   </section>
 
