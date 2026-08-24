@@ -12,7 +12,7 @@
 <meta property="og:description" content="The daily market for public-safety data. Call the number before it drops.">
 <meta property="og:url" content="https://crimeline.fun/">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@CrimeLineMarket">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='t' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23161e33'/%3E%3Cstop offset='1' stop-color='%2305080f'/%3E%3C/linearGradient%3E%3CclipPath id='c'%3E%3Crect x='4' y='4' width='92' height='92' rx='23'/%3E%3C/clipPath%3E%3C/defs%3E%3Crect x='4' y='4' width='92' height='92' rx='23' fill='url(%23t)'/%3E%3Cg clip-path='url(%23c)'%3E%3Cpath d='M9 64 H36 L43 64 50 22 57 64 64 64 68 56 73 64 H91' fill='none' stroke='%23ff3b56' stroke-width='6' stroke-linejoin='round' stroke-linecap='round'/%3E%3Ccircle cx='50' cy='22' r='9' fill='none' stroke='%23ff3b56' stroke-width='2.4'/%3E%3Ccircle cx='50' cy='22' r='4.4' fill='%23ff3b56'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect x='2' y='2' width='96' height='96' rx='24' fill='%230b1222'/%3E%3Cpath d='M 78 30 A 34 34 0 1 0 78 70' fill='none' stroke='%23ff3050' stroke-width='15' stroke-linecap='round'/%3E%3Crect x='34' y='45.2' width='52' height='9.6' rx='4.8' fill='%23ff3050'/%3E%3Ccircle cx='81' cy='50' r='3.6' fill='%23ffe9ec'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap">
@@ -58,7 +58,7 @@
   nav { position: sticky; top: 0; z-index: 40; border-bottom: 1px solid var(--line); background: rgba(4,6,12,.78); backdrop-filter: blur(16px) saturate(1.3); }
   .nav-in { max-width: 1200px; margin: 0 auto; padding: 15px 26px; display: flex; align-items: center; gap: 16px; }
   .brand { display: flex; align-items: center; gap: 11px; text-decoration: none; color: inherit; }
-  .brand .mark { width: 40px; height: 40px; flex: none; display: block; filter: drop-shadow(0 3px 9px rgba(0,0,0,.5)) drop-shadow(0 0 14px rgba(255,45,77,.14)); }
+  .brand .mark { width: 38px; height: 38px; flex: none; display: block; filter: drop-shadow(0 2px 8px rgba(0,0,0,.5)) drop-shadow(0 0 16px rgba(255,48,80,.22)); }
   .brand .mark svg { width: 100%; height: 100%; display: block; }
   .brand b { font-family: var(--display); font-size: 18.5px; font-weight: 700; letter-spacing: -.02em; }
   .brand .cr { font-size: 8px; font-weight: 600; letter-spacing: 0; vertical-align: super; margin-left: 1px; color: var(--muted); }
@@ -313,24 +313,11 @@
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="clmark" viewBox="0 0 100 100">
     <defs>
-      <linearGradient id="clTile" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#161e33"/><stop offset=".5" stop-color="#0b101f"/><stop offset="1" stop-color="#05080f"/></linearGradient>
-      <linearGradient id="clEdge" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff" stop-opacity=".16"/><stop offset=".25" stop-color="#ffffff" stop-opacity=".04"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/></linearGradient>
-      <linearGradient id="clPulse" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff2d4d" stop-opacity="0"/><stop offset=".14" stop-color="#ff2d4d" stop-opacity=".9"/><stop offset=".55" stop-color="#ff5570"/><stop offset=".86" stop-color="#ff2d4d" stop-opacity=".9"/><stop offset="1" stop-color="#ff2d4d" stop-opacity="0"/></linearGradient>
-      <radialGradient id="clBloom" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ff3b56" stop-opacity=".5"/><stop offset=".55" stop-color="#ff3b56" stop-opacity=".1"/><stop offset="1" stop-color="#ff3b56" stop-opacity="0"/></radialGradient>
-      <linearGradient id="clUnder" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff2d4d" stop-opacity="0"/><stop offset="1" stop-color="#ff2d4d" stop-opacity=".14"/></linearGradient>
-      <clipPath id="clClip"><rect x="4" y="4" width="92" height="92" rx="23"/></clipPath>
+      <linearGradient id="clR" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff6076"/><stop offset=".5" stop-color="#ff3050"/><stop offset="1" stop-color="#e01b3e"/></linearGradient>
     </defs>
-    <rect x="4" y="4" width="92" height="92" rx="23" fill="url(#clTile)"/>
-    <g clip-path="url(#clClip)">
-      <g stroke="#1b2540" stroke-width=".5" opacity=".5"><path d="M4 27.5 H96 M4 50 H96 M4 72.5 H96 M27.5 4 V96 M50 4 V96 M72.5 4 V96"/></g>
-      <rect x="4" y="60" width="92" height="36" fill="url(#clUnder)"/>
-      <circle cx="50" cy="32" r="27" fill="url(#clBloom)"/>
-      <path d="M9 64 H36 L43 64 50 22 57 64 64 64 68 56 73 64 H91" fill="none" stroke="url(#clPulse)" stroke-width="4.8" stroke-linejoin="round" stroke-linecap="round"/>
-      <circle cx="50" cy="22" r="7.4" fill="none" stroke="#ff3b56" stroke-width="1.8" opacity=".8"/>
-      <circle cx="50" cy="22" r="3.5" fill="#ff3b56"/>
-      <circle cx="50" cy="22" r="1.5" fill="#ffe9ec"/>
-    </g>
-    <rect x="4" y="4" width="92" height="92" rx="23" fill="none" stroke="url(#clEdge)" stroke-width="1.4"/>
+    <path d="M 82 26 A 40 40 0 1 0 82 74" fill="none" stroke="url(#clR)" stroke-width="17" stroke-linecap="round"/>
+    <rect x="30" y="44.5" width="62" height="11" rx="5.5" fill="url(#clR)"/>
+    <circle cx="86" cy="50" r="4" fill="#ffe9ec"/>
   </symbol>
   <symbol id="sol" viewBox="0 0 24 20">
     <defs><linearGradient id="solG" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#9945ff"/><stop offset="1" stop-color="#14f195"/></linearGradient></defs>
