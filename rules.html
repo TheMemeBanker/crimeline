@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Rules & Scoring — CrimeLine</title>
+<meta name="description" content="The complete CrimeLine rulebook: how markets work, how the severity-weighted Score is calculated, how live data accumulates, and how settlement pays out — in plain English.">
+<link rel="canonical" href="https://crimeline.fun/rules.html">
+<meta name="theme-color" content="#12151d">
+<meta property="og:type" content="website"><meta property="og:site_name" content="CrimeLine">
+<meta property="og:title" content="Rules & Scoring — CrimeLine">
+<meta property="og:description" content="How markets work, how the Score is calculated, and how settlement pays — in plain English.">
+<meta property="og:url" content="https://crimeline.fun/rules.html">
+<meta property="og:image" content="https://crimeline.fun/assets/og.jpg">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@CrimeLineMarket">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect x='2' y='2' width='96' height='96' rx='24' fill='%230b1222'/%3E%3Cpath d='M 78 30 A 34 34 0 1 0 78 70' fill='none' stroke='%23ff3050' stroke-width='15' stroke-linecap='round'/%3E%3Crect x='34' y='45.2' width='52' height='9.6' rx='4.8' fill='%23ff3050'/%3E%3Ccircle cx='81' cy='50' r='3.6' fill='%23ffe9ec'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap">
+<style>
+  :root {
+    --bg:#12151d; --surface:#1a1f2a; --surface-2:#232937;
+    --line:#262d3b;
+    --ink:#e4e8f1; --muted:#98a1b3; --dim:#646d80;
+    --red:#ff3050; --red-ink:#ff5e75;
+    --accent:#5b8aff; --accent-dim:rgba(91,138,255,.12);
+    --over:#31d492; --over-dim:rgba(49,212,146,.1);
+    --under:#ff6478; --under-dim:rgba(255,100,120,.09);
+    --amber:#e8b34b;
+    --mono:"JetBrains Mono", ui-monospace, Menlo, monospace;
+    --sans:"Inter", ui-sans-serif, system-ui, sans-serif;
+    --display:"Space Grotesk", var(--sans);
+    --elev: inset 0 1px 0 rgba(255,255,255,.045), 0 1px 2px rgba(0,0,0,.25), 0 18px 44px -18px rgba(0,0,0,.5);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { position: relative; margin: 0; color: var(--ink); font: 16.5px/1.7 var(--sans); -webkit-font-smoothing: antialiased; background: var(--bg); }
+  a { color: inherit; }
+  .wrap { max-width: 1400px; margin: 0 auto; padding: 0 36px; }
+  .mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  .eyebrow { font-family: var(--mono); font-size: 11.5px; letter-spacing: .24em; text-transform: uppercase; color: var(--dim); }
+
+  .city-horizon { position: fixed; left: 0; right: 0; bottom: 0; height: 240px; z-index: -2; pointer-events: none;
+    background: radial-gradient(60% 130% at 50% 108%, rgba(91,138,255,.07), transparent 60%), radial-gradient(35% 90% at 78% 106%, rgba(255,59,88,.04), transparent 60%); }
+  .city-horizon svg { position: absolute; left: 0; bottom: -2px; width: 100%; height: 190px; display: block; }
+
+  nav { position: sticky; top: 0; z-index: 40; border-bottom: 1px solid rgba(148,168,214,.05); background: rgba(18,21,29,.8); backdrop-filter: blur(20px) saturate(1.4); }
+  .nav-in { max-width: 1400px; margin: 0 auto; padding: 15px 36px; display: flex; align-items: center; gap: 16px; }
+  .brand { display: flex; align-items: center; gap: 11px; text-decoration: none; color: inherit; }
+  .brand .mark { width: 38px; height: 38px; flex: none; display: block; filter: drop-shadow(0 2px 8px rgba(0,0,0,.5)) drop-shadow(0 0 16px rgba(255,48,80,.22)); }
+  .brand .mark svg { width: 100%; height: 100%; display: block; }
+  .brand b { font-family: var(--display); font-size: 18.5px; font-weight: 700; letter-spacing: -.02em; }
+  .brand .cr { font-size: 8px; font-weight: 600; vertical-align: super; margin-left: 1px; color: var(--muted); }
+  .nav-links { margin-left: auto; display: flex; align-items: center; gap: 24px; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 14px; }
+  .nav-links a:hover { color: var(--ink); }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; font-size: 14px; font-weight: 650; text-decoration: none; cursor: pointer; border-radius: 999px; padding: 11px 22px; border: none; background: #222836; box-shadow: inset 0 1px 0 rgba(255,255,255,.05); color: var(--ink); transition: all .16s ease; }
+  .btn:hover { background:#2a3140; }
+  .btn.solid { background: #eef1f7; color: #12151d; box-shadow: 0 1px 2px rgba(0,0,0,.3); }
+  .btn.solid:hover { background:#ffffff; }
+
+  .hero { padding: 76px 0 30px; }
+  .hero h1 { margin: 16px 0 0; font-family: var(--display); font-size: clamp(38px, 4.6vw, 58px); font-weight: 700; letter-spacing: -.035em; line-height: 1.03; }
+  .hero p { margin: 18px 0 0; color: var(--muted); font-size: 18px; max-width: 62ch; }
+
+  .layout { display: grid; grid-template-columns: 250px 1fr; gap: 48px; padding: 40px 0 110px; align-items: start; }
+  .toc { position: sticky; top: 86px; display: flex; flex-direction: column; gap: 2px; }
+  .toc a { display: block; padding: 9px 14px; border-radius: 10px; color: var(--muted); text-decoration: none; font-size: 14px; }
+  .toc a:hover { color: var(--ink); background: #1c2230; }
+  .toc a.on { color: var(--ink); background: #222a3b; font-weight: 600; }
+  .toc .toc-h { font-family: var(--mono); font-size: 10.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--dim); padding: 0 14px 8px; }
+
+  .rsec { padding: 26px 0 14px; scroll-margin-top: 92px; }
+  .rsec h2 { margin: 0 0 6px; font-family: var(--display); font-size: 28px; font-weight: 700; letter-spacing: -.02em; }
+  .rsec .lead { color: var(--muted); margin: 6px 0 18px; max-width: 68ch; }
+  .rcard { border-radius: 20px; padding: 28px 32px; margin: 14px 0; background: linear-gradient(170deg, #1e2431, var(--surface) 55%, #171c27); box-shadow: var(--elev); }
+  .rcard h3 { margin: 0 0 8px; font-size: 17.5px; font-weight: 700; }
+  .rcard p { margin: 6px 0; color: var(--muted); font-size: 15px; line-height: 1.7; }
+  .rcard p b { color: var(--ink); }
+
+  table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+  th { text-align: left; font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--dim); padding: 10px 14px; }
+  td { padding: 12px 14px; color: var(--muted); border-top: 1px solid rgba(148,168,214,.07); }
+  td b { color: var(--ink); }
+  tr td:first-child b { font-weight: 650; }
+  .tag { font-family: var(--mono); font-size: 11px; padding: 3px 9px; border-radius: 6px; }
+  .tag.count { color: var(--accent); background: var(--accent-dim); }
+  .tag.score { color: var(--amber); background: rgba(232,179,75,.12); }
+  .tag.field { color: var(--over); background: var(--over-dim); }
+
+  .weights { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 6px; }
+  .wchip { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 14px; background: #1e2430; box-shadow: inset 0 1px 0 rgba(255,255,255,.04); }
+  .wchip .x { font-family: var(--mono); font-weight: 700; min-width: 32px; }
+  .wchip div b { display: block; font-size: 14px; }
+  .wchip div span { font-size: 12px; color: var(--dim); }
+  .w1 .x { color: var(--over); } .w2 .x { color: var(--over); }
+  .w3 .x { color: var(--amber); } .w4 .x { color: var(--amber); }
+  .w6 .x { color: var(--under); } .w8 .x { color: var(--under); }
+
+  .example { font-family: var(--mono); font-size: 13.5px; line-height: 2; background: #151a24; border-radius: 14px; padding: 18px 22px; margin-top: 12px; overflow-x: auto; }
+  .example .c { color: var(--dim); }
+  .example .g { color: var(--over); }
+  .example .r { color: var(--red-ink); }
+  .example b { color: var(--ink); font-weight: 600; }
+
+  details { border-radius: 16px; background: linear-gradient(170deg, #1e2431, var(--surface) 60%); box-shadow: var(--elev); margin: 10px 0; overflow: hidden; }
+  summary { cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 18px 24px; font-weight: 650; font-size: 15.5px; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; font-family: var(--mono); font-size: 18px; color: var(--dim); transition: transform .18s ease; }
+  details[open] summary::after { transform: rotate(45deg); color: var(--red-ink); }
+  details .body { padding: 0 24px 20px; color: var(--muted); font-size: 14.5px; line-height: 1.7; }
+  details .body b { color: var(--ink); }
+
+  footer { margin-top: 40px; padding: 44px 0 70px; background: #10141d; }
+  .foot { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .foot a { color: var(--muted); text-decoration: none; font-size: 14px; }
+  .foot a:hover { color: var(--ink); }
+  .disc { margin-top: 22px; font-size: 11.5px; line-height: 1.7; color: var(--dim); max-width: 100ch; }
+
+  @media (max-width: 900px) {
+    .wrap { padding: 0 18px; } .nav-in { padding: 12px 18px; }
+    .layout { grid-template-columns: 1fr; gap: 8px; }
+    .toc { position: static; flex-direction: row; flex-wrap: wrap; gap: 6px; padding-bottom: 10px; }
+    .toc .toc-h { display: none; }
+    .toc a { padding: 8px 13px; background: #1c2230; border-radius: 999px; font-size: 13px; }
+    .weights { grid-template-columns: 1fr; }
+    .rcard { padding: 22px 18px; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="city-horizon" aria-hidden="true"><svg viewBox="0 0 1600 190" preserveAspectRatio="xMidYMax slice">
+  <g fill="#181e2c"><path d="M0 190V120h34v-14h10v14h22v70zM80 190V96h18l4-12 4 12h16v94zM136 190V134h40v56zM190 190V88h14V72h8v16h20v102zM248 190V128h30v-16h12v16h20v62zM326 190V102h24V88h10v14h20v88zM398 190V140h44v50zM458 190V92h16l3-10 3 10h20v98zM518 190V124h34v66zM570 190V76h12V62h8v14h16v114zM624 190V132h40v58zM682 190V98h22v92zM722 190V144h36v46zM774 190V84h14V70h8v14h20v106zM834 190V126h32v64zM884 190V100h20l4-14 4 14h14v90zM944 190V138h42v52zM1002 190V92h16v98zM1036 190V120h30v70zM1084 190V80h12V64h8v16h18v110zM1140 190V130h38v60zM1194 190V96h22v94zM1234 190V142h34v48zM1286 190V88h16l3-12 3 12h18v102zM1344 190V122h32v68zM1394 190V104h24v86zM1436 190V134h40v56zM1494 190V90h14V76h8v14h20v100zM1554 190V126h46v64z"/></g>
+  <g fill="#1f2739"><path d="M0 190V146h60v44zM76 190V112h26l5-16 5 16h20v78zM148 190V150h52v40zM216 190V122h18V104h10v18h26v68zM288 190V158h60v32zM366 190V118h30v72zM414 190V100h14V84h10v16h22v90zM478 190V154h56v36zM552 190V128h34v62zM604 190V108h20l4-14 4 14h18v82zM668 190V152h50v38zM736 190V116h28v74zM782 190V94h12V78h10v16h20v96zM842 190V148h54v42zM914 190V120h32v70zM964 190V102h18l4-12 4 12h16v88zM1024 190V156h52v34zM1094 190V126h30v64zM1142 190V106h22v84zM1182 190V148h50v42zM1250 190V112h16V96h10v16h24v78zM1318 190V152h48v38zM1384 190V124h30v66zM1432 190V98h20l4-12 4 12h16v92zM1494 190V150h50v40zM1560 190V118h40v72z"/></g>
+</svg></div>
+
+<nav>
+  <div class="nav-in">
+    <a class="brand" href="index.html"><span class="mark"><svg viewBox="0 0 100 100"><defs><linearGradient id="clR" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff6076"/><stop offset=".5" stop-color="#ff3050"/><stop offset="1" stop-color="#e01b3e"/></linearGradient></defs><path d="M 82 26 A 40 40 0 1 0 82 74" fill="none" stroke="url(#clR)" stroke-width="17" stroke-linecap="round"/><rect x="30" y="44.5" width="62" height="11" rx="5.5" fill="url(#clR)"/><circle cx="86" cy="50" r="4" fill="#ffe9ec"/></svg></span><b>CrimeLine<span class="cr">©</span></b></a>
+    <div class="nav-links">
+      <a href="index.html#board">Today's board</a>
+      <a href="index.html#markets">Markets</a>
+      <a href="rules.html" style="color:var(--ink)">Rules</a>
+      <a href="index.html#token">$CrimeLine</a>
+      <a class="btn solid" href="index.html#board">See the board</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <header class="hero">
+    <p class="eyebrow">The rulebook</p>
+    <h1>Every rule. Every weight.<br>Nothing hidden.</h1>
+    <p>How CrimeLine markets work, how the severity-weighted Score is calculated, where the live numbers come from, and exactly how you get paid — written for humans, auditable by anyone.</p>
+  </header>
+
+  <div class="layout">
+    <aside class="toc" id="toc">
+      <span class="toc-h">On this page</span>
+      <a href="#basics" class="on">The basics</a>
+      <a href="#markets">Market types</a>
+      <a href="#theline">The line</a>
+      <a href="#scoring">Scoring & severity</a>
+      <a href="#data">Live data & settlement</a>
+      <a href="#payouts">Payouts & fees</a>
+      <a href="#fairplay">Fair play</a>
+      <a href="#faq">FAQ</a>
+    </aside>
+
+    <main>
+      <section class="rsec" id="basics">
+        <h2>The basics</h2>
+        <p class="lead">CrimeLine is a peer-to-peer prediction market on official city crime data. You never bet against a house — you trade against other players, and the official number decides who wins.</p>
+        <div class="rcard">
+          <h3>The whole game in five sentences</h3>
+          <p><b>1.</b> Every morning, each city gets a line for each market — like <span class="mono">Houston · Total Crime · 287.5</span>.</p>
+          <p><b>2.</b> You pick over or under. Your order matches against players who take the opposite side.</p>
+          <p><b>3.</b> Through the day, reported incidents accumulate in the live counter — every market stays visible and moves.</p>
+          <p><b>4.</b> At noon ET the next day, one fixed snapshot of the licensed data feed locks the official number.</p>
+          <p><b>5.</b> Over the line, overs win; under it, unders win. Settlement posts on-chain and payouts land in USDC automatically.</p>
+        </div>
+      </section>
+
+      <section class="rsec" id="markets">
+        <h2>Market types</h2>
+        <p class="lead">Six ways to read a city. Each settles from the same snapshot — the difference is the question being asked.</p>
+        <div class="rcard" style="padding:14px 8px">
+          <table>
+            <tr><th>Market</th><th>The question</th><th>Settles on</th></tr>
+            <tr><td><b>Over / Under</b></td><td>Does the city finish above or below its line?</td><td><span class="tag count">Count</span> or <span class="tag score">Score</span></td></tr>
+            <tr><td><b>Most Crime Today</b></td><td>Which city reports the most?</td><td><span class="tag field">Field</span></td></tr>
+            <tr><td><b>Lowest Crime</b></td><td>Which city stays quietest?</td><td><span class="tag field">Field</span></td></tr>
+            <tr><td><b>Biggest Increase</b></td><td>Which city jumps most vs yesterday (%)?</td><td><span class="tag field">Field</span></td></tr>
+            <tr><td><b>Exact Range</b></td><td>Which bucket does the final number land in?</td><td><span class="tag count">Count</span></td></tr>
+            <tr><td><b>CrimeLine Index</b></td><td>The severity-weighted Score across all launch cities.</td><td><span class="tag score">Score</span></td></tr>
+          </table>
+        </div>
+        <div class="rcard">
+          <h3>Sub-markets</h3>
+          <p>Over/Under runs per category too: <b>Total Crime · Violent Crime · Vehicle Thefts · Burglaries · Robberies</b>. A category market counts only qualifying incidents of that category.</p>
+        </div>
+      </section>
+
+      <section class="rsec" id="theline">
+        <h2>The line</h2>
+        <div class="rcard">
+          <h3>Where lines come from</h3>
+          <p>Lines post each morning, priced from each city's historical baseline (same weekday, season, and recent trend) plus the day's early reporting pace. Lines are <b>fixed once posted</b> — the price of each side moves with the market, the line itself does not.</p>
+          <p>Every line ends in <b>.5</b> so a market can never land exactly on it — <b>there are no pushes on CrimeLine</b>. One side always wins.</p>
+        </div>
+      </section>
+
+      <section class="rsec" id="scoring">
+        <h2>Scoring &amp; severity</h2>
+        <p class="lead">Not all crime counts the same. Count markets use raw incident counts. Score markets weight every incident by severity, so one violent felony moves the number more than eight shoplifting reports.</p>
+        <div class="rcard">
+          <h3>The severity weights <span class="mono" style="font-size:11px;color:var(--dim)">(illustrative — final rubric is fixed and published before any market opens)</span></h3>
+          <div class="weights">
+            <div class="wchip w1"><span class="x">×1</span><div><b>Petty theft</b><span>shoplifting, minor larceny</span></div></div>
+            <div class="wchip w2"><span class="x">×2</span><div><b>Vandalism</b><span>property damage, graffiti</span></div></div>
+            <div class="wchip w3"><span class="x">×3</span><div><b>Vehicle theft</b><span>auto theft, carjack attempt</span></div></div>
+            <div class="wchip w4"><span class="x">×4</span><div><b>Burglary</b><span>breaking &amp; entering</span></div></div>
+            <div class="wchip w6"><span class="x">×6</span><div><b>Robbery</b><span>theft by force or threat</span></div></div>
+            <div class="wchip w8"><span class="x">×8</span><div><b>Assault</b><span>violent offenses against persons</span></div></div>
+          </div>
+        </div>
+        <div class="rcard">
+          <h3>Worked example — one day in one city</h3>
+          <div class="example">
+            <span class="c">// raw reports filed</span><br>
+            120 petty theft · 30 vandalism · 22 vehicle theft · 14 burglary · 6 robbery · 8 assault<br>
+            <span class="c">// count market settles on</span><br>
+            <b>Count = 120+30+22+14+6+8 = <span class="g">200</span></b><br>
+            <span class="c">// score market settles on</span><br>
+            <b>Score = 120×1 + 30×2 + 22×3 + 14×4 + 6×6 + 8×8 = <span class="r">402</span></b>
+          </div>
+          <p style="margin-top:12px">Same day, two different numbers — a quiet-looking day with two extra assaults moves the Score sharply while barely moving the Count. That's the point.</p>
+        </div>
+        <div class="rcard">
+          <h3>What counts as a qualifying incident</h3>
+          <p>An incident qualifies when it is <b>officially reported</b> by the city's police department, <b>timestamped inside the market day</b> (12:00 AM – 11:59 PM local city time), and <b>categorized</b> into one of the covered offense types by the licensed data provider. Duplicates, reclassifications, and non-covered categories are excluded by the provider's standardization — the same way for every market and every player.</p>
+        </div>
+      </section>
+
+      <section class="rsec" id="data">
+        <h2>Live data &amp; settlement</h2>
+        <div class="rcard">
+          <h3>The pipeline</h3>
+          <p><b>Police departments file reports</b> → <b>the licensed feed standardizes them</b> → <b>the live counter climbs all day</b> → <b>the noon ET snapshot locks the number</b> → <b>settlement posts on-chain.</b></p>
+          <p>Reports lag real time — a 9 PM incident may not appear until morning. That's why settlement is a <b>fixed-time snapshot the following day</b>, not a midnight cutoff, and why the live projection runs ahead of the raw counter during the day.</p>
+        </div>
+        <div class="rcard">
+          <h3>Finality &amp; edge cases</h3>
+          <p><b>The snapshot is final.</b> If the provider later revises a number, settled markets do not reopen — finality is what makes instant payouts possible.</p>
+          <p><b>Data outage:</b> if the provider cannot deliver a city's number by the snapshot deadline plus a 6-hour grace window, that city's markets for the day are <b>voided and all stakes returned in full</b>. Nobody wins on missing data.</p>
+          <p><b>Ties in field markets:</b> if two cities tie for Most/Lowest/Biggest, the market splits winnings equally across backers of the tied cities.</p>
+        </div>
+      </section>
+
+      <section class="rsec" id="payouts">
+        <h2>Payouts &amp; fees</h2>
+        <div class="rcard">
+          <h3>Peer-to-peer pools</h3>
+          <p>Every market is a pool of matched orders. The percentages you see — <span class="mono" style="color:var(--over)">O 61%</span> / <span class="mono" style="color:var(--under)">U 39%</span> — are the crowd's live prices: the cost of one side is its implied probability, and winning pays out the whole matched pool to the correct side, pro-rata to stake.</p>
+          <p><b>CrimeLine's only revenue is a small fee on winnings</b> (fixed and published before launch). We never hold your funds, never set prices, and never take the other side of your trade.</p>
+        </div>
+        <div class="rcard">
+          <h3>Getting paid</h3>
+          <p>Settlement executes on Solana within minutes of the snapshot. Winnings land <b>directly in your wallet in USDC</b> — no claim button, no withdrawal queue, no minimums. Every settlement transaction is public and auditable forever.</p>
+        </div>
+      </section>
+
+      <section class="rsec" id="fairplay">
+        <h2>Fair play</h2>
+        <div class="rcard">
+          <p><b>One line for everyone.</b> Every player sees the same lines, the same live counter, and the same snapshot — there is no premium data tier that settles differently.</p>
+          <p><b>No insider positions.</b> CrimeLine, its team, and the data provider are prohibited from holding positions in any market.</p>
+          <p><b>Market integrity.</b> Attempting to manipulate underlying data (including filing false reports) is fraud; associated positions are voided and reported.</p>
+          <p><b>Eligibility.</b> CrimeLine is for eligible users in permitted jurisdictions only, 18+ (21+ where required). Availability depends on local law.</p>
+        </div>
+      </section>
+
+      <section class="rsec" id="faq">
+        <h2>FAQ</h2>
+        <details>
+          <summary>Why did the live counter go down during the day?</summary>
+          <div class="body">Providers occasionally reclassify or de-duplicate reports intraday. The counter reflects the current standardized total, so it can tick down as duplicates are merged. Only the noon ET snapshot matters for settlement.</div>
+        </details>
+        <details>
+          <summary>What happens if a game-changing incident happens at 11:58 PM?</summary>
+          <div class="body">If it's officially reported and timestamped inside the market day, it counts — even if the report is <i>filed</i> hours later. The next-day snapshot exists precisely to capture late-filed reports.</div>
+        </details>
+        <details>
+          <summary>Is betting on crime… okay?</summary>
+          <div class="body">CrimeLine treats public-safety data the way weather markets treat storms: it's <b>measurable public information</b>, already published by every major city. Markets on public data create better forecasts and more attention on the numbers cities report. We never touch victim-level data — only aggregate official statistics.</div>
+        </details>
+        <details>
+          <summary>Can a market settle on a corrected number?</summary>
+          <div class="body">No. The snapshot at noon ET is final even if the provider revises later. Finality is a feature: it's what allows instant, irreversible USDC payouts.</div>
+        </details>
+        <details>
+          <summary>Who sets the severity weights?</summary>
+          <div class="body">The rubric is fixed and published in the docs before any market opens, and any future change goes through public governance — never mid-market. The weights on this page are illustrative until launch.</div>
+        </details>
+        <details>
+          <summary>When does CrimeLine launch?</summary>
+          <div class="body">The board today is an illustrative preview while the real-money layer is built the right way (licensing, data contracts, audits). Join the waitlist on the homepage to be in the first cohort.</div>
+        </details>
+      </section>
+    </main>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <a class="brand" href="index.html" style="display:inline-flex;align-items:center;gap:10px;text-decoration:none"><span class="mark" style="width:30px;height:30px;display:inline-block"><svg viewBox="0 0 100 100" width="30" height="30"><path d="M 82 26 A 40 40 0 1 0 82 74" fill="none" stroke="#ff3050" stroke-width="17" stroke-linecap="round"/><rect x="30" y="44.5" width="62" height="11" rx="5.5" fill="#ff3050"/><circle cx="86" cy="50" r="4" fill="#ffe9ec"/></svg></span><b style="font-family:var(--display)">CrimeLine<span class="cr">©</span></b></a>
+      <div style="display:flex;gap:20px;flex-wrap:wrap">
+        <a href="index.html">Home</a><a href="index.html#board">Today's board</a><a href="index.html#token">$CrimeLine</a><a href="https://x.com/CrimeLineMarket" target="_blank" rel="noopener">X</a>
+      </div>
+    </div>
+    <p class="disc">Illustrative preview — CrimeLine is in development and nothing here is an offer to wager. Rules, weights, fees, and availability are subject to finalization and local law; the published docs at launch are authoritative. Data via a licensed third-party provider of official city statistics.</p>
+  </div>
+</footer>
+
+<script>
+  // clickable TOC with scroll-spy
+  (function(){
+    var links=[].slice.call(document.querySelectorAll('#toc a'));
+    var secs=links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
+    function spy(){
+      var y=window.scrollY+120, cur=0;
+      secs.forEach(function(s,i){ if(s && s.offsetTop<=y) cur=i; });
+      links.forEach(function(a,i){ a.classList.toggle('on', i===cur); });
+    }
+    window.addEventListener('scroll', spy, {passive:true}); spy();
+  })();
+</script>
+</body>
+</html>
