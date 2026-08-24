@@ -1,0 +1,11 @@
+# City photo credits (Wikimedia Commons)
+- NYC: File:New York skyline at night.jpg — cc by 4.0 — <a href="//commons.wikimedia.org/w/index.php?title=User:Azeusss&amp;action=edit&
+- CHI: File:Chicago Skyline @ Night (4768676199).jpg — cc by 2.0 — <a rel="nofollow" class="external text" href="https://www.flickr.com/people/5186
+- LA: File:Nightime skyline view of Los Angeles, California, looking north over the U.S. 101 (Hollywood) Freeway LCCN2013631697.tif — public domain — <bdi><a href="https://en.wikipedia.org/wiki/en:Carol_M._Highsmith" class="extiw"
+- HOU: File:Fireworks over Houston, Texas (LOC).jpg — public domain — <bdi><a href="https://en.wikipedia.org/wiki/en:Carol_M._Highsmith" class="extiw"
+- PHI: File:Philadelphia Skyline (52747785363).jpg — cc by 2.0 — <a rel="nofollow" class="external text" href="https://www.flickr.com/people/9297
+- DAL: File:Dallas night skyline.jpg — public domain — Carol M. Highsmith
+- PHX: File:Phoenix Skyline from a plan.jpg — cc0 — <a href="//commons.wikimedia.org/w/index.php?title=User:Weridman21213&amp;action
+- MIA: File:Super Bowl 44 Miami Florida Skyline shot (4331552443).jpg — cc by 2.0 — <a rel="nofollow" class="external text" href="https://www.flickr.com/people/2288
+- ATL: File:Jackson Street Bridge and Atlanta Night Skyline (Unsplash).jpg — cc0 — Joey Kyber <a rel="nofollow" class="external text" href="https://unsplash.com/@j
+- STL: File:Gateway Arch -173 Set (14214208983).jpg — cc by 2.0 — <a rel="nofollow" class="external text" href="https://www.flickr.com/people/1371
