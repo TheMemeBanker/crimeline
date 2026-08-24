@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>CrimeLine — Predict the Pulse of America's Cities</title>
-<meta name="description" content="The daily on-chain prediction market for public-safety data, built on Solana. Call official city crime totals — over or under — trade in USDC, and settle on-chain.">
+<meta name="description" content="Peer-to-peer prediction markets on city crime data. Trade over/under lines on official city crime numbers directly against other players — no house, no bookmaker. USDC on Solana, settled from licensed data.">
 <link rel="canonical" href="https://crimeline.fun/">
 <meta name="theme-color" content="#05070e">
 <meta property="og:type" content="website"><meta property="og:site_name" content="CrimeLine">
 <meta property="og:title" content="CrimeLine — Predict the Pulse of America's Cities">
-<meta property="og:description" content="The daily market for public-safety data. Call the number before it drops.">
+<meta property="og:description" content="Peer-to-peer prediction markets on city crime data. No house — you trade against the crowd, and the data settles it.">
 <meta property="og:url" content="https://crimeline.fun/">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@CrimeLineMarket">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect x='2' y='2' width='96' height='96' rx='24' fill='%230b1222'/%3E%3Cpath d='M 78 30 A 34 34 0 1 0 78 70' fill='none' stroke='%23ff3050' stroke-width='15' stroke-linecap='round'/%3E%3Crect x='34' y='45.2' width='52' height='9.6' rx='4.8' fill='%23ff3050'/%3E%3Ccircle cx='81' cy='50' r='3.6' fill='%23ffe9ec'/%3E%3C/svg%3E">
@@ -143,6 +143,19 @@
   .pill.o { color: var(--over); border-color: color-mix(in srgb, var(--over) 32%, transparent); }
   .pill.u { color: var(--under); border-color: color-mix(in srgb, var(--under) 32%, transparent); }
 
+  /* score band */
+  .score-band { display: grid; grid-template-columns: 1.05fr .95fr; gap: 56px; align-items: center; border: none; border-radius: 24px; padding: 56px;
+    background: linear-gradient(170deg, #1e2431, var(--surface) 55%, #171c27); box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 24px 56px -24px rgba(0,0,0,.55); }
+  .score-copy h2 { margin: 14px 0 0; font-family: var(--display); font-size: clamp(26px, 3vw, 38px); font-weight: 700; letter-spacing: -.025em; }
+  .score-copy p { margin: 16px 0 0; color: var(--muted); font-size: 16.5px; line-height: 1.75; max-width: 52ch; }
+  .score-scale { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .sw { display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-radius: 14px; background: #1e2430; box-shadow: inset 0 1px 0 rgba(255,255,255,.04); }
+  .sw .swx { font-family: var(--mono); font-weight: 700; font-size: 15px; color: var(--under); min-width: 34px; }
+  .sw:nth-child(1) .swx, .sw:nth-child(2) .swx { color: var(--over); }
+  .sw:nth-child(3) .swx, .sw:nth-child(4) .swx { color: #e8b34b; }
+  .sw b { font-size: 14.5px; font-weight: 600; }
+  .score-fine { grid-column: 1 / -1; font-size: 11.5px; color: var(--dim); margin-top: 2px; }
+  @media (max-width: 1000px) { .score-band { grid-template-columns: 1fr; padding: 36px 24px; gap: 28px; } }
   /* section frame */
   .sec { padding: 130px 0; }
   .sec-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; margin-bottom: 52px; flex-wrap: wrap; }
@@ -453,7 +466,7 @@
     <div>
       <p class="eyebrow">The daily on-chain market for public-safety data</p>
       <h1>Predict the <span class="hl">Pulse</span> of America's cities.</h1>
-      <p class="lede">CrimeLine turns official city statistics into a daily prediction market on Solana. Call the number before it's released — over or under — trade in USDC, and settle on-chain the moment the data drops.</p>
+      <p class="lede">CrimeLine turns official city crime data into peer-to-peer prediction markets. Call tomorrow's number — over or under — and trade directly against other players, never against a house. Prices come from the crowd. Settlement comes from the data.</p>
       <div class="cta-row">
         <button class="btn solid js-join" type="button">Join the waitlist</button>
         <a class="btn" href="#board">See today's board ↓</a>
@@ -476,7 +489,7 @@
       <div>
         <p class="eyebrow">Today's board</p>
         <h2>Every city has a number.</h2>
-        <p>Pick a market, pick a side. It's as simple as opening a sportsbook — but the outcome is real, measurable city data.</p>
+        <p>Pick a market, pick a side. It feels like a sportsbook — except there's no book. Every line is a live peer-to-peer market: another player holds the other side, and the official number decides who's right.</p>
       </div>
       <div class="mtabs" id="mtabs"></div>
     </div>
@@ -485,6 +498,26 @@
       <span class="sb-count">Next settlement in <b id="settleClock" class="mono">--:--:--</b><span class="sb-tz"> · noon ET</span></span>
     </div>
     <div class="board" id="boardGrid"></div>
+  </section>
+
+  <!-- SEVERITY SCORE -->
+  <section class="sec" id="score" style="padding-top:0">
+    <div class="score-band">
+      <div class="score-copy">
+        <p class="eyebrow">The CrimeLine Score</p>
+        <h2>Not all crime counts the same.</h2>
+        <p>A shoplifting report isn't a robbery. Every qualifying incident is scored by severity — minor offenses count light, major offenses count heavy — so the Score reflects how a city's day actually felt, not just how many reports were filed. Markets trade on raw counts <em>and</em> the weighted Score.</p>
+      </div>
+      <div class="score-scale" aria-label="Illustrative severity weights">
+        <div class="sw"><span class="swx">×1</span><b>Petty theft</b></div>
+        <div class="sw"><span class="swx">×2</span><b>Vandalism</b></div>
+        <div class="sw"><span class="swx">×3</span><b>Vehicle theft</b></div>
+        <div class="sw"><span class="swx">×4</span><b>Burglary</b></div>
+        <div class="sw"><span class="swx">×6</span><b>Robbery</b></div>
+        <div class="sw"><span class="swx">×8</span><b>Assault</b></div>
+        <div class="score-fine">Illustrative weights — the final scoring rubric ships with the docs and is fixed before any market opens.</div>
+      </div>
+    </div>
   </section>
 
   <!-- LIVE DASHBOARD -->
@@ -531,7 +564,7 @@
       <div class="feat"><span class="fi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><svg class="spark" viewBox="0 0 80 34" aria-hidden="true"><path d="M2 12 L14 18 24 10 34 22 44 18 56 26 66 22 78 30" fill="none" stroke="var(--over)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".8"/><circle cx="78" cy="30" r="2.6" fill="var(--over)"/></svg><h4>Lowest Crime</h4><p>The flip side — which city stays quietest today. A market for the calm as much as the chaos.</p></div>
       <div class="feat"><span class="fi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20 L10 12 L14 15 L20 5 M20 5 h-5 M20 5 v5"/></svg></span><svg class="spark" viewBox="0 0 80 34" aria-hidden="true"><path d="M2 30 L16 28 26 22 36 24 46 14 58 16 68 8 78 4" fill="none" stroke="var(--under)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".8"/><circle cx="78" cy="4" r="2.6" fill="var(--under)"/></svg><h4>Biggest Increase</h4><p>Which city jumps the most versus yesterday? A pure momentum market on the day-over-day swing.</p></div>
       <div class="feat"><span class="fi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="4" rx="1"/><rect x="3" y="10" width="18" height="4" rx="1"/><rect x="3" y="16" width="18" height="4" rx="1"/></svg></span><svg class="spark" viewBox="0 0 80 34" aria-hidden="true"><path d="M2 22 L12 22 12 14 24 14 24 26 38 26 38 10 52 10 52 20 66 20 66 6 78 6" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".8"/><circle cx="78" cy="6" r="2.6" fill="var(--accent)"/></svg><h4>Exact Range</h4><p>Skip over/under and nail the bucket: 260–269, 270–279, 280–289, 290–299, 300+. More precision, bigger payout.</p></div>
-      <div class="feat"><span class="fi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 4-6"/></svg></span><svg class="spark" viewBox="0 0 80 34" aria-hidden="true"><path d="M2 28 L14 24 24 26 34 18 44 20 56 12 66 14 78 6" fill="none" stroke="var(--over)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".8"/><circle cx="78" cy="6" r="2.6" fill="var(--over)"/></svg><h4>CrimeLine Index</h4><p>One market to rule them all: total qualifying incidents across every launch city, in a single daily number.</p></div>
+      <div class="feat"><span class="fi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 4-6"/></svg></span><svg class="spark" viewBox="0 0 80 34" aria-hidden="true"><path d="M2 28 L14 24 24 26 34 18 44 20 56 12 66 14 78 6" fill="none" stroke="var(--over)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".8"/><circle cx="78" cy="6" r="2.6" fill="var(--over)"/></svg><h4>CrimeLine Index</h4><p>One market to rule them all: the severity-weighted Score across every launch city, rolled into a single daily number.</p></div>
     </div>
   </section>
 
@@ -539,7 +572,7 @@
   <section class="sec" id="onchain">
     <div class="sec-head"><div><h2>On-chain by design.</h2><p>CrimeLine runs on Solana — so every market is fast, cheap, transparent, and always yours. No house account, no custody, no cash-out delays.</p></div></div>
     <div class="onchain">
-      <div class="oc"><span class="oi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span><h4>Your wallet, your funds</h4><p>Connect a Solana wallet — Phantom, Solflare, Backpack. Non-custodial: we never hold your money.</p></div>
+      <div class="oc"><span class="oi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span><h4>Peer-to-peer by design</h4><p>You trade against other players, never against us. CrimeLine matches orders and takes a small fee — it never holds your funds and never takes the other side.</p></div>
       <div class="oc"><span class="oi" style="font-weight:800;font-size:18px">$</span><h4>Trade in USDC</h4><p>Take a side in stablecoins. Positions are held and settled in USDC on-chain — no chips, no house float.</p></div>
       <div class="oc"><span class="oi"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z"/></svg></span><h4>Instant &amp; near-zero fees</h4><p>Solana settles in seconds for a fraction of a cent, so placing and settling a market feels instant.</p></div>
       <div class="oc"><span class="oi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><h4>Verifiable settlement</h4><p>The licensed data feed is posted on-chain at a fixed time. Every result is auditable by anyone, forever.</p></div>
@@ -550,7 +583,7 @@
     <div class="sec-head"><div><p class="eyebrow">How it works</p><h2>One source. One settlement. Fully transparent.</h2></div></div>
     <div class="steps">
       <div class="step"><div class="n">01</div><h4>Lines post each morning</h4><p>Every launch city opens with a line for each market, priced from historical data and the day's early pace.</p></div>
-      <div class="step"><div class="n">02</div><h4>You take a side</h4><p>Over or under, a city, or a range. Build a slip, track it live, and watch the projection move all day.</p></div>
+      <div class="step"><div class="n">02</div><h4>The crowd takes the other</h4><p>Over or under, a city, or a range — your order matches against players on the opposite side. Build a slip, track it live, and watch the market move all day.</p></div>
       <div class="step"><div class="n">03</div><h4>Settles on-chain</h4><p>A single licensed data provider is snapshotted at noon Eastern the following day and posted to Solana. Same source, every market — payouts in USDC, verifiable by anyone.</p></div>
     </div>
   </section>
