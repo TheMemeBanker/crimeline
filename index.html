@@ -12,17 +12,21 @@
 <meta property="og:description" content="The daily market for public-safety data. Call the number before it drops.">
 <meta property="og:url" content="https://crimeline.fun/">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@CrimeLineMarket">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cdefs%3E%3CclipPath id='c'%3E%3Crect x='2' y='2' width='44' height='44' rx='12'/%3E%3C/clipPath%3E%3C/defs%3E%3Crect x='2' y='2' width='44' height='44' rx='12' fill='%2313223f'/%3E%3Cg clip-path='url(%23c)'%3E%3Cpath d='M9 40 V26 H12 V40 H15 V20 H19 V40 H20.5 V12 H25 V40 H27 V24 H30 V40 H32 V17 H35 V40 H37 V28 H39 V40 Z' fill='%232c4066'/%3E%3Cpath d='M5 40 H9 V26 H12 V40 H15 V20 H19 V40 H20.5 V12 H25 V40 H27 V24 H30 V40 H32 V17 H35 V40 H37 V28 H39 V40 H43' fill='none' stroke='%23ff3a54' stroke-width='2.1' stroke-linejoin='miter' stroke-linecap='round'/%3E%3Ccircle cx='22.75' cy='12' r='2.9' fill='%23ff2d4d' stroke='%23ffdfe4' stroke-width='1'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='t' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23161e33'/%3E%3Cstop offset='1' stop-color='%2305080f'/%3E%3C/linearGradient%3E%3CclipPath id='c'%3E%3Crect x='4' y='4' width='92' height='92' rx='23'/%3E%3C/clipPath%3E%3C/defs%3E%3Crect x='4' y='4' width='92' height='92' rx='23' fill='url(%23t)'/%3E%3Cg clip-path='url(%23c)'%3E%3Cpath d='M9 64 H36 L43 64 50 22 57 64 64 64 68 56 73 64 H91' fill='none' stroke='%23ff3b56' stroke-width='6' stroke-linejoin='round' stroke-linecap='round'/%3E%3Ccircle cx='50' cy='22' r='9' fill='none' stroke='%23ff3b56' stroke-width='2.4'/%3E%3Ccircle cx='50' cy='22' r='4.4' fill='%23ff3b56'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap">
 <style>
   :root {
-    --bg:#05070e; --navy:#0a1120; --surface:#0c1424; --surface-2:#111c31; --raise:#16233c;
-    --line:rgba(255,255,255,.08); --card-line:rgba(255,255,255,.07);
-    --ink:#eaf0fb; --muted:#8a95ac; --dim:#5c667d;
-    --red:#ff2d4d; --red-ink:#ff5069; --glow:rgba(255,45,77,.18);
-    --over:#22d38b; --over-dim:rgba(34,211,139,.14);
-    --under:#ff4d68; --under-dim:rgba(255,77,104,.13);
-    --mono: ui-monospace, "SF Mono", "SFMono-Regular", Menlo, Consolas, monospace;
-    --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --bg:#04060c; --navy:#090f1d; --surface:#0b1222; --surface-2:#101a2e; --raise:#15223a;
+    --line:rgba(148,168,214,.10); --card-line:rgba(148,168,214,.11);
+    --ink:#eef3fd; --muted:#93a0ba; --dim:#5f6a84;
+    --red:#ff3050; --red-ink:#ff5c74; --glow:rgba(255,48,80,.2);
+    --over:#2adf95; --over-dim:rgba(42,223,149,.13);
+    --under:#ff5670; --under-dim:rgba(255,86,112,.12);
+    --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    --sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --display: "Space Grotesk", var(--sans);
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -51,19 +55,19 @@
   .tk .p.d { color: var(--under); background: var(--under-dim); }
 
   /* nav */
-  nav { position: sticky; top: 0; z-index: 40; border-bottom: 1px solid var(--line); background: rgba(5,7,14,.82); backdrop-filter: blur(12px); }
-  .nav-in { max-width: 1200px; margin: 0 auto; padding: 13px 26px; display: flex; align-items: center; gap: 16px; }
+  nav { position: sticky; top: 0; z-index: 40; border-bottom: 1px solid var(--line); background: rgba(4,6,12,.78); backdrop-filter: blur(16px) saturate(1.3); }
+  .nav-in { max-width: 1200px; margin: 0 auto; padding: 15px 26px; display: flex; align-items: center; gap: 16px; }
   .brand { display: flex; align-items: center; gap: 11px; text-decoration: none; color: inherit; }
-  .brand .mark { width: 36px; height: 36px; flex: none; display: block; filter: drop-shadow(0 3px 9px rgba(0,0,0,.5)) drop-shadow(0 0 14px rgba(255,45,77,.14)); }
+  .brand .mark { width: 40px; height: 40px; flex: none; display: block; filter: drop-shadow(0 3px 9px rgba(0,0,0,.5)) drop-shadow(0 0 14px rgba(255,45,77,.14)); }
   .brand .mark svg { width: 100%; height: 100%; display: block; }
-  .brand b { font-size: 17px; font-weight: 750; letter-spacing: -.01em; }
+  .brand b { font-family: var(--display); font-size: 18.5px; font-weight: 700; letter-spacing: -.02em; }
   .brand .cr { font-size: 8px; font-weight: 600; letter-spacing: 0; vertical-align: super; margin-left: 1px; color: var(--muted); }
   .nav-links { margin-left: auto; display: flex; align-items: center; gap: 24px; }
   .nav-links a { color: var(--muted); text-decoration: none; font-size: 14px; }
   .nav-links a:hover { color: var(--ink); }
-  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; font-family: var(--sans); font-size: 14px; font-weight: 650; text-decoration: none; cursor: pointer; border-radius: 10px; padding: 9px 17px; border: 1px solid var(--card-line); background: transparent; color: var(--ink); transition: all .15s ease; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; font-family: var(--sans); font-size: 14px; font-weight: 650; text-decoration: none; cursor: pointer; border-radius: 12px; padding: 10px 19px; border: 1px solid var(--card-line); background: transparent; color: var(--ink); transition: all .16s ease; }
   .btn:hover { border-color: color-mix(in srgb, var(--red) 55%, var(--card-line)); }
-  .btn.solid { background: linear-gradient(180deg, var(--red-ink), var(--red)); border-color: transparent; color: #fff; box-shadow: 0 1px 1px rgba(0,0,0,.25), 0 10px 26px -12px var(--glow); }
+  .btn.solid { background: linear-gradient(180deg, #ff5c74, #f01f42); border-color: transparent; color: #fff; box-shadow: inset 0 1px 0 rgba(255,255,255,.22), 0 1px 1px rgba(0,0,0,.3), 0 12px 30px -12px var(--glow); }
   .btn.solid:hover { transform: translateY(-1px); box-shadow: 0 2px 3px rgba(0,0,0,.3), 0 16px 34px -12px var(--glow); }
   .btn.solid:active { transform: translateY(0); }
   .btn:focus-visible { outline: 2px solid var(--red-ink); outline-offset: 2px; }
@@ -74,11 +78,11 @@
   .nav-toggle[aria-expanded="true"] span:nth-child(3){ transform: translateY(-6px) rotate(-45deg); }
 
   /* hero */
-  .hero { padding: 66px 0 40px; display: grid; grid-template-columns: 1.05fr .95fr; gap: 46px; align-items: center; }
-  .hero h1 { margin: 16px 0 0; font-size: clamp(40px, 6vw, 68px); line-height: .98; font-weight: 820; letter-spacing: -.035em; }
-  .hero h1 .hl { color: var(--red); }
+  .hero { padding: 88px 0 64px; display: grid; grid-template-columns: 1.05fr .95fr; gap: 46px; align-items: center; }
+  .hero h1 { margin: 18px 0 0; font-family: var(--display); font-size: clamp(44px, 6.4vw, 78px); line-height: .96; font-weight: 700; letter-spacing: -.045em; }
+  .hero h1 .hl { background: linear-gradient(115deg, #ff3050 20%, #ff7a6b 90%); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .hero .lede { margin: 20px 0 26px; font-size: 18px; color: var(--muted); max-width: 48ch; }
-  .cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+  .cta-row { display: flex; gap: 12px; flex-wrap: wrap; } .cta-row .btn { white-space: nowrap; }
   .hero-chips { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 26px; font-family: var(--mono); font-size: 12px; color: var(--muted); }
   .hero-chips span { display: inline-flex; align-items: center; gap: 7px; }
   .hero-chips i { width: 6px; height: 6px; border-radius: 50%; background: var(--red); box-shadow: 0 0 8px var(--glow); }
@@ -93,15 +97,15 @@
   .sol-badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 13px 6px 10px; border-radius: 999px; border: 1px solid var(--card-line); background: linear-gradient(90deg, rgba(153,69,255,.12), rgba(20,241,149,.09)); font-family: var(--mono); font-size: 11.5px; letter-spacing: .05em; color: var(--muted); }
   .sol-badge svg { width: 17px; height: 14px; flex: none; }
   .sol-badge b { color: var(--ink); font-weight: 650; letter-spacing: .02em; }
-  .onchain { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
-  .oc { border: 1px solid var(--card-line); border-radius: 15px; background: var(--surface); padding: 22px; }
+  .onchain { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+  .oc { border: 1px solid var(--card-line); border-radius: 17px; background: linear-gradient(180deg, var(--surface), color-mix(in srgb, var(--surface) 60%, var(--navy))); box-shadow: inset 0 1px 0 rgba(255,255,255,.04); padding: 26px; }
   .oc .oi { width: 36px; height: 36px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(140deg, rgba(153,69,255,.22), rgba(20,241,149,.16)); color: #fff; }
   .oc h4 { margin: 14px 0 6px; font-size: 16px; font-weight: 720; }
   .oc p { margin: 0; color: var(--muted); font-size: 13.5px; }
   /* $CrimeLine token */
   #token { border-top: 1px solid var(--line); }
   .tok-hero { display: grid; grid-template-columns: 1.1fr .9fr; gap: 26px; align-items: center; margin-bottom: 26px; }
-  .tok-hero h2 { margin: 12px 0 8px; font-size: clamp(28px, 3.8vw, 44px); font-weight: 800; letter-spacing: -.025em; }
+  .tok-hero h2 { margin: 12px 0 8px; font-family: var(--display); font-size: clamp(30px, 4vw, 48px); font-weight: 700; letter-spacing: -.03em; }
   .tok-hero h2 .hl { color: var(--red); }
   .tok-hero p { margin: 0; color: var(--muted); font-size: 16px; max-width: 52ch; }
   .flywheel { display: flex; align-items: center; gap: 8px 10px; flex-wrap: wrap; margin-top: 18px; font-family: var(--mono); font-size: 12px; color: var(--muted); }
@@ -115,8 +119,8 @@
   .tok-stat .tr { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 12.5px; color: var(--muted); }
   .tok-stat .tr b { color: var(--ink); font-weight: 650; }
   .tok-stat .btn { width: 100%; justify-content: center; padding: 12px; }
-  .token-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
-  .tk-card { border: 1px solid var(--card-line); border-radius: 15px; background: var(--surface); padding: 22px; }
+  .token-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+  .tk-card { border: 1px solid var(--card-line); border-radius: 17px; background: linear-gradient(180deg, var(--surface), color-mix(in srgb, var(--surface) 60%, var(--navy))); box-shadow: inset 0 1px 0 rgba(255,255,255,.04); padding: 26px; }
   .tk-card .ti { width: 36px; height: 36px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; background: color-mix(in srgb, var(--red) 15%, transparent); color: var(--red-ink); font-weight: 800; }
   .tk-card h4 { margin: 14px 0 6px; font-size: 16px; font-weight: 730; }
   .tk-card p { margin: 0; color: var(--muted); font-size: 13.5px; }
@@ -134,9 +138,9 @@
   .pill.u { color: var(--under); border-color: color-mix(in srgb, var(--under) 32%, transparent); }
 
   /* section frame */
-  .sec { padding: 44px 0; border-top: 1px solid var(--line); }
-  .sec-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
-  .sec-head h2 { margin: 8px 0 0; font-size: clamp(26px, 3.4vw, 38px); font-weight: 780; letter-spacing: -.02em; }
+  .sec { padding: 76px 0; border-top: 1px solid var(--line); }
+  .sec-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 34px; flex-wrap: wrap; }
+  .sec-head h2 { margin: 10px 0 0; font-family: var(--display); font-size: clamp(30px, 3.8vw, 44px); font-weight: 700; letter-spacing: -.03em; }
   .sec-head p { margin: 8px 0 0; color: var(--muted); font-size: 15.5px; max-width: 60ch; }
 
   /* market tabs */
@@ -152,9 +156,9 @@
   .settle-bar .sb-tz { color: var(--dim); }
 
   /* board grid */
-  .board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-  .card { border: 1px solid var(--card-line); border-radius: 15px; background: linear-gradient(180deg, var(--surface), var(--navy)); padding: 16px 16px 14px; transition: border-color .15s ease, transform .15s ease; }
-  .card:hover { border-color: color-mix(in srgb, var(--red) 30%, var(--card-line)); transform: translateY(-2px); }
+  .board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .card { border: 1px solid var(--card-line); border-radius: 17px; background: linear-gradient(180deg, var(--surface), var(--navy)); box-shadow: inset 0 1px 0 rgba(255,255,255,.045), 0 24px 48px -36px rgba(0,0,0,.9); padding: 19px 19px 17px; transition: border-color .18s ease, transform .18s ease, box-shadow .18s ease; }
+  .card:hover { border-color: color-mix(in srgb, var(--red) 38%, var(--card-line)); transform: translateY(-3px); box-shadow: inset 0 1px 0 rgba(255,255,255,.06), 0 30px 60px -34px rgba(0,0,0,.95), 0 0 40px -18px var(--glow); }
   .card-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
   .card-city { display: flex; align-items: center; gap: 10px; }
   .abbr { width: 38px; height: 38px; border-radius: 9px; background: var(--surface-2); border: 1px solid var(--card-line); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--ink); letter-spacing: .02em; }
@@ -163,7 +167,7 @@
   .live-tag { font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--over); display: inline-flex; align-items: center; gap: 5px; }
   .live-tag i { width: 6px; height: 6px; border-radius: 50%; background: var(--over); animation: pulse 1.8s ease-out infinite; }
   .card-line { display: flex; align-items: baseline; gap: 8px; margin: 14px 0 4px; }
-  .card-line .num { font-family: var(--mono); font-size: 34px; font-weight: 750; letter-spacing: -1px; }
+  .card-line .num { font-family: var(--mono); font-size: 38px; font-weight: 700; letter-spacing: -1.4px; }
   .card-line .lab { font-family: var(--mono); font-size: 11px; color: var(--muted); }
   .card-meta { font-family: var(--mono); font-size: 11.5px; color: var(--muted); margin-bottom: 12px; }
   .card-meta b { color: var(--ink); }
@@ -189,23 +193,23 @@
   .lp-scale { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 11px; color: var(--dim); }
   .lp-note { margin-top: 16px; font-size: 13.5px; color: var(--muted); }
   .lp-side { display: flex; flex-direction: column; gap: 12px; }
-  .mini { border: 1px solid var(--card-line); border-radius: 14px; background: var(--surface); padding: 16px 18px; }
+  .mini { border: 1px solid var(--card-line); border-radius: 16px; background: linear-gradient(180deg, var(--surface), color-mix(in srgb, var(--surface) 60%, var(--navy))); box-shadow: inset 0 1px 0 rgba(255,255,255,.04); padding: 18px 20px; }
   .mini .k { font-family: var(--mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); display: flex; align-items: center; gap: 8px; }
   .mini .k .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--red); }
   .mini .b { font-size: 20px; font-weight: 720; margin-top: 6px; }
   .mini .s { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
 
   /* generic feature grids */
-  .grid3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+  .grid3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
   .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-  .feat { border: 1px solid var(--card-line); border-radius: 15px; background: var(--surface); padding: 22px; }
+  .feat { border: 1px solid var(--card-line); border-radius: 17px; background: linear-gradient(180deg, var(--surface), color-mix(in srgb, var(--surface) 60%, var(--navy))); box-shadow: inset 0 1px 0 rgba(255,255,255,.04); padding: 26px; transition: border-color .18s ease, transform .18s ease; }
   .feat .fi { width: 36px; height: 36px; border-radius: 10px; background: color-mix(in srgb, var(--red) 14%, transparent); color: var(--red-ink); display: inline-flex; align-items: center; justify-content: center; }
   .feat h4 { margin: 14px 0 6px; font-size: 17px; font-weight: 720; }
   .feat p { margin: 0; color: var(--muted); font-size: 14px; }
 
   /* how it works */
-  .steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; counter-reset: s; }
-  .step { border: 1px solid var(--card-line); border-radius: 15px; background: var(--surface); padding: 22px; position: relative; }
+  .steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; counter-reset: s; }
+  .step { border: 1px solid var(--card-line); border-radius: 17px; background: linear-gradient(180deg, var(--surface), color-mix(in srgb, var(--surface) 60%, var(--navy))); box-shadow: inset 0 1px 0 rgba(255,255,255,.04); padding: 26px; position: relative; }
   .step .n { font-family: var(--mono); font-size: 12px; color: var(--red-ink); font-weight: 700; }
   .step h4 { margin: 8px 0 6px; font-size: 17px; font-weight: 720; }
   .step p { margin: 0; color: var(--muted); font-size: 14px; }
@@ -228,8 +232,8 @@
   .lead-row .pts { font-family: var(--mono); font-weight: 700; color: var(--over); }
 
   /* expansion lines */
-  .lines { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
-  .lcard { border: 1px solid var(--card-line); border-radius: 15px; background: var(--surface); padding: 20px; display: flex; flex-direction: column; gap: 6px; }
+  .lines { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+  .lcard { border: 1px solid var(--card-line); border-radius: 17px; background: linear-gradient(180deg, var(--surface), color-mix(in srgb, var(--surface) 60%, var(--navy))); box-shadow: inset 0 1px 0 rgba(255,255,255,.04); padding: 24px; display: flex; flex-direction: column; gap: 7px; }
   .lcard.live { border-color: color-mix(in srgb, var(--red) 40%, var(--card-line)); background: linear-gradient(180deg, color-mix(in srgb, var(--red) 8%, var(--surface)), var(--surface)); }
   .lcard .lh { display: flex; align-items: center; justify-content: space-between; }
   .lcard b { font-size: 17px; font-weight: 730; }
@@ -239,8 +243,8 @@
   .badge.soon { color: var(--muted); border: 1px solid var(--card-line); }
 
   /* cta band */
-  .cta-band { border: 1px solid var(--card-line); border-radius: 22px; padding: 46px 40px; text-align: center; background: radial-gradient(120% 160% at 50% -40%, var(--glow), transparent 60%), linear-gradient(180deg, var(--surface), var(--navy)); box-shadow: 0 50px 90px -60px #000; }
-  .cta-band h2 { margin: 14px 0 10px; font-size: clamp(28px, 3.6vw, 42px); font-weight: 800; letter-spacing: -.02em; }
+  .cta-band { border: 1px solid var(--card-line); border-radius: 26px; padding: 64px 44px; text-align: center; background: radial-gradient(120% 160% at 50% -40%, var(--glow), transparent 60%), linear-gradient(180deg, var(--surface), var(--navy)); box-shadow: 0 50px 90px -60px #000; }
+  .cta-band h2 { margin: 14px 0 12px; font-family: var(--display); font-size: clamp(30px, 4vw, 48px); font-weight: 700; letter-spacing: -.03em; }
   .cta-band p { margin: 0 auto 22px; max-width: 54ch; color: var(--muted); font-size: 16px; }
 
   /* footer */
@@ -289,6 +293,7 @@
     .grid2 { grid-template-columns: 1fr; }
   }
   @media (max-width: 680px) {
+    body { background-attachment: scroll; }
     .wrap { padding: 0 16px; }
     .nav-in { padding: 12px 16px; position: relative; }
     .nav-toggle { display: flex; }
@@ -306,26 +311,26 @@
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <symbol id="clmark" viewBox="0 0 48 48">
+  <symbol id="clmark" viewBox="0 0 100 100">
     <defs>
-      <linearGradient id="clTile" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1b2d4c"/><stop offset="1" stop-color="#0a1322"/></linearGradient>
-      <linearGradient id="clBld" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2b3f63" stop-opacity=".92"/><stop offset="1" stop-color="#1a2942" stop-opacity=".5"/></linearGradient>
-      <linearGradient id="clEdge" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff" stop-opacity=".16"/><stop offset=".5" stop-color="#ffffff" stop-opacity="0"/></linearGradient>
-      <radialGradient id="clGlow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#ff2d4d" stop-opacity=".95"/><stop offset=".55" stop-color="#ff2d4d" stop-opacity=".3"/><stop offset="1" stop-color="#ff2d4d" stop-opacity="0"/></radialGradient>
-      <clipPath id="clClip"><rect x="1.5" y="1.5" width="45" height="45" rx="12.5"/></clipPath>
+      <linearGradient id="clTile" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#161e33"/><stop offset=".5" stop-color="#0b101f"/><stop offset="1" stop-color="#05080f"/></linearGradient>
+      <linearGradient id="clEdge" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff" stop-opacity=".16"/><stop offset=".25" stop-color="#ffffff" stop-opacity=".04"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/></linearGradient>
+      <linearGradient id="clPulse" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff2d4d" stop-opacity="0"/><stop offset=".14" stop-color="#ff2d4d" stop-opacity=".9"/><stop offset=".55" stop-color="#ff5570"/><stop offset=".86" stop-color="#ff2d4d" stop-opacity=".9"/><stop offset="1" stop-color="#ff2d4d" stop-opacity="0"/></linearGradient>
+      <radialGradient id="clBloom" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ff3b56" stop-opacity=".5"/><stop offset=".55" stop-color="#ff3b56" stop-opacity=".1"/><stop offset="1" stop-color="#ff3b56" stop-opacity="0"/></radialGradient>
+      <linearGradient id="clUnder" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff2d4d" stop-opacity="0"/><stop offset="1" stop-color="#ff2d4d" stop-opacity=".14"/></linearGradient>
+      <clipPath id="clClip"><rect x="4" y="4" width="92" height="92" rx="23"/></clipPath>
     </defs>
-    <rect x="1.5" y="1.5" width="45" height="45" rx="12.5" fill="url(#clTile)"/>
+    <rect x="4" y="4" width="92" height="92" rx="23" fill="url(#clTile)"/>
     <g clip-path="url(#clClip)">
-      <g stroke="#9fb0d0" stroke-opacity=".06" stroke-width="1"><line x1="16" y1="4" x2="16" y2="44"/><line x1="32" y1="4" x2="32" y2="44"/></g>
-      <path d="M9 40 V26 H12 V40 H15 V20 H19 V40 H20.5 V12 H25 V40 H27 V24 H30 V40 H32 V17 H35 V40 H37 V28 H39 V40 Z" fill="url(#clBld)"/>
-      <g fill="#0c1526" fill-opacity=".9"><rect x="21.4" y="16" width="1.1" height="1.6"/><rect x="23" y="16" width="1.1" height="1.6"/><rect x="21.4" y="20" width="1.1" height="1.6"/><rect x="23" y="20" width="1.1" height="1.6"/><rect x="21.4" y="24" width="1.1" height="1.6"/><rect x="23" y="24" width="1.1" height="1.6"/><rect x="33" y="21" width="1" height="1.5"/><rect x="16.4" y="24" width="1" height="1.5"/></g>
-      <path d="M5 40 H9 V26 H12 V40 H15 V20 H19 V40 H20.5 V12 H25 V40 H27 V24 H30 V40 H32 V17 H35 V40 H37 V28 H39 V40 H43" fill="none" stroke="#ff3a54" stroke-width="2.1" stroke-linejoin="miter" stroke-linecap="round"/>
-      <circle cx="22.75" cy="12" r="6" fill="url(#clGlow)"/>
-      <circle cx="22.75" cy="12" r="2.7" fill="#ff2d4d" stroke="#ffdfe4" stroke-width=".9"/>
-      <circle cx="22.75" cy="12" r=".9" fill="#fff"/>
-      <rect x="1.5" y="1.5" width="45" height="22" rx="12.5" fill="url(#clEdge)"/>
+      <g stroke="#1b2540" stroke-width=".5" opacity=".5"><path d="M4 27.5 H96 M4 50 H96 M4 72.5 H96 M27.5 4 V96 M50 4 V96 M72.5 4 V96"/></g>
+      <rect x="4" y="60" width="92" height="36" fill="url(#clUnder)"/>
+      <circle cx="50" cy="32" r="27" fill="url(#clBloom)"/>
+      <path d="M9 64 H36 L43 64 50 22 57 64 64 64 68 56 73 64 H91" fill="none" stroke="url(#clPulse)" stroke-width="4.8" stroke-linejoin="round" stroke-linecap="round"/>
+      <circle cx="50" cy="22" r="7.4" fill="none" stroke="#ff3b56" stroke-width="1.8" opacity=".8"/>
+      <circle cx="50" cy="22" r="3.5" fill="#ff3b56"/>
+      <circle cx="50" cy="22" r="1.5" fill="#ffe9ec"/>
     </g>
-    <rect x="1.5" y="1.5" width="45" height="45" rx="12.5" fill="none" stroke="#ffffff" stroke-opacity=".11" stroke-width="1.4"/>
+    <rect x="4" y="4" width="92" height="92" rx="23" fill="none" stroke="url(#clEdge)" stroke-width="1.4"/>
   </symbol>
   <symbol id="sol" viewBox="0 0 24 20">
     <defs><linearGradient id="solG" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#9945ff"/><stop offset="1" stop-color="#14f195"/></linearGradient></defs>
