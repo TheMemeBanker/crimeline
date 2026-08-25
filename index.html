@@ -145,7 +145,11 @@
   .tk-card p { margin: 0; color: var(--muted); font-size: 13.5px; }
   .tk-fine { margin-top: 14px; font-size: 11px; color: var(--dim); }
   .pv-rows { padding: 6px; }
-  .pv-row { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 14px; padding: 16px 16px; border-radius: 12px; }
+  .pv-row { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 14px; padding: 16px 16px; border-radius: 12px; position: relative; overflow: hidden; isolation: isolate; }
+  /* noir city photo behind each preview row — same treatment as the board cards */
+  .pv-row::before { content: ""; position: absolute; inset: 0; z-index: -2; background-image: var(--pvbg); background-size: cover; background-position: center 42%; filter: grayscale(.78) contrast(1.18) brightness(.68) saturate(1.1); }
+  .pv-row::after { content: ""; position: absolute; inset: 0; z-index: -1;
+    background: radial-gradient(90% 110% at 88% 0%, rgba(255,59,88,.14), transparent 55%), linear-gradient(90deg, rgba(23,28,39,.92) 0%, rgba(23,28,39,.72) 44%, rgba(23,28,39,.42) 100%); }
   .pv-row + .pv-row { border-top: 1px solid var(--line); }
   .pv-city { display: flex; flex-direction: column; }
   .pv-city b { font-size: 15px; font-weight: 650; }
@@ -485,7 +489,7 @@
       <a href="how-it-works.html">How it works</a>
       <a href="rules.html">Rules</a>
       <a href="#token" id="tokenLink">$CrimeLine</a>
-      <button class="btn solid js-wallet" type="button">Connect wallet</button>
+      <button class="js-wallet" type="button">Connect wallet</button>
     </div>
   </div>
 </nav>
@@ -498,7 +502,7 @@
       <h1>Predict the <span class="hl">Pulse</span> of America's cities.</h1>
       <p class="lede">CrimeLine turns official city crime data into peer-to-peer prediction markets. Call tomorrow's number — over or under — and trade directly against other players, never against a house. Prices come from the crowd. Settlement comes from the data.</p>
       <div class="cta-row">
-        <button class="btn solid js-wallet" type="button">Connect wallet</button>
+        <button class="js-wallet" type="button">Connect wallet</button>
         <a class="btn" href="#board">See today's board ↓</a>
       </div>
       <div class="hero-chips">
@@ -696,7 +700,7 @@
           <div class="tr"><span>Holder perks</span><b>fees · boosts · access</b></div>
           <div class="tr"><span>Launch</span><b>with the first cohort</b></div>
         </div>
-        <button class="btn solid js-wallet" type="button">Connect wallet</button>
+        <button class="js-wallet" type="button">Connect wallet</button>
         <p class="tk-fine">Illustrative utility token for the CrimeLine protocol. Mechanics shown are design targets — not a promise of value or return.</p>
       </div>
     </div>
@@ -715,7 +719,7 @@
       <p class="eyebrow">Devnet beta · first markets soon</p>
       <h2>Find the line. Beat the line.</h2>
       <p>CrimeLine is in devnet beta. Connect your Solana wallet now and you're ready the moment the first boards open — trading runs in USDC, peer-to-peer, settled on-chain.</p>
-      <div class="cta-row" style="justify-content:center"><button class="btn solid js-wallet" type="button">Connect wallet</button><a class="btn" href="#board">Explore the board</a></div>
+      <div class="cta-row" style="justify-content:center"><button class="js-wallet" type="button">Connect wallet</button><a class="btn" href="#board">Explore the board</a></div>
     </div>
   </section>
 
@@ -738,7 +742,7 @@
 </div>
 
 <!-- floating slip bar -->
-<div class="slipbar" id="slipbar"><span class="cnt"><b id="slipN">0</b> picks on your slip</span><button class="btn solid js-wallet" type="button">Connect wallet</button></div>
+<div class="slipbar" id="slipbar"><span class="cnt"><b id="slipN">0</b> picks on your slip</span><button class="js-wallet" type="button">Connect wallet</button></div>
 
 <script>
 (function(){
@@ -772,7 +776,8 @@
   (function(){
     var top=CITIES.slice().sort(function(a,b){ return LINES["Total Crime"][b]-LINES["Total Crime"][a]; }).slice(0,4);
     $("pvRows").innerHTML=top.map(function(c){ var L=LINES["Total Crime"][c], ov=META[c].ov;
-      return '<div class="pv-row"><div class="pv-city"><b>'+c+'</b><span>'+curOf(L,META[c].cf)+' reported · proj '+expOf(L,ov)+'</span></div>'
+      var img="assets/cities/"+AB[c].replace(".","").toLowerCase()+".jpg";
+      return '<div class="pv-row" style="--pvbg:url('+img+')"><div class="pv-city"><b>'+c+'</b><span>'+curOf(L,META[c].cf)+' reported · proj '+expOf(L,ov)+'</span></div>'
         +'<div class="pv-line">'+L.toFixed(1)+'</div>'
         +'<div class="pv-ou"><span class="pill o">O '+ov+'%</span><span class="pill u">U '+(100-ov)+'%</span></div></div>';
     }).join("");
