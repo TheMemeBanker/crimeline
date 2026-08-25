@@ -481,13 +481,11 @@
     <a class="brand" href="#top"><span class="mark"><svg><use href="#clmark"/></svg></span><b>CrimeLine<span class="cr">&#169;</span></b></a>
     <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
     <div class="nav-links" id="navLinks">
-      <a href="#board">Today's board</a>
-      <a href="#markets">Markets</a>
-      <a href="#how">How it works</a>
+      <a href="markets.html">Markets</a>
+      <a href="how-it-works.html">How it works</a>
       <a href="rules.html">Rules</a>
-      <a href="#lines">The Lines</a>
       <a href="#token" id="tokenLink">$CrimeLine</a>
-      <button class="btn solid js-join" type="button">Join the waitlist</button>
+      <button class="btn solid js-wallet" type="button">Connect wallet</button>
     </div>
   </div>
 </nav>
@@ -500,7 +498,7 @@
       <h1>Predict the <span class="hl">Pulse</span> of America's cities.</h1>
       <p class="lede">CrimeLine turns official city crime data into peer-to-peer prediction markets. Call tomorrow's number — over or under — and trade directly against other players, never against a house. Prices come from the crowd. Settlement comes from the data.</p>
       <div class="cta-row">
-        <button class="btn solid js-join" type="button">Join the waitlist</button>
+        <button class="btn solid js-wallet" type="button">Connect wallet</button>
         <a class="btn" href="#board">See today's board ↓</a>
       </div>
       <div class="hero-chips">
@@ -698,7 +696,7 @@
           <div class="tr"><span>Holder perks</span><b>fees · boosts · access</b></div>
           <div class="tr"><span>Launch</span><b>with the first cohort</b></div>
         </div>
-        <button class="btn solid js-join" type="button">Get on the $CrimeLine list</button>
+        <button class="btn solid js-wallet" type="button">Connect wallet</button>
         <p class="tk-fine">Illustrative utility token for the CrimeLine protocol. Mechanics shown are design targets — not a promise of value or return.</p>
       </div>
     </div>
@@ -714,10 +712,10 @@
 
   <section class="sec" style="border-top:none">
     <div class="cta-band">
-      <p class="eyebrow">Now forming · first cohort</p>
+      <p class="eyebrow">Devnet beta · first markets soon</p>
       <h2>Find the line. Beat the line.</h2>
-      <p>CrimeLine is opening to a first group of players. Join the waitlist to get early access and help shape the launch board.</p>
-      <div class="cta-row" style="justify-content:center"><button class="btn solid js-join" type="button">Join the waitlist</button><a class="btn" href="#board">Explore the board</a></div>
+      <p>CrimeLine is in devnet beta. Connect your Solana wallet now and you're ready the moment the first boards open — trading runs in USDC, peer-to-peer, settled on-chain.</p>
+      <div class="cta-row" style="justify-content:center"><button class="btn solid js-wallet" type="button">Connect wallet</button><a class="btn" href="#board">Explore the board</a></div>
     </div>
   </section>
 
@@ -731,7 +729,7 @@
         </div>
       </div>
       <div class="foot-links">
-        <a href="#board">Today's board</a><a href="#markets">Markets</a><a href="#how">How it works</a>
+        <a href="#board">Today's board</a><a href="markets.html">Markets</a><a href="how-it-works.html">How it works</a>
       <a href="rules.html">Rules</a><a href="#lines">The Lines</a><a href="mailto:hello@crimeline.fun">Contact</a><a href="https://x.com/CrimeLineMarket" target="_blank" rel="noopener" aria-label="CrimeLine on X" style="display:inline-flex;align-items:center;gap:6px">X <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:middle"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
       </div>
     </div>
@@ -740,35 +738,7 @@
 </div>
 
 <!-- floating slip bar -->
-<div class="slipbar" id="slipbar"><span class="cnt"><b id="slipN">0</b> picks on your slip</span><button class="btn solid js-join" type="button">Join to play</button></div>
-
-<!-- modal -->
-<div class="ov" id="ov" hidden>
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
-    <button class="x" id="mClose" type="button" aria-label="Close">&#10005;</button>
-    <div id="formView">
-      <p class="eyebrow">Early access · First cohort</p>
-      <h3 id="mTitle">Join the CrimeLine waitlist</h3>
-      <p class="sub">Reserve your spot on Solana. We'll email you when your city's board opens.</p>
-      <form id="form" novalidate>
-        <label class="fld"><span class="lab">Email</span><input type="email" id="fEmail" autocomplete="email" placeholder="you@email.com"><span class="err" id="eEmail" role="alert"></span></label>
-        <label class="fld"><span class="lab">Solana wallet <span style="color:var(--dim);font-weight:400">(optional · early whitelist)</span></span><input type="text" id="fWallet" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="e.g. 7xKX…9dPq" style="font-family:var(--mono);font-size:13.5px"><span class="err" id="eWallet" role="alert"></span></label>
-        <label class="fld"><span class="lab">Your city <span style="color:var(--dim);font-weight:400">(optional)</span></span>
-          <select id="fCity"><option value="">Pick your home board…</option></select><span class="err"></span></label>
-        <button class="btn solid" id="submit" type="submit">Join the waitlist</button>
-        <p class="sub" style="margin:14px 0 0; font-size:11.5px">18+. Illustrative preview — no wagers are placed. We'll only email you about launch.</p>
-      </form>
-    </div>
-    <div id="doneView" hidden>
-      <div class="done">
-        <div class="ck"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
-        <h3>You're on the list.</h3>
-        <p class="sub">You're in line for the first cohort. Watch your inbox — we'll open your board soon.</p>
-        <button class="btn solid" id="doneClose" type="button">Done</button>
-      </div>
-    </div>
-  </div>
-</div>
+<div class="slipbar" id="slipbar"><span class="cnt"><b id="slipN">0</b> picks on your slip</span><button class="btn solid js-wallet" type="button">Connect wallet</button></div>
 
 <script>
 (function(){
@@ -867,43 +837,11 @@
     } else { run(); }
   })();
 
-  // ---- nav + modal ----
+  // ---- nav ----
   var navToggle=$("navToggle"), navLinks=$("navLinks");
   function closeNav(){ navLinks.classList.remove("open"); navToggle.setAttribute("aria-expanded","false"); }
   navToggle.addEventListener("click", function(){ var o=navLinks.classList.toggle("open"); navToggle.setAttribute("aria-expanded",o?"true":"false"); });
   Array.prototype.forEach.call(navLinks.querySelectorAll("a"), function(a){ a.addEventListener("click", function(e){ if(a.getAttribute("href")==="#"){ e.preventDefault(); } closeNav(); }); });
-
-  var ov=$("ov"), formView=$("formView"), doneView=$("doneView"), form=$("form"), fEmail=$("fEmail"), eEmail=$("eEmail"), fWallet=$("fWallet"), eWallet=$("eWallet"), submit=$("submit"), lastFocus=null;
-  var emailRe=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/, EA_ENDPOINT="";
-  function isSolAddress(a){
-    if(!/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(a)) return false;
-    var AL="123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz", bytes=[0], i, j;
-    for(i=0;i<a.length;i++){ var v=AL.indexOf(a.charAt(i)); if(v<0) return false; var carry=v;
-      for(j=0;j<bytes.length;j++){ carry+=bytes[j]*58; bytes[j]=carry&0xff; carry>>=8; }
-      while(carry){ bytes.push(carry&0xff); carry>>=8; } }
-    for(i=0;i<a.length && a.charAt(i)==='1';i++) bytes.push(0);
-    return bytes.length===32;
-  }
-  $("fCity").insertAdjacentHTML("beforeend", CITIES.map(function(c){ return '<option>'+c+'</option>'; }).join(""));
-  function openM(){ closeNav(); lastFocus=document.activeElement; formView.hidden=false; doneView.hidden=true; ov.hidden=false; document.body.classList.add("lock"); setTimeout(function(){ fEmail.focus(); },40); }
-  function closeM(){ ov.hidden=true; document.body.classList.remove("lock"); if(lastFocus&&lastFocus.focus) lastFocus.focus(); }
-  Array.prototype.forEach.call(document.querySelectorAll(".js-join"), function(b){ b.addEventListener("click", openM); });
-  $("mClose").addEventListener("click", closeM); $("doneClose").addEventListener("click", closeM);
-  ov.addEventListener("click", function(e){ if(e.target===ov) closeM(); });
-  document.addEventListener("keydown", function(e){ if(e.key==="Escape" && !ov.hidden) closeM(); });
-  fEmail.addEventListener("input", function(){ fEmail.closest(".fld").classList.remove("bad"); eEmail.textContent=""; });
-  fWallet.addEventListener("input", function(){ fWallet.closest(".fld").classList.remove("bad"); eWallet.textContent=""; });
-  form.addEventListener("submit", function(e){
-    e.preventDefault(); var em=fEmail.value.trim(), w=fWallet.value.trim();
-    if(!emailRe.test(em)){ fEmail.closest(".fld").classList.add("bad"); eEmail.textContent="Enter a valid email so we can reach you."; return; }
-    if(w && !isSolAddress(w)){ fWallet.closest(".fld").classList.add("bad"); eWallet.textContent="That doesn't look like a valid Solana address."; return; }
-    submit.disabled=true; submit.textContent="Joining…";
-    var payload={ email:em, wallet:w, city:$("fCity").value, picks:Object.keys(picks).length, source:"crimeline.fun" };
-    try{ localStorage.setItem("crimeline_waitlist", JSON.stringify(payload)); }catch(_){}
-    var p = EA_ENDPOINT ? fetch(EA_ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify(payload)}).then(function(r){ if(!r.ok) throw 0; }) : Promise.resolve();
-    p.then(function(){ formView.hidden=true; doneView.hidden=false; setTimeout(function(){ $("doneClose").focus(); },40); })
-     .catch(function(){ submit.disabled=false; submit.textContent="Join the waitlist"; eEmail.textContent="Something went wrong — please try again."; });
-  });
 
   // ---- live settlement countdown (to next noon ET, DST-safe) ----
   (function(){
@@ -925,6 +863,7 @@
   })();
 })();
 </script>
+<script src="assets/wallet.js" defer></script>
 
 </body>
 </html>

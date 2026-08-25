@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Markets — CrimeLine</title>
+<meta name="description" content="Every CrimeLine market, explained: over/under lines for ten cities, field markets, exact ranges, and the severity-weighted CrimeLine Index — all peer-to-peer, all settled from official data.">
+<link rel="canonical" href="https://crimeline.fun/markets.html">
+<meta name="theme-color" content="#12151d">
+<meta property="og:type" content="website"><meta property="og:site_name" content="CrimeLine">
+<meta property="og:title" content="Markets — CrimeLine">
+<meta property="og:description" content="Every market on the board: over/under lines, field markets, exact ranges, and the CrimeLine Index.">
+<meta property="og:url" content="https://crimeline.fun/markets.html">
+<meta property="og:image" content="https://crimeline.fun/assets/og.jpg">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@CrimeLineMarket">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect x='2' y='2' width='96' height='96' rx='24' fill='%230b1222'/%3E%3Cpath d='M 78 30 A 34 34 0 1 0 78 70' fill='none' stroke='%23ff3050' stroke-width='15' stroke-linecap='round'/%3E%3Crect x='34' y='45.2' width='52' height='9.6' rx='4.8' fill='%23ff3050'/%3E%3Ccircle cx='81' cy='50' r='3.6' fill='%23ffe9ec'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap">
+<style>
+  :root {
+    --bg:#12151d; --surface:#1a1f2a; --surface-2:#232937;
+    --line:#262d3b;
+    --ink:#e4e8f1; --muted:#98a1b3; --dim:#646d80;
+    --red:#ff3050; --red-ink:#ff5e75;
+    --accent:#5b8aff; --accent-dim:rgba(91,138,255,.12);
+    --over:#31d492; --over-dim:rgba(49,212,146,.1);
+    --under:#ff6478; --under-dim:rgba(255,100,120,.09);
+    --amber:#e8b34b;
+    --mono:"JetBrains Mono", ui-monospace, Menlo, monospace;
+    --sans:"Inter", ui-sans-serif, system-ui, sans-serif;
+    --display:"Space Grotesk", var(--sans);
+    --elev: inset 0 1px 0 rgba(255,255,255,.045), 0 1px 2px rgba(0,0,0,.25), 0 18px 44px -18px rgba(0,0,0,.5);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { position: relative; margin: 0; color: var(--ink); font: 16.5px/1.7 var(--sans); -webkit-font-smoothing: antialiased; background: var(--bg); }
+  a { color: inherit; }
+  .wrap { max-width: 1400px; margin: 0 auto; padding: 0 36px; }
+  .mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  .eyebrow { font-family: var(--mono); font-size: 11.5px; letter-spacing: .24em; text-transform: uppercase; color: var(--dim); }
+
+  .city-horizon { position: fixed; left: 0; right: 0; bottom: 0; height: 240px; z-index: -2; pointer-events: none;
+    background: radial-gradient(60% 130% at 50% 108%, rgba(91,138,255,.07), transparent 60%), radial-gradient(35% 90% at 78% 106%, rgba(255,59,88,.04), transparent 60%); }
+  .city-horizon svg { position: absolute; left: 0; bottom: -2px; width: 100%; height: 190px; display: block; }
+
+  nav { position: sticky; top: 0; z-index: 40; border-bottom: 1px solid rgba(148,168,214,.05); background: rgba(18,21,29,.8); backdrop-filter: blur(20px) saturate(1.4); }
+  .nav-in { max-width: 1400px; margin: 0 auto; padding: 15px 36px; display: flex; align-items: center; gap: 16px; }
+  .brand { display: flex; align-items: center; gap: 11px; text-decoration: none; color: inherit; }
+  .brand .mark { width: 38px; height: 38px; flex: none; display: block; filter: drop-shadow(0 2px 8px rgba(0,0,0,.5)) drop-shadow(0 0 16px rgba(255,48,80,.22)); }
+  .brand .mark svg { width: 100%; height: 100%; display: block; }
+  .brand b { font-family: var(--display); font-size: 18.5px; font-weight: 700; letter-spacing: -.02em; }
+  .brand .cr { font-size: 8px; font-weight: 600; vertical-align: super; margin-left: 1px; color: var(--muted); }
+  .nav-links { margin-left: auto; display: flex; align-items: center; gap: 24px; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 14px; }
+  .nav-links a:hover, .nav-links a.on { color: var(--ink); }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; font-size: 14px; font-weight: 650; text-decoration: none; cursor: pointer; border-radius: 999px; padding: 11px 22px; border: none; background: #222836; box-shadow: inset 0 1px 0 rgba(255,255,255,.05); color: var(--ink); transition: all .16s ease; font-family: var(--sans); }
+  .btn:hover { background:#2a3140; }
+  .btn.solid { background: #eef1f7; color: #12151d; box-shadow: 0 1px 2px rgba(0,0,0,.3); }
+  .btn.solid:hover { background:#ffffff; }
+  .nav-toggle { display: none; margin-left: auto; width: 40px; height: 40px; border: 1px solid #333b4d; border-radius: 12px; background: var(--surface); cursor: pointer; padding: 0; flex-direction: column; align-items: center; justify-content: center; gap: 4px; }
+  .nav-toggle span { width: 18px; height: 2px; border-radius: 2px; background: var(--ink); display: block; transition: transform .2s, opacity .2s; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(1){ transform: translateY(6px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] span:nth-child(2){ opacity: 0; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(3){ transform: translateY(-6px) rotate(-45deg); }
+
+  .hero { padding: 76px 0 20px; display: grid; grid-template-columns: 1.15fr .85fr; gap: 64px; align-items: center; }
+  .hero h1 { margin: 16px 0 0; font-family: var(--display); font-size: clamp(38px, 4.6vw, 58px); font-weight: 700; letter-spacing: -.035em; line-height: 1.03; }
+  .hero h1 .hl { color: var(--accent); }
+  .hero .lede { margin: 18px 0 0; color: var(--muted); font-size: 18px; max-width: 58ch; line-height: 1.75; }
+  .hero-chips { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 24px; font-family: var(--mono); font-size: 12px; color: var(--muted); }
+  .hero-chips span { display: inline-flex; align-items: center; gap: 7px; }
+  .hero-chips i { width: 6px; height: 6px; border-radius: 50%; background: var(--over); }
+
+  /* annotated card anatomy */
+  .anat { position: relative; }
+  .anat .card { border-radius: 20px; overflow: hidden; background: linear-gradient(170deg, #1e2431, var(--surface) 55%, #171c27); box-shadow: var(--elev); }
+  .anat .cph { position: relative; height: 168px; overflow: hidden; }
+  .anat .cph img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(.82) contrast(1.12) brightness(.78) saturate(1.1); }
+  .anat .cph::after { content: ""; position: absolute; inset: 0;
+    background: radial-gradient(90% 90% at 85% 0%, rgba(255,59,88,.16), transparent 55%), linear-gradient(180deg, rgba(18,21,29,.18) 0%, rgba(18,21,29,.42) 55%, var(--surface) 99%); }
+  .anat .cph-top { position: absolute; top: 14px; left: 16px; right: 16px; display: flex; align-items: center; justify-content: space-between; z-index: 2; }
+  .anat .abbr { width: 42px; height: 42px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 12px; font-weight: 700; background: rgba(10,12,18,.55); backdrop-filter: blur(6px); color: #eef1f7; }
+  .anat .cname { font-family: var(--display); font-size: 19px; font-weight: 700; color: #f2f5fb; display: block; text-shadow: 0 1px 10px rgba(0,0,0,.5); }
+  .anat .mkt { font-family: var(--mono); font-size: 10px; color: rgba(238,241,247,.75); letter-spacing: .08em; text-transform: uppercase; }
+  .anat .live-tag { font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--over); display: inline-flex; align-items: center; gap: 5px; }
+  .anat .live-tag i { width: 6px; height: 6px; border-radius: 50%; background: var(--over); }
+  .anat .card-body { padding: 16px 22px 22px; position: relative; margin-top: -34px; z-index: 2; }
+  .anat .num { font-family: var(--mono); font-size: 40px; font-weight: 700; letter-spacing: -1.4px; }
+  .anat .lab { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-left: 8px; }
+  .anat .card-meta { font-family: var(--mono); font-size: 11.5px; color: var(--muted); margin: 4px 0 16px; }
+  .anat .card-meta b { color: var(--ink); }
+  .anat .ou { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .anat .ou span { font-family: var(--mono); font-size: 13px; font-weight: 650; padding: 13px 8px; border-radius: 12px; display: flex; flex-direction: column; gap: 3px; align-items: center; }
+  .anat .ou .o { background: var(--over-dim); color: var(--over); }
+  .anat .ou .u { background: var(--under-dim); color: var(--under); }
+  .anat .ou .dir { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; opacity: .85; }
+  .callouts { display: flex; flex-direction: column; gap: 0; margin-top: 18px; }
+  .co { display: flex; gap: 12px; padding: 11px 2px; border-top: 1px solid rgba(148,168,214,.07); font-size: 13.5px; color: var(--muted); line-height: 1.6; }
+  .co:first-child { border-top: none; }
+  .co .n { flex: none; width: 24px; height: 24px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 12px; font-weight: 700; color: #12151d; background: #eef1f7; margin-top: 2px; }
+  .co b { color: var(--ink); }
+
+  .sec { padding: 110px 0 0; }
+  .sec:last-of-type { padding-bottom: 110px; }
+  .sec-head { margin-bottom: 44px; }
+  .sec-head h2 { margin: 14px 0 0; font-family: var(--display); font-size: clamp(28px, 3.4vw, 40px); font-weight: 700; letter-spacing: -.025em; }
+  .sec-head p { margin: 14px 0 0; color: var(--muted); font-size: 17px; line-height: 1.75; max-width: 62ch; }
+  .sec-head .tags { margin-top: 14px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .tag { font-family: var(--mono); font-size: 11px; padding: 4px 10px; border-radius: 6px; }
+  .tag.count { color: var(--accent); background: var(--accent-dim); }
+  .tag.score { color: var(--amber); background: rgba(232,179,75,.12); }
+  .tag.field { color: var(--over); background: var(--over-dim); }
+
+  .rcard { border-radius: 20px; padding: 30px 34px; background: linear-gradient(170deg, #1e2431, var(--surface) 55%, #171c27); box-shadow: var(--elev); }
+  .rcard h3 { margin: 0 0 8px; font-size: 17.5px; font-weight: 700; }
+  .rcard p { margin: 6px 0; color: var(--muted); font-size: 15px; line-height: 1.7; }
+  .rcard p b { color: var(--ink); }
+
+  /* big line table */
+  .tbl-wrap { overflow-x: auto; border-radius: 20px; background: linear-gradient(170deg, #1e2431, var(--surface) 55%, #171c27); box-shadow: var(--elev); }
+  table { width: 100%; border-collapse: collapse; font-size: 14.5px; min-width: 780px; }
+  th { text-align: right; font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); padding: 16px 18px 10px; white-space: nowrap; }
+  th:first-child { text-align: left; padding-left: 26px; }
+  td { padding: 13px 18px; color: var(--muted); border-top: 1px solid rgba(148,168,214,.07); text-align: right; font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 14px; }
+  td:first-child { text-align: left; font-family: var(--sans); padding-left: 26px; }
+  td:first-child b { color: var(--ink); font-weight: 650; }
+  td:first-child span { color: var(--dim); font-family: var(--mono); font-size: 11px; margin-left: 8px; }
+  tr:hover td { background: rgba(148,168,214,.03); }
+  .tbl-note { padding: 12px 26px 18px; font-size: 12px; color: var(--dim); }
+
+  /* feature grid */
+  .grid3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 26px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
+  .feat { position: relative; overflow: hidden; background: linear-gradient(170deg, #1e2431, var(--surface) 55%, #171c27); box-shadow: var(--elev); border-radius: 20px; padding: 32px; transition: transform .18s ease; }
+  .feat:hover { transform: translateY(-3px); }
+  .feat .fi { width: 40px; height: 40px; border-radius: 12px; background: var(--surface-2); color: var(--ink); display: inline-flex; align-items: center; justify-content: center; }
+  .feat h4 { margin: 14px 0 6px; font-size: 17px; font-weight: 720; }
+  .feat h4 .tag { margin-left: 8px; vertical-align: 2px; }
+  .feat p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.7; }
+  .feat .ex { margin-top: 14px; font-family: var(--mono); font-size: 12.5px; line-height: 1.9; background: #151a24; border-radius: 12px; padding: 13px 16px; color: var(--muted); overflow-x: auto; }
+  .feat .ex b { color: var(--ink); font-weight: 600; }
+  .feat .ex .g { color: var(--over); } .feat .ex .r { color: var(--under); }
+
+  /* range buckets */
+  .buckets { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+  .bk { font-family: var(--mono); font-size: 13px; font-weight: 650; padding: 11px 16px; border-radius: 12px; background: #1e2430; color: var(--muted); box-shadow: inset 0 1px 0 rgba(255,255,255,.04); }
+  .bk.hot { color: #12151d; background: #eef1f7; }
+  .bk span { display: block; font-size: 10.5px; font-weight: 500; color: var(--dim); margin-top: 2px; }
+  .bk.hot span { color: #4a5162; }
+
+  /* settle strip */
+  .settle-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-top: 44px; padding: 16px 22px; border-radius: 16px; background: linear-gradient(170deg, #1d2330, #181d28); box-shadow: var(--elev); font-family: var(--mono); font-size: 12.5px; }
+  .settle-bar .sb-live { display: inline-flex; align-items: center; gap: 8px; color: var(--over); letter-spacing: .06em; text-transform: uppercase; font-size: 11px; }
+  .settle-bar .sb-live i { width: 7px; height: 7px; border-radius: 50%; background: var(--over); }
+  .settle-bar .sb-count { color: var(--muted); }
+  .settle-bar .sb-count b { color: var(--ink); font-weight: 700; font-size: 14.5px; letter-spacing: .08em; font-variant-numeric: tabular-nums; }
+
+  /* cta band */
+  .cta-band { position: relative; overflow: hidden; border-radius: 30px; padding: 84px 48px; text-align: center; margin-top: 110px;
+    background: linear-gradient(180deg, rgba(14,17,24,.82), rgba(14,17,24,.9)), url("assets/cities/nyc.jpg") center 40%/cover no-repeat;
+    box-shadow: 0 30px 80px -40px rgba(0,0,0,.6); }
+  .cta-band h2 { margin: 14px 0 12px; font-family: var(--display); font-size: clamp(28px, 3.6vw, 44px); font-weight: 700; letter-spacing: -.03em; }
+  .cta-band p { margin: 0 auto 22px; max-width: 54ch; color: var(--muted); font-size: 16px; }
+  .cta-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+
+  footer { margin-top: 110px; padding: 44px 0 70px; background: #10141d; }
+  .foot { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .foot a { color: var(--muted); text-decoration: none; font-size: 14px; }
+  .foot a:hover { color: var(--ink); }
+  .foot .links { display: flex; flex-wrap: wrap; gap: 10px 20px; }
+  .disc { margin-top: 22px; font-size: 11.5px; line-height: 1.7; color: var(--dim); max-width: 100ch; }
+
+  @media (max-width: 1000px) {
+    .hero { grid-template-columns: 1fr; gap: 36px; padding-top: 48px; }
+    .grid3 { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 680px) {
+    .wrap { padding: 0 16px; }
+    .nav-in { padding: 12px 16px; position: relative; }
+    .nav-toggle { display: flex; }
+    .nav-links { position: absolute; top: calc(100% + 1px); left: 0; right: 0; margin: 0; flex-direction: column; align-items: stretch; gap: 0; background: #1a1f2a; border-bottom: 1px solid var(--line); padding: 8px 16px 14px; display: none; box-shadow: 0 22px 40px -24px rgba(0,0,0,.6); }
+    .nav-links.open { display: flex; }
+    .nav-links a { padding: 13px 4px; border-bottom: 1px solid var(--line); }
+    .nav-links .btn { margin-top: 12px; justify-content: center; padding: 12px; }
+    .sec { padding-top: 76px; }
+    .grid3, .grid2 { grid-template-columns: 1fr; }
+    .rcard { padding: 24px 20px; }
+    .cta-band { padding: 40px 20px; }
+    .city-horizon { height: 150px; } .city-horizon svg { height: 120px; }
+  }
+</style>
+</head>
+<body>
+<div class="city-horizon" aria-hidden="true"><svg viewBox="0 0 1600 190" preserveAspectRatio="xMidYMax slice">
+  <g fill="#181e2c"><path d="M0 190V120h34v-14h10v14h22v70zM80 190V96h18l4-12 4 12h16v94zM136 190V134h40v56zM190 190V88h14V72h8v16h20v102zM248 190V128h30v-16h12v16h20v62zM326 190V102h24V88h10v14h20v88zM398 190V140h44v50zM458 190V92h16l3-10 3 10h20v98zM518 190V124h34v66zM570 190V76h12V62h8v14h16v114zM624 190V132h40v58zM682 190V98h22v92zM722 190V144h36v46zM774 190V84h14V70h8v14h20v106zM834 190V126h32v64zM884 190V100h20l4-14 4 14h14v90zM944 190V138h42v52zM1002 190V92h16v98zM1036 190V120h30v70zM1084 190V80h12V64h8v16h18v110zM1140 190V130h38v60zM1194 190V96h22v94zM1234 190V142h34v48zM1286 190V88h16l3-12 3 12h18v102zM1344 190V122h32v68zM1394 190V104h24v86zM1436 190V134h40v56zM1494 190V90h14V76h8v14h20v100zM1554 190V126h46v64z"/></g>
+  <g fill="#1f2739"><path d="M0 190V146h60v44zM76 190V112h26l5-16 5 16h20v78zM148 190V150h52v40zM216 190V122h18V104h10v18h26v68zM288 190V158h60v32zM366 190V118h30v72zM414 190V100h14V84h10v16h22v90zM478 190V154h56v36zM552 190V128h34v62zM604 190V108h20l4-14 4 14h18v82zM668 190V152h50v38zM736 190V116h28v74zM782 190V94h12V78h10v16h20v96zM842 190V148h54v42zM914 190V120h32v70zM964 190V102h18l4-12 4 12h16v88zM1024 190V156h52v34zM1094 190V126h30v64zM1142 190V106h22v84zM1182 190V148h50v42zM1250 190V112h16V96h10v16h24v78zM1318 190V152h48v38zM1384 190V124h30v66zM1432 190V98h20l4-12 4 12h16v92zM1494 190V150h50v40zM1560 190V118h40v72z"/></g>
+</svg></div>
+
+<nav>
+  <div class="nav-in">
+    <a class="brand" href="index.html" aria-label="CrimeLine home"><span class="mark"><svg viewBox="0 0 100 100"><defs><linearGradient id="clR" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff6076"/><stop offset=".5" stop-color="#ff3050"/><stop offset="1" stop-color="#e01b3e"/></linearGradient></defs><path d="M 82 26 A 40 40 0 1 0 82 74" fill="none" stroke="url(#clR)" stroke-width="17" stroke-linecap="round"/><rect x="30" y="44.5" width="62" height="11" rx="5.5" fill="url(#clR)"/><circle cx="86" cy="50" r="4" fill="#ffe9ec"/></svg></span><b>CrimeLine<span class="cr">©</span></b></a>
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <div class="nav-links" id="navLinks">
+      <a href="markets.html" class="on">Markets</a>
+      <a href="how-it-works.html">How it works</a>
+      <a href="rules.html">Rules</a>
+      <a href="index.html#token">$CrimeLine</a>
+      <button class="btn solid js-wallet" type="button">Connect wallet</button>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <!-- HERO + card anatomy -->
+  <header class="hero">
+    <div>
+      <p class="eyebrow">The board</p>
+      <h1>Every market<br>on the <span class="hl">board.</span></h1>
+      <p class="lede">Ten cities, one number each, every day — and a full family of markets around it. Every line is peer-to-peer: another player holds the other side, and the official data decides who's right.</p>
+      <div class="hero-chips">
+        <span><i></i>Trade in USDC on Solana</span>
+        <span><i></i>Peer-to-peer · no house</span>
+        <span><i></i>Settles noon ET from licensed data</span>
+      </div>
+    </div>
+    <div class="anat">
+      <div class="card" aria-label="Example market card">
+        <div class="cph"><img src="assets/cities/hou.jpg" alt="Houston skyline at night">
+          <div class="cph-top">
+            <div style="display:flex;align-items:center;gap:10px"><span class="abbr">HOU</span><div><b class="cname">Houston</b><span class="mkt">Total Crime</span></div></div>
+            <span class="live-tag"><i></i>Live</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div><span class="num">287.5</span><span class="lab">line</span></div>
+          <div class="card-meta"><b>241</b> reported so far · proj finish <b>289</b></div>
+          <div class="ou"><span class="o"><span class="dir">Over</span><span>61%</span></span><span class="u"><span class="dir">Under</span><span>39%</span></span></div>
+        </div>
+      </div>
+      <div class="callouts">
+        <div class="co"><span class="n">1</span><span><b>The line</b> — posted each morning per city, per market. Houston needs 288+ reports for overs to win.</span></div>
+        <div class="co"><span class="n">2</span><span><b>Live count &amp; projection</b> — incidents accumulate all day; the projection runs ahead of the lagging raw count.</span></div>
+        <div class="co"><span class="n">3</span><span><b>Crowd prices</b> — 61% is what the other side of the market currently believes, not a bookmaker's odds.</span></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- O/U FAMILY -->
+  <section class="sec" id="overunder">
+    <div class="sec-head">
+      <p class="eyebrow">The flagship family</p>
+      <h2>Over / Under lines</h2>
+      <p>The core market. Each city posts a daily line for five categories — call the official number over or under. Half-point lines mean there's never a push: the number is either over the line or it isn't.</p>
+      <div class="tags"><span class="tag count">Settles on raw count</span></div>
+    </div>
+    <div class="tbl-wrap">
+      <table aria-label="Illustrative daily lines for all ten cities">
+        <thead><tr><th>City</th><th>Total Crime</th><th>Violent</th><th>Vehicle Thefts</th><th>Burglaries</th><th>Robberies</th></tr></thead>
+        <tbody>
+          <tr><td><b>New York</b><span>NYC</span></td><td>512.5</td><td>78.5</td><td>88.5</td><td>61.5</td><td>44.5</td></tr>
+          <tr><td><b>Chicago</b><span>CHI</span></td><td>401.5</td><td>53.5</td><td>121.5</td><td>44.5</td><td>31.5</td></tr>
+          <tr><td><b>Los Angeles</b><span>LA</span></td><td>356.5</td><td>61.5</td><td>94.5</td><td>52.5</td><td>28.5</td></tr>
+          <tr><td><b>Houston</b><span>HOU</span></td><td>287.5</td><td>44.5</td><td>66.5</td><td>41.5</td><td>22.5</td></tr>
+          <tr><td><b>Philadelphia</b><span>PHI</span></td><td>243.5</td><td>41.5</td><td>47.5</td><td>29.5</td><td>19.5</td></tr>
+          <tr><td><b>Dallas</b><span>DAL</span></td><td>198.5</td><td>31.5</td><td>52.5</td><td>37.5</td><td>17.5</td></tr>
+          <tr><td><b>Phoenix</b><span>PHX</span></td><td>176.5</td><td>29.5</td><td>58.5</td><td>33.5</td><td>16.5</td></tr>
+          <tr><td><b>Miami</b><span>MIA</span></td><td>164.5</td><td>27.5</td><td>33.5</td><td>24.5</td><td>15.5</td></tr>
+          <tr><td><b>Atlanta</b><span>ATL</span></td><td>141.5</td><td>24.5</td><td>39.5</td><td>22.5</td><td>13.5</td></tr>
+          <tr><td><b>St. Louis</b><span>STL</span></td><td>88.5</td><td>18.5</td><td>26.5</td><td>14.5</td><td>9.5</td></tr>
+        </tbody>
+      </table>
+      <div class="tbl-note">Illustrative lines. Real lines are posted each morning from historical settlement data and early-day pace, and move with the market all day.</div>
+    </div>
+    <div class="settle-bar">
+      <span class="sb-live"><i></i>Daily cycle</span>
+      <span class="sb-count">Next settlement snapshot in <b id="settleClock" class="mono">--:--:--</b> · noon ET</span>
+    </div>
+  </section>
+
+  <!-- FIELD MARKETS -->
+  <section class="sec" id="field">
+    <div class="sec-head">
+      <p class="eyebrow">City versus city</p>
+      <h2>Field markets</h2>
+      <p>Instead of one city against a line, the whole board competes. Pick from the field of ten — payouts scale with how contrarian your pick is.</p>
+      <div class="tags"><span class="tag field">Field of 10 cities</span><span class="tag count">Settles on raw count</span></div>
+    </div>
+    <div class="grid3">
+      <div class="feat">
+        <span class="fi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21h8M12 21v-4M5 4h14v4a7 7 0 0 1-14 0V4Z"/><path d="M5 6H3a3 3 0 0 0 3 5M19 6h2a3 3 0 0 1-3 5"/></svg></span>
+        <h4>Most Crime Today</h4>
+        <p>Which of the ten cities reports the most qualifying incidents? New York usually leads — which is exactly why the value hides elsewhere.</p>
+        <div class="ex"><b>Example</b> · field pays by pick<br><span class="g">NYC 1.4×</span> · CHI 3.1× · LA 4.8× · <span class="r">STL 41×</span></div>
+      </div>
+      <div class="feat">
+        <span class="fi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M12 21l-4-4M12 21l4-4"/></svg></span>
+        <h4>Lowest Crime</h4>
+        <p>The flip side — which city stays quietest, adjusted per capita so small boards compete fairly. A market for the calm as much as the chaos.</p>
+        <div class="ex"><b>Example</b> · quiet-day field<br><span class="g">PHX 2.2×</span> · STL 2.9× · ATL 5.4× · <span class="r">NYC 30×</span></div>
+      </div>
+      <div class="feat">
+        <span class="fi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20 L10 12 L14 15 L20 5 M20 5 h-5 M20 5 v5"/></svg></span>
+        <h4>Biggest Increase</h4>
+        <p>Pure momentum: which city jumps the most versus its own yesterday, in percent? Rewards reading the weather, the calendar, and the news cycle.</p>
+        <div class="ex"><b>Example</b> · day-over-day swing<br>MIA <span class="g">+18%</span> · DAL +11% · HOU +6% · CHI <span class="r">−4%</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXACT RANGE -->
+  <section class="sec" id="range">
+    <div class="sec-head">
+      <p class="eyebrow">Precision play</p>
+      <h2>Exact Range</h2>
+      <p>Skip over/under and call the bucket the final number lands in. Narrower target, bigger payout — the sharpest way to express a strong read on one city.</p>
+      <div class="tags"><span class="tag count">Settles on raw count</span></div>
+    </div>
+    <div class="rcard">
+      <h3>Houston · Total Crime — today's buckets</h3>
+      <p>One bucket wins; every bucket is its own peer-to-peer pool. Multiples shown are illustrative — they float with how the crowd distributes.</p>
+      <div class="buckets">
+        <span class="bk">≤ 259 <span>7.2×</span></span>
+        <span class="bk">260–269 <span>6.1×</span></span>
+        <span class="bk">270–279 <span>4.4×</span></span>
+        <span class="bk hot">280–289 <span>3.6× · crowd favorite</span></span>
+        <span class="bk">290–299 <span>4.9×</span></span>
+        <span class="bk">300+ <span>5.8×</span></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCORE MARKETS -->
+  <section class="sec" id="score">
+    <div class="sec-head">
+      <p class="eyebrow">Severity-weighted</p>
+      <h2>Score markets &amp; the CrimeLine Index</h2>
+      <p>Raw counts treat a shoplifting report and a robbery the same. The CrimeLine Score doesn't — every qualifying incident is weighted by severity, so Score markets trade on how a city's day actually felt.</p>
+      <div class="tags"><span class="tag score">Settles on weighted Score</span></div>
+    </div>
+    <div class="grid2">
+      <div class="feat">
+        <span class="fi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M7 12h10M10 18h4"/></svg></span>
+        <h4>City Score O/U <span class="tag score">Score</span></h4>
+        <p>The same over/under mechanic, on the severity-weighted Score instead of the raw count. A day heavy on minor reports can go over on count and under on Score — two different markets, two different reads.</p>
+        <div class="ex"><b>Example</b> · Houston<br>Count 291 <span class="g">(over 287.5)</span> · Score 388 <span class="r">(under 402.5)</span></div>
+      </div>
+      <div class="feat">
+        <span class="fi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 4-6"/></svg></span>
+        <h4>CrimeLine Index <span class="tag score">Score</span></h4>
+        <p>One market to rule them all: the weighted Score summed across every launch city, rolled into a single daily number. The macro trade — a position on the country's whole day, not one city's.</p>
+        <div class="ex"><b>Example</b> · Index line 2,847.5<br>All 10 cities settle → Index prints <b>2,861</b> → <span class="g">overs win</span></div>
+      </div>
+    </div>
+    <p style="margin-top:22px;color:var(--muted);font-size:14.5px">The full severity ladder, worked examples, and the fixed-rubric guarantee live in the <a href="rules.html#scoring" style="color:var(--accent)">rulebook →</a></p>
+  </section>
+
+  <!-- HOW A MARKET SETTLES -->
+  <section class="sec" id="settlement">
+    <div class="sec-head">
+      <p class="eyebrow">From line to payout</p>
+      <h2>How every market settles</h2>
+    </div>
+    <div class="grid3">
+      <div class="rcard"><h3>1 · One source</h3><p>Every market settles from a single licensed data provider — the same feed for everyone, on every market, every day. No house discretion, nothing to argue with.</p></div>
+      <div class="rcard"><h3>2 · One snapshot</h3><p>At <b>noon ET the following day</b>, the number is locked: raw counts for count markets, the weighted Score for Score markets. Late report revisions after the snapshot don't change a settled market.</p></div>
+      <div class="rcard"><h3>3 · On-chain payout</h3><p>The settlement number posts to Solana and winning positions are paid in <b>USDC</b> automatically — no claims process, and anyone can audit any result, forever.</p></div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-band">
+    <p class="eyebrow">Devnet beta</p>
+    <h2>Be ready when the board opens.</h2>
+    <p>Markets aren't live yet — CrimeLine is in devnet beta. Connect your Solana wallet now and your seat is ready the moment the first lines post.</p>
+    <div class="cta-row"><button class="btn solid js-wallet" type="button">Connect wallet</button><a class="btn" href="how-it-works.html">See how it works</a></div>
+  </div>
+
+  <footer>
+    <div class="foot">
+      <a class="brand" href="index.html" style="display:inline-flex;align-items:center;gap:10px;text-decoration:none"><span class="mark" style="width:30px;height:30px;display:inline-block"><svg viewBox="0 0 100 100" width="30" height="30"><path d="M 82 26 A 40 40 0 1 0 82 74" fill="none" stroke="#ff3050" stroke-width="17" stroke-linecap="round"/><rect x="30" y="44.5" width="62" height="11" rx="5.5" fill="#ff3050"/><circle cx="86" cy="50" r="4" fill="#ffe9ec"/></svg></span><b style="font-family:var(--display)">CrimeLine<span class="cr">©</span></b></a>
+      <div class="links">
+        <a href="index.html">Home</a><a href="markets.html">Markets</a><a href="how-it-works.html">How it works</a><a href="rules.html">Rules</a><a href="mailto:hello@crimeline.fun">Contact</a><a href="https://x.com/CrimeLineMarket" target="_blank" rel="noopener">X ↗</a>
+      </div>
+    </div>
+    <p class="disc">CrimeLine is a prediction market on aggregate, publicly-reported city statistics — not a commentary on any individual or event, and not a live product. All numbers, lines, probabilities and payouts shown are illustrative previews from the devnet beta. Markets are intended to settle from a single licensed third-party data provider at a predetermined time. Participation, where offered, will be subject to eligibility, age, identity verification and applicable law, and will not be available where prohibited. © 2026 CrimeLine. crimeline.fun</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var t=document.getElementById("navToggle"), l=document.getElementById("navLinks");
+  if(t&&l){ t.addEventListener("click", function(){ var o=l.classList.toggle("open"); t.setAttribute("aria-expanded",o?"true":"false"); });
+    Array.prototype.forEach.call(l.querySelectorAll("a"), function(a){ a.addEventListener("click", function(){ l.classList.remove("open"); t.setAttribute("aria-expanded","false"); }); }); }
+  var el=document.getElementById("settleClock");
+  function etSecondsNow(){
+    try{
+      var parts=new Intl.DateTimeFormat("en-US",{timeZone:"America/New_York",hour12:false,hour:"2-digit",minute:"2-digit",second:"2-digit"}).formatToParts(new Date());
+      var o={}; parts.forEach(function(p){ o[p.type]=p.value; });
+      return (parseInt(o.hour,10)%24)*3600 + parseInt(o.minute,10)*60 + parseInt(o.second,10);
+    }catch(e){ var d=new Date(); return d.getUTCHours()*3600 + d.getUTCMinutes()*60 + d.getUTCSeconds(); }
+  }
+  function pad(n){ return (n<10?"0":"")+n; }
+  function tick(){ var s=etSecondsNow(), noon=43200, left=s<noon?noon-s:86400-s+noon;
+    if(el) el.textContent=pad(Math.floor(left/3600))+":"+pad(Math.floor((left%3600)/60))+":"+pad(left%60); }
+  tick(); setInterval(tick,1000);
+})();
+</script>
+<script src="assets/wallet.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>How it works — CrimeLine</title>
+<meta name="description" content="How CrimeLine works, start to finish: connect a Solana wallet, fund with USDC, pick a line, get matched peer-to-peer, watch the live counter, and settle from official data at noon ET.">
+<link rel="canonical" href="https://crimeline.fun/how-it-works.html">
+<meta name="theme-color" content="#12151d">
+<meta property="og:type" content="website"><meta property="og:site_name" content="CrimeLine">
+<meta property="og:title" content="How it works — CrimeLine">
+<meta property="og:description" content="Connect a wallet, pick a line, trade peer-to-peer, and let the data settle it — the full walkthrough.">
+<meta property="og:url" content="https://crimeline.fun/how-it-works.html">
+<meta property="og:image" content="https://crimeline.fun/assets/og.jpg">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@CrimeLineMarket">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect x='2' y='2' width='96' height='96' rx='24' fill='%230b1222'/%3E%3Cpath d='M 78 30 A 34 34 0 1 0 78 70' fill='none' stroke='%23ff3050' stroke-width='15' stroke-linecap='round'/%3E%3Crect x='34' y='45.2' width='52' height='9.6' rx='4.8' fill='%23ff3050'/%3E%3Ccircle cx='81' cy='50' r='3.6' fill='%23ffe9ec'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap">
+<style>
+  :root {
+    --bg:#12151d; --surface:#1a1f2a; --surface-2:#232937;
+    --line:#262d3b;
+    --ink:#e4e8f1; --muted:#98a1b3; --dim:#646d80;
+    --red:#ff3050; --red-ink:#ff5e75;
+    --accent:#5b8aff; --accent-dim:rgba(91,138,255,.12);
+    --over:#31d492; --over-dim:rgba(49,212,146,.1);
+    --under:#ff6478; --under-dim:rgba(255,100,120,.09);
+    --amber:#e8b34b;
+    --mono:"JetBrains Mono", ui-monospace, Menlo, monospace;
+    --sans:"Inter", ui-sans-serif, system-ui, sans-serif;
+    --display:"Space Grotesk", var(--sans);
+    --elev: inset 0 1px 0 rgba(255,255,255,.045), 0 1px 2px rgba(0,0,0,.25), 0 18px 44px -18px rgba(0,0,0,.5);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { position: relative; margin: 0; color: var(--ink); font: 16.5px/1.7 var(--sans); -webkit-font-smoothing: antialiased; background: var(--bg); }
+  a { color: inherit; }
+  .wrap { max-width: 1400px; margin: 0 auto; padding: 0 36px; }
+  .mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  .eyebrow { font-family: var(--mono); font-size: 11.5px; letter-spacing: .24em; text-transform: uppercase; color: var(--dim); }
+
+  .city-horizon { position: fixed; left: 0; right: 0; bottom: 0; height: 240px; z-index: -2; pointer-events: none;
+    background: radial-gradient(60% 130% at 50% 108%, rgba(91,138,255,.07), transparent 60%), radial-gradient(35% 90% at 78% 106%, rgba(255,59,88,.04), transparent 60%); }
+  .city-horizon svg { position: absolute; left: 0; bottom: -2px; width: 100%; height: 190px; display: block; }
+
+  nav { position: sticky; top: 0; z-index: 40; border-bottom: 1px solid rgba(148,168,214,.05); background: rgba(18,21,29,.8); backdrop-filter: blur(20px) saturate(1.4); }
+  .nav-in { max-width: 1400px; margin: 0 auto; padding: 15px 36px; display: flex; align-items: center; gap: 16px; }
+  .brand { display: flex; align-items: center; gap: 11px; text-decoration: none; color: inherit; }
+  .brand .mark { width: 38px; height: 38px; flex: none; display: block; filter: drop-shadow(0 2px 8px rgba(0,0,0,.5)) drop-shadow(0 0 16px rgba(255,48,80,.22)); }
+  .brand .mark svg { width: 100%; height: 100%; display: block; }
+  .brand b { font-family: var(--display); font-size: 18.5px; font-weight: 700; letter-spacing: -.02em; }
+  .brand .cr { font-size: 8px; font-weight: 600; vertical-align: super; margin-left: 1px; color: var(--muted); }
+  .nav-links { margin-left: auto; display: flex; align-items: center; gap: 24px; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 14px; }
+  .nav-links a:hover, .nav-links a.on { color: var(--ink); }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; font-size: 14px; font-weight: 650; text-decoration: none; cursor: pointer; border-radius: 999px; padding: 11px 22px; border: none; background: #222836; box-shadow: inset 0 1px 0 rgba(255,255,255,.05); color: var(--ink); transition: all .16s ease; font-family: var(--sans); }
+  .btn:hover { background:#2a3140; }
+  .btn.solid { background: #eef1f7; color: #12151d; box-shadow: 0 1px 2px rgba(0,0,0,.3); }
+  .btn.solid:hover { background:#ffffff; }
+  .nav-toggle { display: none; margin-left: auto; width: 40px; height: 40px; border: 1px solid #333b4d; border-radius: 12px; background: var(--surface); cursor: pointer; padding: 0; flex-direction: column; align-items: center; justify-content: center; gap: 4px; }
+  .nav-toggle span { width: 18px; height: 2px; border-radius: 2px; background: var(--ink); display: block; transition: transform .2s, opacity .2s; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(1){ transform: translateY(6px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] span:nth-child(2){ opacity: 0; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(3){ transform: translateY(-6px) rotate(-45deg); }
+
+  .hero { padding: 76px 0 26px; max-width: 900px; }
+  .hero h1 { margin: 16px 0 0; font-family: var(--display); font-size: clamp(38px, 4.6vw, 58px); font-weight: 700; letter-spacing: -.035em; line-height: 1.03; }
+  .hero h1 .hl { color: var(--accent); }
+  .hero p { margin: 18px 0 0; color: var(--muted); font-size: 18px; max-width: 62ch; line-height: 1.75; }
+
+  .sec { padding: 100px 0 0; }
+  .sec:last-of-type { padding-bottom: 110px; }
+  .sec-head { margin-bottom: 40px; }
+  .sec-head h2 { margin: 14px 0 0; font-family: var(--display); font-size: clamp(28px, 3.4vw, 40px); font-weight: 700; letter-spacing: -.025em; }
+  .sec-head p { margin: 14px 0 0; color: var(--muted); font-size: 17px; line-height: 1.75; max-width: 62ch; }
+
+  /* start rail */
+  .rail { display: grid; grid-template-columns: repeat(4, 1fr); gap: 26px; counter-reset: st; }
+  .rl { position: relative; border-radius: 20px; padding: 30px; background: linear-gradient(170deg, #1e2431, var(--surface) 55%, #171c27); box-shadow: var(--elev); overflow: hidden; }
+  .rl .n { position: absolute; top: -20px; right: 4px; font-family: var(--display); font-size: 104px; font-weight: 700; color: rgba(228,232,241,.05); letter-spacing: -4px; pointer-events: none; }
+  .rl .ri { width: 40px; height: 40px; border-radius: 12px; background: var(--surface-2); color: var(--ink); display: inline-flex; align-items: center; justify-content: center; }
+  .rl h4 { margin: 14px 0 6px; font-size: 16.5px; font-weight: 720; }
+  .rl p { margin: 0; color: var(--muted); font-size: 13.5px; line-height: 1.7; }
+  .rl .btn { margin-top: 16px; padding: 9px 16px; font-size: 13px; }
+  .rl .soon { display: inline-flex; align-items: center; gap: 6px; margin-top: 16px; font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--amber); background: rgba(232,179,75,.1); padding: 5px 11px; border-radius: 999px; }
+  .rl .soon i { width: 6px; height: 6px; border-radius: 50%; background: var(--amber); }
+
+  /* p2p diagram */
+  .p2p { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; align-items: stretch; }
+  .p2p-card { border-radius: 22px; padding: 36px 38px; background: linear-gradient(170deg, #1e2431, var(--surface) 55%, #171c27); box-shadow: var(--elev); }
+  .p2p-card h3 { margin: 0 0 10px; font-size: 19px; font-weight: 720; }
+  .p2p-card p { margin: 8px 0; color: var(--muted); font-size: 15px; line-height: 1.75; }
+  .p2p-card p b { color: var(--ink); }
+  .match { margin-top: 20px; border-radius: 16px; background: #151a24; padding: 22px; font-family: var(--mono); font-size: 13px; }
+  .match .mrow { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 9px 0; }
+  .match .mrow + .mrow { border-top: 1px solid rgba(148,168,214,.08); }
+  .match .side { display: inline-flex; align-items: center; gap: 9px; }
+  .match .avan { width: 26px; height: 26px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #12151d; }
+  .match .you .avan { background: #eef1f7; }
+  .match .them .avan { background: #5b8aff; color: #0d1322; }
+  .match .o { color: var(--over); } .match .u { color: var(--under); }
+  .match .mid { color: var(--dim); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; text-align: center; padding: 7px 0; }
+  .fee-line { display: flex; justify-content: space-between; margin-top: 14px; padding-top: 12px; border-top: 1px dashed #323a4c; font-family: var(--mono); font-size: 12.5px; color: var(--muted); }
+  .fee-line b { color: var(--ink); }
+
+  /* pipeline */
+  .pipeline { margin-top: 6px; position: relative; }
+  .pipeline::before { content: ""; position: absolute; left: 14px; top: 16px; bottom: 16px; width: 2px; background: linear-gradient(180deg, #2a3346, #232a3a); border-radius: 2px; }
+  .pnode { position: relative; display: flex; gap: 18px; padding: 0 0 22px 0; }
+  .pnode:last-child { padding-bottom: 0; }
+  .pnode .pn { position: relative; z-index: 1; flex: none; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 12.5px; font-weight: 700; color: #12151d; background: #eef1f7; box-shadow: 0 0 0 4px #171c27; }
+  .pnode b { display: block; font-size: 15.5px; color: var(--ink); }
+  .pnode span { display: block; font-size: 14px; color: var(--muted); line-height: 1.65; margin-top: 2px; max-width: 70ch; }
+
+  /* solana cards */
+  .grid4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 26px; }
+  .oc { position: relative; overflow: hidden; background: linear-gradient(170deg, #1e2431, var(--surface) 55%, #171c27); box-shadow: var(--elev); border-radius: 20px; padding: 30px; }
+  .oc::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, #9945ff, #14f195 60%, transparent); opacity: .55; }
+  .oc .oi { width: 36px; height: 36px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(140deg, rgba(153,69,255,.22), rgba(20,241,149,.16)); color: #fff; font-weight: 800; }
+  .oc h4 { margin: 14px 0 6px; font-size: 16px; font-weight: 720; }
+  .oc p { margin: 0; color: var(--muted); font-size: 13.5px; line-height: 1.7; }
+
+  /* beta status */
+  .status { border-radius: 24px; padding: 44px 48px; background: linear-gradient(170deg, #1e2431, var(--surface) 55%, #171c27); box-shadow: var(--elev); }
+  .status h3 { margin: 10px 0 8px; font-family: var(--display); font-size: clamp(24px, 2.6vw, 32px); font-weight: 700; letter-spacing: -.02em; }
+  .status p { margin: 0 0 26px; color: var(--muted); font-size: 15.5px; max-width: 68ch; }
+  .roadmap { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .rm { border-radius: 14px; padding: 18px 20px; background: #1e2430; box-shadow: inset 0 1px 0 rgba(255,255,255,.04); }
+  .rm .k { font-family: var(--mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 7px; }
+  .rm .k i { width: 7px; height: 7px; border-radius: 50%; }
+  .rm.now .k { color: var(--over); } .rm.now .k i { background: var(--over); }
+  .rm.next .k { color: var(--amber); } .rm.next .k i { background: var(--amber); }
+  .rm.later .k { color: var(--dim); } .rm.later .k i { background: var(--dim); }
+  .rm b { display: block; margin-top: 8px; font-size: 15px; }
+  .rm span { display: block; margin-top: 3px; font-size: 12.5px; color: var(--muted); line-height: 1.6; }
+
+  /* faq */
+  details { border-radius: 16px; background: linear-gradient(170deg, #1e2431, var(--surface) 60%); box-shadow: var(--elev); margin: 10px 0; overflow: hidden; }
+  summary { cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 18px 24px; font-weight: 650; font-size: 15.5px; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; font-family: var(--mono); font-size: 18px; color: var(--dim); transition: transform .18s ease; }
+  details[open] summary::after { transform: rotate(45deg); color: var(--red-ink); }
+  details .body { padding: 0 24px 20px; color: var(--muted); font-size: 14.5px; line-height: 1.75; }
+  details .body b { color: var(--ink); }
+  details .body a { color: var(--accent); }
+
+  .cta-band { position: relative; overflow: hidden; border-radius: 30px; padding: 84px 48px; text-align: center; margin-top: 110px;
+    background: linear-gradient(180deg, rgba(14,17,24,.82), rgba(14,17,24,.9)), url("assets/cities/la.jpg") center 40%/cover no-repeat;
+    box-shadow: 0 30px 80px -40px rgba(0,0,0,.6); }
+  .cta-band h2 { margin: 14px 0 12px; font-family: var(--display); font-size: clamp(28px, 3.6vw, 44px); font-weight: 700; letter-spacing: -.03em; }
+  .cta-band p { margin: 0 auto 22px; max-width: 54ch; color: var(--muted); font-size: 16px; }
+  .cta-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+
+  footer { margin-top: 110px; padding: 44px 0 70px; background: #10141d; }
+  .foot { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .foot a { color: var(--muted); text-decoration: none; font-size: 14px; }
+  .foot a:hover { color: var(--ink); }
+  .foot .links { display: flex; flex-wrap: wrap; gap: 10px 20px; }
+  .disc { margin-top: 22px; font-size: 11.5px; line-height: 1.7; color: var(--dim); max-width: 100ch; }
+
+  @media (max-width: 1000px) {
+    .rail { grid-template-columns: 1fr 1fr; }
+    .p2p { grid-template-columns: 1fr; }
+    .grid4 { grid-template-columns: 1fr 1fr; }
+    .roadmap { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 680px) {
+    .wrap { padding: 0 16px; }
+    .nav-in { padding: 12px 16px; position: relative; }
+    .nav-toggle { display: flex; }
+    .nav-links { position: absolute; top: calc(100% + 1px); left: 0; right: 0; margin: 0; flex-direction: column; align-items: stretch; gap: 0; background: #1a1f2a; border-bottom: 1px solid var(--line); padding: 8px 16px 14px; display: none; box-shadow: 0 22px 40px -24px rgba(0,0,0,.6); }
+    .nav-links.open { display: flex; }
+    .nav-links a { padding: 13px 4px; border-bottom: 1px solid var(--line); }
+    .nav-links .btn { margin-top: 12px; justify-content: center; padding: 12px; }
+    .sec { padding-top: 72px; }
+    .rail, .grid4 { grid-template-columns: 1fr; }
+    .p2p-card { padding: 26px 20px; }
+    .status { padding: 30px 22px; }
+    .cta-band { padding: 40px 20px; }
+    .city-horizon { height: 150px; } .city-horizon svg { height: 120px; }
+  }
+</style>
+</head>
+<body>
+<div class="city-horizon" aria-hidden="true"><svg viewBox="0 0 1600 190" preserveAspectRatio="xMidYMax slice">
+  <g fill="#181e2c"><path d="M0 190V120h34v-14h10v14h22v70zM80 190V96h18l4-12 4 12h16v94zM136 190V134h40v56zM190 190V88h14V72h8v16h20v102zM248 190V128h30v-16h12v16h20v62zM326 190V102h24V88h10v14h20v88zM398 190V140h44v50zM458 190V92h16l3-10 3 10h20v98zM518 190V124h34v66zM570 190V76h12V62h8v14h16v114zM624 190V132h40v58zM682 190V98h22v92zM722 190V144h36v46zM774 190V84h14V70h8v14h20v106zM834 190V126h32v64zM884 190V100h20l4-14 4 14h14v90zM944 190V138h42v52zM1002 190V92h16v98zM1036 190V120h30v70zM1084 190V80h12V64h8v16h18v110zM1140 190V130h38v60zM1194 190V96h22v94zM1234 190V142h34v48zM1286 190V88h16l3-12 3 12h18v102zM1344 190V122h32v68zM1394 190V104h24v86zM1436 190V134h40v56zM1494 190V90h14V76h8v14h20v100zM1554 190V126h46v64z"/></g>
+  <g fill="#1f2739"><path d="M0 190V146h60v44zM76 190V112h26l5-16 5 16h20v78zM148 190V150h52v40zM216 190V122h18V104h10v18h26v68zM288 190V158h60v32zM366 190V118h30v72zM414 190V100h14V84h10v16h22v90zM478 190V154h56v36zM552 190V128h34v62zM604 190V108h20l4-14 4 14h18v82zM668 190V152h50v38zM736 190V116h28v74zM782 190V94h12V78h10v16h20v96zM842 190V148h54v42zM914 190V120h32v70zM964 190V102h18l4-12 4 12h16v88zM1024 190V156h52v34zM1094 190V126h30v64zM1142 190V106h22v84zM1182 190V148h50v42zM1250 190V112h16V96h10v16h24v78zM1318 190V152h48v38zM1384 190V124h30v66zM1432 190V98h20l4-12 4 12h16v92zM1494 190V150h50v40zM1560 190V118h40v72z"/></g>
+</svg></div>
+
+<nav>
+  <div class="nav-in">
+    <a class="brand" href="index.html" aria-label="CrimeLine home"><span class="mark"><svg viewBox="0 0 100 100"><defs><linearGradient id="clR" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff6076"/><stop offset=".5" stop-color="#ff3050"/><stop offset="1" stop-color="#e01b3e"/></linearGradient></defs><path d="M 82 26 A 40 40 0 1 0 82 74" fill="none" stroke="url(#clR)" stroke-width="17" stroke-linecap="round"/><rect x="30" y="44.5" width="62" height="11" rx="5.5" fill="url(#clR)"/><circle cx="86" cy="50" r="4" fill="#ffe9ec"/></svg></span><b>CrimeLine<span class="cr">©</span></b></a>
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <div class="nav-links" id="navLinks">
+      <a href="markets.html">Markets</a>
+      <a href="how-it-works.html" class="on">How it works</a>
+      <a href="rules.html">Rules</a>
+      <a href="index.html#token">$CrimeLine</a>
+      <button class="btn solid js-wallet" type="button">Connect wallet</button>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <header class="hero">
+    <p class="eyebrow">The walkthrough</p>
+    <h1>No house. One number.<br><span class="hl">On-chain.</span></h1>
+    <p>CrimeLine is a peer-to-peer prediction market on official city data. Here's the whole thing, start to finish — from connecting a wallet to getting paid — with nothing hidden along the way.</p>
+  </header>
+
+  <!-- GET STARTED -->
+  <section class="sec" id="start">
+    <div class="sec-head">
+      <p class="eyebrow">Getting started</p>
+      <h2>Four steps. That's the product.</h2>
+    </div>
+    <div class="rail">
+      <div class="rl"><div class="n">01</div><span class="ri"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="13" rx="3"/><path d="M16 12h.01M3 10h18"/></svg></span>
+        <h4>Connect a Solana wallet</h4>
+        <p>Phantom, Solflare or Backpack — one click, non-custodial, and your keys never leave your wallet. This works today.</p>
+        <button class="btn solid js-wallet" type="button">Connect wallet</button>
+      </div>
+      <div class="rl"><div class="n">02</div><span class="ri" style="font-weight:800;font-size:16px">$</span>
+        <h4>Fund with USDC</h4>
+        <p>Positions are opened, held and settled in USDC — a dollar-pegged stablecoin. No chips, no house balance, no cash-out queue. Plus a little SOL for network fees (fractions of a cent).</p>
+        <span class="soon"><i></i>Opens after beta</span>
+      </div>
+      <div class="rl"><div class="n">03</div><span class="ri"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 18 L4 6 M4 18 L20 18 M8 14l3-4 3 3 4-6"/></svg></span>
+        <h4>Pick your lines</h4>
+        <p>Open the board, pick a city and a market, take over or under. Your order matches against a player on the opposite side — that's the whole trade.</p>
+        <span class="soon"><i></i>Opens after beta</span>
+      </div>
+      <div class="rl"><div class="n">04</div><span class="ri"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span>
+        <h4>Watch it live, settle at noon</h4>
+        <p>The live counter runs all day. At noon ET the next day the official number locks, the market settles on-chain, and winnings land in your wallet automatically.</p>
+        <span class="soon"><i></i>Opens after beta</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- P2P -->
+  <section class="sec" id="p2p">
+    <div class="sec-head">
+      <p class="eyebrow">The core principle</p>
+      <h2>You trade the crowd, never a house.</h2>
+      <p>CrimeLine is not a sportsbook. There is no bookmaker setting odds against you and no house bankroll on the other side of your trade — just another player who reads the city differently.</p>
+    </div>
+    <div class="p2p">
+      <div class="p2p-card">
+        <h3>How a match works</h3>
+        <p>When you take <b>over</b>, your order sits in the market until a player takes <b>under</b> at the same price. Matched stakes form the pot; the settlement number decides who takes it. Prices you see — like "61% over" — are the crowd's live consensus, not odds we set.</p>
+        <div class="match" aria-label="Example order match">
+          <div class="mrow you"><span class="side"><span class="avan">Y</span>You</span><span class="o">OVER 287.5 · 61¢</span></div>
+          <div class="mid">— matched by the market —</div>
+          <div class="mrow them"><span class="side"><span class="avan">P</span>night_desk</span><span class="u">UNDER 287.5 · 39¢</span></div>
+          <div class="fee-line"><span>Winner takes the $1.00 pot</span><b>minus a small fee on winnings</b></div>
+        </div>
+      </div>
+      <div class="p2p-card">
+        <h3>What CrimeLine does — and never does</h3>
+        <p><b>We do:</b> post the lines, match orders, run the live data feed, and settle every market from the official number. For that, the protocol takes a small fee on winnings — the fee schedule is published in the <a href="rules.html#payouts" style="color:var(--accent)">rulebook</a>.</p>
+        <p><b>We never:</b> take the other side of your trade, hold your funds in a house account, set odds against you, or touch a settled result. If nobody takes the opposite side of your order, it simply doesn't match — and an unmatched order costs you nothing.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DATA PIPELINE -->
+  <section class="sec" id="data">
+    <div class="sec-head">
+      <p class="eyebrow">Where the numbers come from</p>
+      <h2>One feed, five stops, zero discretion.</h2>
+    </div>
+    <div class="p2p-card" style="max-width:900px">
+      <div class="pipeline">
+        <div class="pnode"><span class="pn">1</span><div><b>Police departments report</b><span>Official incident reports from each launch city, timestamped as they're filed throughout the day.</span></div></div>
+        <div class="pnode"><span class="pn">2</span><div><b>A licensed feed aggregates</b><span>One independent, licensed data provider collects and standardizes every qualifying incident — the same feed for every player and every market.</span></div></div>
+        <div class="pnode"><span class="pn">3</span><div><b>The live counter updates</b><span>Reported-so-far climbs all day. Reports lag real time, so the dashboard also shows a projection that runs ahead of the raw count — that's the number the market argues about.</span></div></div>
+        <div class="pnode"><span class="pn">4</span><div><b>Noon ET locks the number</b><span>At a fixed time the next day, the snapshot is taken: raw counts for count markets, the severity-weighted Score for Score markets. Revisions after the snapshot don't touch settled markets.</span></div></div>
+        <div class="pnode"><span class="pn">5</span><div><b>Solana settles and pays</b><span>The number posts on-chain, every market resolves from it, and payouts land in USDC — automatic, instant, auditable by anyone forever.</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY SOLANA -->
+  <section class="sec" id="solana">
+    <div class="sec-head">
+      <p class="eyebrow">The rails</p>
+      <h2>Why it runs on Solana.</h2>
+    </div>
+    <div class="grid4">
+      <div class="oc"><span class="oi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span><h4>Non-custodial</h4><p>Your funds sit in your wallet until an order matches, and payouts return straight to it. CrimeLine never holds a balance for you.</p></div>
+      <div class="oc"><span class="oi">$</span><h4>USDC native</h4><p>Everything is denominated in USDC, so your stake and your winnings are dollar-stable — the market risk you take is the line, not the currency.</p></div>
+      <div class="oc"><span class="oi"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z"/></svg></span><h4>Fast &amp; near-free</h4><p>Solana confirms in seconds for fractions of a cent — placing a position and receiving a payout both feel instant.</p></div>
+      <div class="oc"><span class="oi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><h4>Auditable forever</h4><p>Settlement numbers and payouts are public on-chain records. Anyone can verify any market, any day, without trusting us.</p></div>
+    </div>
+  </section>
+
+  <!-- STATUS -->
+  <section class="sec" id="status">
+    <div class="status">
+      <p class="eyebrow">Where we are</p>
+      <h3>Devnet beta — nothing is live yet.</h3>
+      <p>CrimeLine is being built and tested on Solana devnet. Connecting your wallet today links your address for early access — no transaction is made, nothing is signed, and no funds can move. Real markets open only after audit, on mainnet, where permitted by law.</p>
+      <div class="roadmap">
+        <div class="rm now"><span class="k"><i></i>Now</span><b>Devnet beta</b><span>Wallet linking live · market engine and data pipeline in test on devnet.</span></div>
+        <div class="rm next"><span class="k"><i></i>Next</span><b>Audit &amp; mainnet</b><span>Independent security audit, then USDC markets on Solana mainnet.</span></div>
+        <div class="rm later"><span class="k"><i></i>Then</span><b>First cohort boards</b><span>The ten launch cities open to the first cohort of connected wallets.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="sec" id="faq">
+    <div class="sec-head">
+      <p class="eyebrow">Questions</p>
+      <h2>Asked &amp; answered.</h2>
+    </div>
+    <details>
+      <summary>Is this betting on crime happening to people?</summary>
+      <div class="body">No. CrimeLine markets trade on <b>aggregate, publicly-reported city statistics</b> — the same totals cities publish in open-data portals and year-end reports. No market ever references an individual, an address, or a specific event, and nothing on CrimeLine affects what happens in a city. It's the same relationship a weather market has to rain.</div>
+    </details>
+    <details>
+      <summary>Which wallets are supported?</summary>
+      <div class="body"><b>Phantom, Solflare and Backpack</b> connect today — on desktop and in their mobile in-app browsers. If you don't have one, the connect dialog links you to the official downloads. Your wallet stays non-custodial: CrimeLine can see your public address and nothing else.</div>
+    </details>
+    <details>
+      <summary>Do I need SOL if everything is in USDC?</summary>
+      <div class="body">A little. Positions and payouts are in <b>USDC</b>, but Solana network fees are paid in <b>SOL</b> — typically fractions of a cent per transaction. A few dollars of SOL covers months of trading.</div>
+    </details>
+    <details>
+      <summary>When do markets go live?</summary>
+      <div class="body">After the devnet beta and an independent audit. The sequence is: devnet beta (now) → audited mainnet deployment → first cohort boards on the ten launch cities. Connected wallets are first in line. Follow <a href="https://x.com/CrimeLineMarket" target="_blank" rel="noopener">@CrimeLineMarket</a> for the countdown.</div>
+    </details>
+    <details>
+      <summary>What happens if the data feed goes down?</summary>
+      <div class="body">Markets have explicit void-and-refund rules — if the licensed feed can't produce a settlement number for a city by the deadline, that city's markets void and stakes return in full. The exact finality, void and tie rules are in the <a href="rules.html#data">rulebook</a>.</div>
+    </details>
+    <details>
+      <summary>How does CrimeLine make money if there's no house?</summary>
+      <div class="body">A small <b>fee on winnings</b> — charged only when you win a matched market, never on deposits, unmatched orders or refunds. The protocol earns from volume, not from your losses, so it has no stake in which side wins.</div>
+    </details>
+    <details>
+      <summary>Who can play?</summary>
+      <div class="body">When markets open: 18+, subject to eligibility, identity verification and applicable law, and not available where prohibited. The beta preview and wallet linking are open to everyone.</div>
+    </details>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-band">
+    <p class="eyebrow">Devnet beta</p>
+    <h2>Ready in one click.</h2>
+    <p>Connect your Solana wallet now — you're first in line when the ten launch boards open, trading in USDC against the crowd.</p>
+    <div class="cta-row"><button class="btn solid js-wallet" type="button">Connect wallet</button><a class="btn" href="markets.html">Explore the markets</a></div>
+  </div>
+
+  <footer>
+    <div class="foot">
+      <a class="brand" href="index.html" style="display:inline-flex;align-items:center;gap:10px;text-decoration:none"><span class="mark" style="width:30px;height:30px;display:inline-block"><svg viewBox="0 0 100 100" width="30" height="30"><path d="M 82 26 A 40 40 0 1 0 82 74" fill="none" stroke="#ff3050" stroke-width="17" stroke-linecap="round"/><rect x="30" y="44.5" width="62" height="11" rx="5.5" fill="#ff3050"/><circle cx="86" cy="50" r="4" fill="#ffe9ec"/></svg></span><b style="font-family:var(--display)">CrimeLine<span class="cr">©</span></b></a>
+      <div class="links">
+        <a href="index.html">Home</a><a href="markets.html">Markets</a><a href="how-it-works.html">How it works</a><a href="rules.html">Rules</a><a href="mailto:hello@crimeline.fun">Contact</a><a href="https://x.com/CrimeLineMarket" target="_blank" rel="noopener">X ↗</a>
+      </div>
+    </div>
+    <p class="disc">CrimeLine is a prediction market on aggregate, publicly-reported city statistics — not a commentary on any individual or event, and not a live product. All numbers, lines, probabilities and payouts shown are illustrative previews from the devnet beta. Markets are intended to settle from a single licensed third-party data provider at a predetermined time. Participation, where offered, will be subject to eligibility, age, identity verification and applicable law, and will not be available where prohibited. © 2026 CrimeLine. crimeline.fun</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var t=document.getElementById("navToggle"), l=document.getElementById("navLinks");
+  if(t&&l){ t.addEventListener("click", function(){ var o=l.classList.toggle("open"); t.setAttribute("aria-expanded",o?"true":"false"); });
+    Array.prototype.forEach.call(l.querySelectorAll("a"), function(a){ a.addEventListener("click", function(){ l.classList.remove("open"); t.setAttribute("aria-expanded","false"); }); }); }
+})();
+</script>
+<script src="assets/wallet.js" defer></script>
+</body>
+</html>

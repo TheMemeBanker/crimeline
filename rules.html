@@ -54,7 +54,12 @@
   .brand .cr { font-size: 8px; font-weight: 600; vertical-align: super; margin-left: 1px; color: var(--muted); }
   .nav-links { margin-left: auto; display: flex; align-items: center; gap: 24px; }
   .nav-links a { color: var(--muted); text-decoration: none; font-size: 14px; }
-  .nav-links a:hover { color: var(--ink); }
+  .nav-links a:hover, .nav-links a.on { color: var(--ink); }
+  .nav-toggle { display: none; margin-left: auto; width: 40px; height: 40px; border: 1px solid #333b4d; border-radius: 12px; background: var(--surface); cursor: pointer; padding: 0; flex-direction: column; align-items: center; justify-content: center; gap: 4px; }
+  .nav-toggle span { width: 18px; height: 2px; border-radius: 2px; background: var(--ink); display: block; transition: transform .2s, opacity .2s; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(1){ transform: translateY(6px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] span:nth-child(2){ opacity: 0; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(3){ transform: translateY(-6px) rotate(-45deg); }
   .btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; font-size: 14px; font-weight: 650; text-decoration: none; cursor: pointer; border-radius: 999px; padding: 11px 22px; border: none; background: #222836; box-shadow: inset 0 1px 0 rgba(255,255,255,.05); color: var(--ink); transition: all .16s ease; }
   .btn:hover { background:#2a3140; }
   .btn.solid { background: #eef1f7; color: #12151d; box-shadow: 0 1px 2px rgba(0,0,0,.3); }
@@ -119,14 +124,18 @@
   .disc { margin-top: 22px; font-size: 11.5px; line-height: 1.7; color: var(--dim); max-width: 100ch; }
 
   @media (max-width: 900px) {
-    .wrap { padding: 0 18px; } .nav-in { padding: 12px 18px; }
+    .wrap { padding: 0 18px; } .nav-in { padding: 12px 18px; position: relative; }
     .layout { grid-template-columns: 1fr; gap: 8px; }
     .toc { position: static; flex-direction: row; flex-wrap: wrap; gap: 6px; padding-bottom: 10px; }
     .toc .toc-h { display: none; }
     .toc a { padding: 8px 13px; background: #1c2230; border-radius: 999px; font-size: 13px; }
     .weights { grid-template-columns: 1fr; }
     .rcard { padding: 22px 18px; }
-    .nav-links { display: none; }
+    .nav-toggle { display: flex; }
+    .nav-links { position: absolute; top: calc(100% + 1px); left: 0; right: 0; margin: 0; flex-direction: column; align-items: stretch; gap: 0; background: #1a1f2a; border-bottom: 1px solid var(--line); padding: 8px 18px 14px; display: none; box-shadow: 0 22px 40px -24px rgba(0,0,0,.6); }
+    .nav-links.open { display: flex; }
+    .nav-links a { padding: 13px 4px; border-bottom: 1px solid var(--line); }
+    .nav-links .btn { margin-top: 12px; justify-content: center; padding: 12px; }
   }
 </style>
 </head>
@@ -139,12 +148,13 @@
 <nav>
   <div class="nav-in">
     <a class="brand" href="index.html"><span class="mark"><svg viewBox="0 0 100 100"><defs><linearGradient id="clR" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff6076"/><stop offset=".5" stop-color="#ff3050"/><stop offset="1" stop-color="#e01b3e"/></linearGradient></defs><path d="M 82 26 A 40 40 0 1 0 82 74" fill="none" stroke="url(#clR)" stroke-width="17" stroke-linecap="round"/><rect x="30" y="44.5" width="62" height="11" rx="5.5" fill="url(#clR)"/><circle cx="86" cy="50" r="4" fill="#ffe9ec"/></svg></span><b>CrimeLine<span class="cr">©</span></b></a>
-    <div class="nav-links">
-      <a href="index.html#board">Today's board</a>
-      <a href="index.html#markets">Markets</a>
-      <a href="rules.html" style="color:var(--ink)">Rules</a>
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <div class="nav-links" id="navLinks">
+      <a href="markets.html">Markets</a>
+      <a href="how-it-works.html">How it works</a>
+      <a href="rules.html" class="on">Rules</a>
       <a href="index.html#token">$CrimeLine</a>
-      <a class="btn solid" href="index.html#board">See the board</a>
+      <button class="btn solid js-wallet" type="button">Connect wallet</button>
     </div>
   </div>
 </nav>
@@ -318,7 +328,7 @@
     <div class="foot">
       <a class="brand" href="index.html" style="display:inline-flex;align-items:center;gap:10px;text-decoration:none"><span class="mark" style="width:30px;height:30px;display:inline-block"><svg viewBox="0 0 100 100" width="30" height="30"><path d="M 82 26 A 40 40 0 1 0 82 74" fill="none" stroke="#ff3050" stroke-width="17" stroke-linecap="round"/><rect x="30" y="44.5" width="62" height="11" rx="5.5" fill="#ff3050"/><circle cx="86" cy="50" r="4" fill="#ffe9ec"/></svg></span><b style="font-family:var(--display)">CrimeLine<span class="cr">©</span></b></a>
       <div style="display:flex;gap:20px;flex-wrap:wrap">
-        <a href="index.html">Home</a><a href="index.html#board">Today's board</a><a href="index.html#token">$CrimeLine</a><a href="https://x.com/CrimeLineMarket" target="_blank" rel="noopener">X</a>
+        <a href="index.html">Home</a><a href="markets.html">Markets</a><a href="how-it-works.html">How it works</a><a href="index.html#token">$CrimeLine</a><a href="mailto:hello@crimeline.fun">Contact</a><a href="https://x.com/CrimeLineMarket" target="_blank" rel="noopener">X ↗</a>
       </div>
     </div>
     <p class="disc">Illustrative preview — CrimeLine is in development and nothing here is an offer to wager. Rules, weights, fees, and availability are subject to finalization and local law; the published docs at launch are authoritative. Data via a licensed third-party provider of official city statistics.</p>
@@ -337,6 +347,12 @@
     }
     window.addEventListener('scroll', spy, {passive:true}); spy();
   })();
+  (function(){
+    var t=document.getElementById("navToggle"), l=document.getElementById("navLinks");
+    if(t&&l){ t.addEventListener("click", function(){ var o=l.classList.toggle("open"); t.setAttribute("aria-expanded",o?"true":"false"); });
+      Array.prototype.forEach.call(l.querySelectorAll("a"), function(a){ a.addEventListener("click", function(){ l.classList.remove("open"); t.setAttribute("aria-expanded","false"); }); }); }
+  })();
 </script>
+<script src="assets/wallet.js" defer></script>
 </body>
 </html>
