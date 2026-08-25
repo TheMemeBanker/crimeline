@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Contact — CrimeLine</title>
+<meta name="description" content="Reach the CrimeLine desk: questions, early-access requests, new-market and new-city suggestions, data &amp; fairness questions, press, and bug reports.">
+<link rel="canonical" href="https://crimeline.fun/contact.html">
+<meta name="theme-color" content="#12151d">
+<meta property="og:type" content="website"><meta property="og:site_name" content="CrimeLine">
+<meta property="og:title" content="Contact — CrimeLine">
+<meta property="og:description" content="Questions, requests, press, bugs — reach the CrimeLine desk.">
+<meta property="og:url" content="https://crimeline.fun/contact.html">
+<meta property="og:image" content="https://crimeline.fun/assets/og.jpg">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@CrimeLineMarket">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect x='2' y='2' width='96' height='96' rx='24' fill='%230b1222'/%3E%3Cpath d='M 78 30 A 34 34 0 1 0 78 70' fill='none' stroke='%23ff3050' stroke-width='15' stroke-linecap='round'/%3E%3Crect x='34' y='45.2' width='52' height='9.6' rx='4.8' fill='%23ff3050'/%3E%3Ccircle cx='81' cy='50' r='3.6' fill='%23ffe9ec'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap">
+<style>
+  :root {
+    --bg:#12151d; --surface:#1a1f2a; --surface-2:#232937;
+    --line:#262d3b;
+    --ink:#e4e8f1; --muted:#98a1b3; --dim:#646d80;
+    --red:#ff3050; --red-ink:#ff5e75;
+    --accent:#5b8aff; --accent-dim:rgba(91,138,255,.12);
+    --over:#31d492; --over-dim:rgba(49,212,146,.1);
+    --under:#ff6478;
+    --amber:#e8b34b;
+    --mono:"JetBrains Mono", ui-monospace, Menlo, monospace;
+    --sans:"Inter", ui-sans-serif, system-ui, sans-serif;
+    --display:"Space Grotesk", var(--sans);
+    --elev: inset 0 1px 0 rgba(255,255,255,.045), 0 1px 2px rgba(0,0,0,.25), 0 18px 44px -18px rgba(0,0,0,.5);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { position: relative; margin: 0; color: var(--ink); font: 16.5px/1.7 var(--sans); -webkit-font-smoothing: antialiased; background: var(--bg); }
+  a { color: inherit; }
+  .wrap { max-width: 1400px; margin: 0 auto; padding: 0 36px; }
+  .mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  .eyebrow { font-family: var(--mono); font-size: 11.5px; letter-spacing: .24em; text-transform: uppercase; color: var(--dim); }
+
+  .city-horizon { position: fixed; left: 0; right: 0; bottom: 0; height: 240px; z-index: -2; pointer-events: none;
+    background: radial-gradient(60% 130% at 50% 108%, rgba(91,138,255,.07), transparent 60%), radial-gradient(35% 90% at 78% 106%, rgba(255,59,88,.04), transparent 60%); }
+  .city-horizon svg { position: absolute; left: 0; bottom: -2px; width: 100%; height: 190px; display: block; }
+
+  nav { position: sticky; top: 0; z-index: 40; border-bottom: 1px solid rgba(148,168,214,.05); background: rgba(18,21,29,.8); backdrop-filter: blur(20px) saturate(1.4); }
+  .nav-in { max-width: 1400px; margin: 0 auto; padding: 15px 36px; display: flex; align-items: center; gap: 16px; }
+  .brand { display: flex; align-items: center; gap: 11px; text-decoration: none; color: inherit; }
+  .brand .mark { width: 38px; height: 38px; flex: none; display: block; filter: drop-shadow(0 2px 8px rgba(0,0,0,.5)) drop-shadow(0 0 16px rgba(255,48,80,.22)); }
+  .brand .mark svg { width: 100%; height: 100%; display: block; }
+  .brand b { font-family: var(--display); font-size: 18.5px; font-weight: 700; letter-spacing: -.02em; }
+  .brand .cr { font-size: 8px; font-weight: 600; vertical-align: super; margin-left: 1px; color: var(--muted); }
+  .nav-links { margin-left: auto; display: flex; align-items: center; gap: 24px; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 14px; }
+  .nav-links a:hover, .nav-links a.on { color: var(--ink); }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; font-size: 14px; font-weight: 650; text-decoration: none; cursor: pointer; border-radius: 999px; padding: 11px 22px; border: none; background: #222836; box-shadow: inset 0 1px 0 rgba(255,255,255,.05); color: var(--ink); transition: all .16s ease; font-family: var(--sans); }
+  .btn:hover { background:#2a3140; }
+  .btn.solid { background: #eef1f7; color: #12151d; box-shadow: 0 1px 2px rgba(0,0,0,.3); }
+  .btn.solid:hover { background:#ffffff; }
+  .nav-toggle { display: none; margin-left: auto; width: 40px; height: 40px; border: 1px solid #333b4d; border-radius: 12px; background: var(--surface); cursor: pointer; padding: 0; flex-direction: column; align-items: center; justify-content: center; gap: 4px; }
+  .nav-toggle span { width: 18px; height: 2px; border-radius: 2px; background: var(--ink); display: block; transition: transform .2s, opacity .2s; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(1){ transform: translateY(6px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] span:nth-child(2){ opacity: 0; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(3){ transform: translateY(-6px) rotate(-45deg); }
+
+  .hero { padding: 76px 0 26px; max-width: 860px; }
+  .hero h1 { margin: 16px 0 0; font-family: var(--display); font-size: clamp(38px, 4.6vw, 58px); font-weight: 700; letter-spacing: -.035em; line-height: 1.03; }
+  .hero h1 .hl { color: var(--accent); }
+  .hero p { margin: 18px 0 0; color: var(--muted); font-size: 18px; max-width: 60ch; line-height: 1.75; }
+
+  .layout { display: grid; grid-template-columns: 1.05fr .95fr; gap: 28px; padding: 40px 0 110px; align-items: start; }
+  .panel { border-radius: 22px; padding: 36px 38px; background: linear-gradient(170deg, #1e2431, var(--surface) 55%, #171c27); box-shadow: var(--elev); }
+  .panel h3 { margin: 0 0 6px; font-size: 19px; font-weight: 720; }
+  .panel .sub { margin: 0 0 22px; color: var(--muted); font-size: 14px; line-height: 1.7; }
+
+  /* topic chips */
+  .topics { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+  .tp { font-family: var(--mono); font-size: 12.5px; color: var(--muted); border: none; background: #1e2430; border-radius: 999px; padding: 9px 15px; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255,255,255,.04); transition: all .14s ease; }
+  .tp:hover { color: var(--ink); }
+  .tp.on { color: #12151d; background: #eef1f7; }
+
+  .fld { display: block; margin-bottom: 14px; }
+  .fld .lab { display: block; font-size: 12.5px; font-weight: 600; margin-bottom: 6px; }
+  .fld .lab span { color: var(--dim); font-weight: 400; }
+  .fld input, .fld textarea { width: 100%; padding: 12px 14px; border-radius: 12px; border: 1px solid #333b4d; background: #151a24; color: var(--ink); font: inherit; font-size: 15px; }
+  .fld textarea { min-height: 148px; resize: vertical; line-height: 1.6; }
+  .fld input:focus, .fld textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-dim); }
+  .fld.bad input, .fld.bad textarea { border-color: var(--under); }
+  .err { display: block; min-height: 15px; margin-top: 5px; font-size: 12px; color: var(--under); }
+  .send-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 6px; }
+  .send-note { font-size: 12px; color: var(--dim); }
+  .sent-ok { display: none; margin-top: 14px; padding: 13px 16px; border-radius: 12px; background: var(--over-dim); color: var(--over); font-size: 13.5px; }
+  .sent-ok.show { display: block; }
+
+  .side { display: flex; flex-direction: column; gap: 16px; }
+  .chan { display: flex; align-items: flex-start; gap: 15px; border-radius: 18px; padding: 22px 24px; background: linear-gradient(170deg, #1e2431, var(--surface) 55%, #171c27); box-shadow: var(--elev); text-decoration: none; transition: transform .16s ease; }
+  .chan:hover { transform: translateY(-2px); }
+  .chan .ci { flex: none; width: 40px; height: 40px; border-radius: 12px; background: var(--surface-2); display: inline-flex; align-items: center; justify-content: center; color: var(--ink); }
+  .chan b { display: block; font-size: 15.5px; }
+  .chan span { display: block; color: var(--muted); font-size: 13px; margin-top: 2px; line-height: 1.6; }
+  .chan .mono-addr { font-family: var(--mono); font-size: 13px; color: var(--accent); }
+  .tips { border-radius: 18px; padding: 24px 26px; background: linear-gradient(170deg, #1d2330, #181d28); box-shadow: var(--elev); }
+  .tips b { font-size: 14.5px; }
+  .tips ul { margin: 10px 0 0; padding-left: 18px; color: var(--muted); font-size: 13.5px; line-height: 1.8; }
+
+  footer { margin-top: 40px; padding: 44px 0 70px; background: #10141d; }
+  .foot { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .foot a { color: var(--muted); text-decoration: none; font-size: 14px; }
+  .foot a:hover { color: var(--ink); }
+  .foot .links { display: flex; flex-wrap: wrap; gap: 10px 20px; }
+  .disc { margin-top: 22px; font-size: 11.5px; line-height: 1.7; color: var(--dim); max-width: 100ch; }
+
+  /* wallet sign (shared treatment lives in wallet.js) */
+
+  @media (max-width: 1000px) { .layout { grid-template-columns: 1fr; } }
+  @media (max-width: 680px) {
+    .wrap { padding: 0 16px; }
+    .nav-in { padding: 12px 16px; position: relative; }
+    .nav-toggle { display: flex; }
+    .nav-links { position: absolute; top: calc(100% + 1px); left: 0; right: 0; margin: 0; flex-direction: column; align-items: stretch; gap: 0; background: #1a1f2a; border-bottom: 1px solid var(--line); padding: 8px 16px 14px; display: none; box-shadow: 0 22px 40px -24px rgba(0,0,0,.6); }
+    .nav-links.open { display: flex; }
+    .nav-links a { padding: 13px 4px; border-bottom: 1px solid var(--line); }
+    .panel { padding: 26px 20px; }
+    .city-horizon { height: 150px; } .city-horizon svg { height: 120px; }
+  }
+</style>
+</head>
+<body>
+<div class="city-horizon" aria-hidden="true"><svg viewBox="0 0 1600 190" preserveAspectRatio="xMidYMax slice">
+  <g fill="#181e2c"><path d="M0 190V120h34v-14h10v14h22v70zM80 190V96h18l4-12 4 12h16v94zM136 190V134h40v56zM190 190V88h14V72h8v16h20v102zM248 190V128h30v-16h12v16h20v62zM326 190V102h24V88h10v14h20v88zM398 190V140h44v50zM458 190V92h16l3-10 3 10h20v98zM518 190V124h34v66zM570 190V76h12V62h8v14h16v114zM624 190V132h40v58zM682 190V98h22v92zM722 190V144h36v46zM774 190V84h14V70h8v14h20v106zM834 190V126h32v64zM884 190V100h20l4-14 4 14h14v90zM944 190V138h42v52zM1002 190V92h16v98zM1036 190V120h30v70zM1084 190V80h12V64h8v16h18v110zM1140 190V130h38v60zM1194 190V96h22v94zM1234 190V142h34v48zM1286 190V88h16l3-12 3 12h18v102zM1344 190V122h32v68zM1394 190V104h24v86zM1436 190V134h40v56zM1494 190V90h14V76h8v14h20v100zM1554 190V126h46v64z"/></g>
+  <g fill="#1f2739"><path d="M0 190V146h60v44zM76 190V112h26l5-16 5 16h20v78zM148 190V150h52v40zM216 190V122h18V104h10v18h26v68zM288 190V158h60v32zM366 190V118h30v72zM414 190V100h14V84h10v16h22v90zM478 190V154h56v36zM552 190V128h34v62zM604 190V108h20l4-14 4 14h18v82zM668 190V152h50v38zM736 190V116h28v74zM782 190V94h12V78h10v16h20v96zM842 190V148h54v42zM914 190V120h32v70zM964 190V102h18l4-12 4 12h16v88zM1024 190V156h52v34zM1094 190V126h30v64zM1142 190V106h22v84zM1182 190V148h50v42zM1250 190V112h16V96h10v16h24v78zM1318 190V152h48v38zM1384 190V124h30v66zM1432 190V98h20l4-12 4 12h16v92zM1494 190V150h50v40zM1560 190V118h40v72z"/></g>
+</svg></div>
+
+<nav>
+  <div class="nav-in">
+    <a class="brand" href="index.html" aria-label="CrimeLine home"><span class="mark"><svg viewBox="0 0 100 100"><defs><linearGradient id="clR" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff6076"/><stop offset=".5" stop-color="#ff3050"/><stop offset="1" stop-color="#e01b3e"/></linearGradient></defs><path d="M 82 26 A 40 40 0 1 0 82 74" fill="none" stroke="url(#clR)" stroke-width="17" stroke-linecap="round"/><rect x="30" y="44.5" width="62" height="11" rx="5.5" fill="url(#clR)"/><circle cx="86" cy="50" r="4" fill="#ffe9ec"/></svg></span><b>CrimeLine<span class="cr">©</span></b></a>
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <div class="nav-links" id="navLinks">
+      <a href="markets.html">Markets</a>
+      <a href="how-it-works.html">How it works</a>
+      <a href="rules.html">Rules</a>
+      <a href="index.html#token">$CrimeLine</a>
+      <button class="js-wallet" type="button">Connect wallet</button>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <header class="hero">
+    <p class="eyebrow">The desk</p>
+    <h1>Talk to <span class="hl">CrimeLine.</span></h1>
+    <p>Questions, early-access requests, a city or market you want on the board, something that looks off — it all lands on the same desk, and a human reads every message.</p>
+  </header>
+
+  <div class="layout">
+    <!-- FORM -->
+    <div class="panel">
+      <h3>Send a request</h3>
+      <p class="sub">Pick a topic, write your message, hit send — it opens ready-to-go in your own mail app, addressed to the desk. Nothing is stored on this site.</p>
+      <div class="topics" id="topics" role="radiogroup" aria-label="Topic">
+        <button class="tp on" type="button" data-t="General question">General</button>
+        <button class="tp" type="button" data-t="Early access">Early access</button>
+        <button class="tp" type="button" data-t="Market / city request">Market or city request</button>
+        <button class="tp" type="button" data-t="Data &amp; fairness">Data &amp; fairness</button>
+        <button class="tp" type="button" data-t="Bug report">Bug report</button>
+        <button class="tp" type="button" data-t="Press">Press</button>
+      </div>
+      <form id="cform" novalidate>
+        <label class="fld"><span class="lab">Your name or handle <span>(optional)</span></span><input type="text" id="fName" autocomplete="name" placeholder="e.g. night_desk"></label>
+        <label class="fld" id="msgFld"><span class="lab">Your message</span><textarea id="fMsg" placeholder="What's on your mind? If it's a market or city request, tell us which city — and what you'd trade on it."></textarea><span class="err" id="eMsg" role="alert"></span></label>
+        <div class="send-row">
+          <button class="btn solid" id="send" type="submit">Send to the desk →</button>
+          <span class="send-note">Opens in your mail app · to hello@crimeline.fun</span>
+        </div>
+        <div class="sent-ok" id="sentOk">Your mail app should have opened with everything filled in — just hit send there. If it didn't, email us directly at hello@crimeline.fun.</div>
+      </form>
+    </div>
+
+    <!-- DIRECT CHANNELS -->
+    <div class="side">
+      <a class="chan" href="mailto:hello@crimeline.fun">
+        <span class="ci"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m3 7 9 6 9-6"/></svg></span>
+        <span><b>Email the desk</b><span>Prefer plain email? Same inbox, no form needed.</span><span class="mono-addr">hello@crimeline.fun</span></span>
+      </a>
+      <a class="chan" href="https://x.com/CrimeLineMarket" target="_blank" rel="noopener">
+        <span class="ci"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></span>
+        <span><b>@CrimeLineMarket</b><span>Announcements, launch countdown, and DMs on X.</span></span>
+      </a>
+      <div class="tips">
+        <b>Make your request count</b>
+        <ul>
+          <li><b style="color:var(--ink)">City requests:</b> name the city and the data you'd trade — consistent public reporting is what gets a board added.</li>
+          <li><b style="color:var(--ink)">Data &amp; fairness:</b> point at the exact market and date; every settlement is on-chain, so we can walk it back together.</li>
+          <li><b style="color:var(--ink)">Bug reports:</b> device + browser + what you expected. Screenshots are gold.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="foot">
+      <a class="brand" href="index.html" style="display:inline-flex;align-items:center;gap:10px;text-decoration:none"><span class="mark" style="width:30px;height:30px;display:inline-block"><svg viewBox="0 0 100 100" width="30" height="30"><path d="M 82 26 A 40 40 0 1 0 82 74" fill="none" stroke="#ff3050" stroke-width="17" stroke-linecap="round"/><rect x="30" y="44.5" width="62" height="11" rx="5.5" fill="#ff3050"/><circle cx="86" cy="50" r="4" fill="#ffe9ec"/></svg></span><b style="font-family:var(--display)">CrimeLine<span class="cr">©</span></b></a>
+      <div class="links">
+        <a href="index.html">Home</a><a href="markets.html">Markets</a><a href="how-it-works.html">How it works</a><a href="rules.html">Rules</a><a href="contact.html">Contact</a><a href="https://x.com/CrimeLineMarket" target="_blank" rel="noopener">X ↗</a>
+      </div>
+    </div>
+    <p class="disc">CrimeLine is a prediction market on aggregate, publicly-reported city statistics — not a commentary on any individual or event, and not a live product. All numbers, lines, probabilities and payouts shown are illustrative previews from the devnet beta. Markets are intended to settle from a single licensed third-party data provider at a predetermined time. Participation, where offered, will be subject to eligibility, age, identity verification and applicable law, and will not be available where prohibited. © 2026 CrimeLine. crimeline.fun</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var t=document.getElementById("navToggle"), l=document.getElementById("navLinks");
+  if(t&&l){ t.addEventListener("click", function(){ var o=l.classList.toggle("open"); t.setAttribute("aria-expanded",o?"true":"false"); });
+    Array.prototype.forEach.call(l.querySelectorAll("a"), function(a){ a.addEventListener("click", function(){ l.classList.remove("open"); t.setAttribute("aria-expanded","false"); }); }); }
+
+  var topic="General question";
+  var topics=document.getElementById("topics");
+  topics.addEventListener("click", function(e){
+    var b=e.target.closest(".tp"); if(!b) return;
+    topic=b.getAttribute("data-t").replace(/&amp;/g,"&");
+    Array.prototype.forEach.call(topics.children, function(x){ x.classList.toggle("on", x===b); });
+  });
+  var form=document.getElementById("cform"), fMsg=document.getElementById("fMsg"), eMsg=document.getElementById("eMsg"), msgFld=document.getElementById("msgFld");
+  fMsg.addEventListener("input", function(){ msgFld.classList.remove("bad"); eMsg.textContent=""; });
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    var msg=fMsg.value.trim(), name=document.getElementById("fName").value.trim();
+    if(msg.length<10){ msgFld.classList.add("bad"); eMsg.textContent="Give the desk a little more to work with — at least a sentence."; return; }
+    var subject="[CrimeLine] "+topic+(name?" — "+name:"");
+    var body=msg+"\n\n—\nTopic: "+topic+(name?"\nFrom: "+name:"")+"\nSent from crimeline.fun/contact";
+    window.location.href="mailto:hello@crimeline.fun?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body);
+    document.getElementById("sentOk").classList.add("show");
+  });
+})();
+</script>
+<script src="assets/wallet.js" defer></script>
+</body>
+</html>

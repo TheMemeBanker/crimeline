@@ -119,7 +119,14 @@
   .rcard p b { color: var(--ink); }
 
   /* big line table */
+  .tbl-shell { position: relative; }
   .tbl-wrap { overflow-x: auto; border-radius: 20px; background: linear-gradient(170deg, #1e2431, var(--surface) 55%, #171c27); box-shadow: var(--elev); }
+  .tbl-hint { display: none; }
+  @media (max-width: 900px) {
+    .tbl-shell::after { content: ""; position: absolute; top: 0; right: 0; bottom: 0; width: 46px; border-radius: 0 20px 20px 0;
+      background: linear-gradient(270deg, rgba(19,24,33,.9), transparent); pointer-events: none; }
+    .tbl-hint { display: inline; color: var(--accent); }
+  }
   table { width: 100%; border-collapse: collapse; font-size: 14.5px; min-width: 780px; }
   th { text-align: right; font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); padding: 16px 18px 10px; white-space: nowrap; }
   th:first-child { text-align: left; padding-left: 26px; }
@@ -255,6 +262,7 @@
       <p>The core market. Each city posts a daily line for five categories — call the official number over or under. Half-point lines mean there's never a push: the number is either over the line or it isn't.</p>
       <div class="tags"><span class="tag count">Settles on raw count</span></div>
     </div>
+    <div class="tbl-shell">
     <div class="tbl-wrap">
       <table aria-label="Illustrative daily lines for all ten cities">
         <thead><tr><th>City</th><th>Total Crime</th><th>Violent</th><th>Vehicle Thefts</th><th>Burglaries</th><th>Robberies</th></tr></thead>
@@ -271,7 +279,8 @@
           <tr><td><b>St. Louis</b><span>STL</span></td><td>88.5</td><td>18.5</td><td>26.5</td><td>14.5</td><td>9.5</td></tr>
         </tbody>
       </table>
-      <div class="tbl-note">Illustrative lines. Real lines are posted each morning from historical settlement data and early-day pace, and move with the market all day.</div>
+    </div>
+    <div class="tbl-note"><span class="tbl-hint">Swipe sideways for all five markets · </span>Illustrative lines. Real lines are posted each morning from historical settlement data and early-day pace, and move with the market all day.</div>
     </div>
     <div class="settle-bar">
       <span class="sb-live"><i></i>Daily cycle</span>
@@ -381,7 +390,7 @@
     <div class="foot">
       <a class="brand" href="index.html" style="display:inline-flex;align-items:center;gap:10px;text-decoration:none"><span class="mark" style="width:30px;height:30px;display:inline-block"><svg viewBox="0 0 100 100" width="30" height="30"><path d="M 82 26 A 40 40 0 1 0 82 74" fill="none" stroke="#ff3050" stroke-width="17" stroke-linecap="round"/><rect x="30" y="44.5" width="62" height="11" rx="5.5" fill="#ff3050"/><circle cx="86" cy="50" r="4" fill="#ffe9ec"/></svg></span><b style="font-family:var(--display)">CrimeLine<span class="cr">©</span></b></a>
       <div class="links">
-        <a href="index.html">Home</a><a href="markets.html">Markets</a><a href="how-it-works.html">How it works</a><a href="rules.html">Rules</a><a href="mailto:hello@crimeline.fun">Contact</a><a href="https://x.com/CrimeLineMarket" target="_blank" rel="noopener">X ↗</a>
+        <a href="index.html">Home</a><a href="markets.html">Markets</a><a href="how-it-works.html">How it works</a><a href="rules.html">Rules</a><a href="contact.html">Contact</a><a href="https://x.com/CrimeLineMarket" target="_blank" rel="noopener">X ↗</a>
       </div>
     </div>
     <p class="disc">CrimeLine is a prediction market on aggregate, publicly-reported city statistics — not a commentary on any individual or event, and not a live product. All numbers, lines, probabilities and payouts shown are illustrative previews from the devnet beta. Markets are intended to settle from a single licensed third-party data provider at a predetermined time. Participation, where offered, will be subject to eligibility, age, identity verification and applicable law, and will not be available where prohibited. © 2026 CrimeLine. crimeline.fun</p>
