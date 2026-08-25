@@ -71,25 +71,17 @@
     + ".clw-btn.solid{background:#eef1f7;color:#12151d}"
     + ".clw-btn.solid:hover{background:#fff}"
     + ".clw-btn.danger{color:#ff6478}"
-    /* ── the Connect Wallet neon sign (not a button) ─────────────────
-       Disconnected: hollow red-outlined letters with the CrimeLine red
-       glow. Connected: the sign "lights up" — filled red, showing the
-       truncated address. Base style is filled glow text so browsers
-       without text-stroke never render invisible text; @supports
-       upgrades to the true neon outline. */
-    + ".js-wallet{appearance:none;-webkit-appearance:none;display:inline-flex;align-items:center;gap:9px;background:none;border:none;padding:10px 4px;cursor:pointer;"
-    +   "font-family:'Space Grotesk',Inter,ui-sans-serif,sans-serif;font-size:15px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;line-height:1;"
-    +   "color:#ff4155;text-shadow:0 0 7px rgba(255,48,80,.55),0 0 18px rgba(255,48,80,.3);"
-    +   "transition:color .22s ease,filter .22s ease,text-shadow .22s ease}"
-    + "@supports ((-webkit-text-stroke:1px red)){"
-    +   ".js-wallet:not(.clw-on){color:transparent;-webkit-text-stroke:1.1px #ff3050;text-shadow:none;"
-    +     "filter:drop-shadow(0 0 5px rgba(255,48,80,.6)) drop-shadow(0 0 14px rgba(255,48,80,.32)) drop-shadow(0 0 30px rgba(255,48,80,.16))}"
-    +   ".js-wallet:not(.clw-on):hover{-webkit-text-stroke:1.1px #ff6076;color:rgba(255,48,80,.16);"
-    +     "filter:drop-shadow(0 0 6px rgba(255,72,98,.85)) drop-shadow(0 0 18px rgba(255,48,80,.55)) drop-shadow(0 0 42px rgba(255,48,80,.32))}"
-    + "}"
-    + ".js-wallet.clw-on{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:14px;letter-spacing:.05em;text-transform:none;color:#ff6076;"
-    +   "text-shadow:0 0 8px rgba(255,48,80,.55),0 0 22px rgba(255,48,80,.3)}"
-    + ".js-wallet.clw-on:hover{color:#ff8093;text-shadow:0 0 8px rgba(255,72,98,.8),0 0 26px rgba(255,48,80,.5)}"
+    /* ── the Connect Wallet sign (not a button) ──────────────────────
+       Understated CrimeLine-red lettering with one soft neon halo.
+       Connected: shows the truncated address in the same treatment. */
+    + ".js-wallet{appearance:none;-webkit-appearance:none;display:inline-flex;align-items:center;gap:8px;background:none;border:none;padding:10px 4px;cursor:pointer;"
+    +   "font-family:'Space Grotesk',Inter,ui-sans-serif,sans-serif;font-size:15px;font-weight:650;letter-spacing:.015em;line-height:1;"
+    +   "color:#ff4d63;text-shadow:0 0 12px rgba(255,48,80,.38),0 0 30px rgba(255,48,80,.12);"
+    +   "transition:color .2s ease,text-shadow .2s ease}"
+    + ".js-wallet:hover{color:#ff6e81;text-shadow:0 0 12px rgba(255,48,80,.55),0 0 34px rgba(255,48,80,.22)}"
+    + ".js-wallet.clw-on{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:13.5px;letter-spacing:.04em;color:#ff5e75;"
+    +   "text-shadow:0 0 12px rgba(255,48,80,.35)}"
+    + ".js-wallet.clw-on:hover{color:#ff8093;text-shadow:0 0 12px rgba(255,48,80,.5)}"
     + ".js-wallet:focus-visible{outline:2px solid rgba(255,48,80,.7);outline-offset:5px;border-radius:8px}"
     + ".js-wallet .wdot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#31d492;margin-right:2px;box-shadow:0 0 8px rgba(49,212,146,.9)}"
     + "@media (max-width:680px){.nav-links .js-wallet{margin-top:12px;justify-content:center;padding:15px 4px;border-bottom:none}}"
